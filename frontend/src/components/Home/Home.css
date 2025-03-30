@@ -1,0 +1,60 @@
+/* Hero Section */
+.hero-section {
+    text-align: center;
+    padding: 80px 20px;
+}
+
+/* Ensures the content is properly aligned */
+.hero-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Headline */
+.hero-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.hero-subtext {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+/* Search Bar */
+.search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+/* Search Form */
+.search-form {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+/* Search Input */
+.search-input {
+    width: 100%;
+    padding: 12px 15px 12px 40px;
+    border: 1px solid #ccc;
+    border-radius: 50px;
+    font-size: 16px;
+    background: white;
+    outline: none;
+}
+
+/* Search Icon */
+.search-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: gray;
+}
