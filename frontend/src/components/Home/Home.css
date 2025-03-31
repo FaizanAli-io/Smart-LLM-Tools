@@ -4,7 +4,6 @@
     padding: 80px 20px;
 }
 
-/* Ensures the content is properly aligned */
 .hero-container {
     max-width: 800px;
     margin: 0 auto;
@@ -31,7 +30,6 @@
     width: 100%;
 }
 
-/* Search Form */
 .search-form {
     position: relative;
     width: 100%;
@@ -39,7 +37,6 @@
     margin: 0 auto;
 }
 
-/* Search Input */
 .search-input {
     width: 100%;
     padding: 12px 15px 12px 40px;
@@ -50,7 +47,6 @@
     outline: none;
 }
 
-/* Search Icon */
 .search-icon {
     position: absolute;
     left: 15px;
@@ -58,3 +54,100 @@
     transform: translateY(-50%);
     color: gray;
 }
+
+/* Section Titles */
+.services-section h2 {
+    color: rgba(34, 193, 195, 0.9);
+    font-weight: bold;
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Services Section */
+.services-section {
+    text-align: center;
+    padding: 50px 20px;
+    margin-left: 15px;
+  }
+  
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    justify-content: center;
+    max-width: 700px; /* Reduced width for better proportions */
+    margin: 0 auto;
+  }
+  
+  /* Service Card */
+  .service-card {
+    background-color: #f5f5f5;
+    border-radius: 30px;
+    padding: 20px; /* Reduced padding to make it more square */
+    text-align: center;
+    transition: 0.3s ease-in-out;
+    border: 1px solid #ddd;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    height: 250px; /* Fixed height to keep it square */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  
+  .service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  .service-icon-wrapper {
+    margin-bottom: 15px;
+  }
+  
+  .service-icon {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .service-name {
+    font-size: 2.0rem;
+    align-self: center;
+    font-weight: bold;
+    margin-bottom: 25px;
+  }
+  
+  .service-description {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 15px;
+  }
+  
+  .service-btn {
+    background-color: #000000;
+    color: white;
+    font-weight: bold;
+    transition: 0.3s;
+    border-radius: 30px;
+  }
+  
+  .service-btn:hover {
+    background-color: #00695c;
+  }
+
+  .cool-button {
+    background-color: black; /* Blue color */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 30px; /* Fully rounded */
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .cool-button:hover {
+    background-color: #2563eb; /* Slightly darker blue */
+  }
+  

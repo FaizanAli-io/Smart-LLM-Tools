@@ -1,0 +1,100 @@
+.category-page {
+    text-align: center;
+    padding: 50px 20px;
+}
+
+/* Category Header */
+.category-header img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+}
+
+.category-title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.category-description {
+    font-size: 1.1rem;
+    color: #666;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Default Services Grid */
+.services-list-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Two per row */
+    gap: 20px;
+    justify-content: center;
+    max-width: 700px;
+    margin: 30px auto 0 auto;
+}
+
+/* Service Card */
+.service-card-2 {
+    background: #f8f9fa;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 15px;
+    transition: 0.3s ease-in-out;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    height: 60px;
+    max-width: 320px;
+    font-weight: 500;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.service-card-2:hover {
+    background: #e0e7ff;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Special Styling for Content Writing */
+.subcategory-container {
+    text-align: left;
+    margin-top: 40px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.subcategory-title {
+    font-size: 1.5rem;
+    font-weight:600;
+    margin-bottom: 30px;
+    color: #000000;
+    padding-bottom: 5px;
+}
+
+.subcategory-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.subcategory-list li {
+    background: #f8f9fa;
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    transition: 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.subcategory-list li:hover {
+    background: #e0e7ff;
+    transform: translateX(5px);
+}
