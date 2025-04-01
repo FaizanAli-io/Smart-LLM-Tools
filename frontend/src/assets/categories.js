@@ -25,7 +25,7 @@ export const categories = [
       services: [
         "Rewrite This",
         "Suggest a Response",
-        "Clarify/Explain This",
+        "Clarify This",
         "Rewrite as Bullet Points",
         "Summarise This",
         "Complaint Generator",
@@ -54,10 +54,10 @@ export const categories = [
     image: "/images/content-writing.png",
     services: {
       "Main Website Content": [
-        "Home Page", "About Us", "Service Page", "Service Page - Location", "Blog/Article", "FAQ"
+        "Home Page", "About Us", "Service Page", "Service Page - Location", "Blog", "FAQ"
       ],
       "Mini/Template Website Content": [
-        "Home Page", "About Us", "Service Page", "Service Page - Location", "Blog/Article", "FAQ"
+        "Home Page", "About Us", "Service Page", "Service Page - Location", "Blog", "FAQ"
       ],
       "Social Media Post": [
         "Google My Business", "LinkedIn", "Instagram"

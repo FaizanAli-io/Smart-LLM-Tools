@@ -1,0 +1,103 @@
+/* Footer Container */
+.footer {
+    background-color: #222;
+    color: #ddd;
+    padding: 30px 0;
+    font-size: 14px;
+  }
+  
+  /* Center Content */
+  .footer-content {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  
+  /* Footer Columns - FLEXBOX */
+  .footer-columns {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  
+  /* Footer Sections */
+  .footer-section {
+    flex: 1;
+    min-width: 200px; /* Ensures proper spacing */
+    padding: 10px;
+  }
+  
+  .footer-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 12px;
+    color: #fff;
+  }
+  
+  /* Footer Links */
+  .footer-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .footer-list li {
+    margin-bottom: 6px;
+  }
+  
+  .footer-link {
+    color: #bbb;
+    text-decoration: none;
+    transition: 0.3s ease-in-out;
+  }
+  
+  .footer-link:hover {
+    color: #00bcd4;
+    text-decoration: underline;
+  }
+  
+  /* Footer Contact */
+  .footer-contact {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .footer-contact li {
+    margin-bottom: 6px;
+  }
+  
+  /* Footer Bottom */
+  .footer-bottom {
+    text-align: center;
+    padding: 12px 0;
+    background-color: #181818;
+    color: #888;
+    font-size: 13px;
+  }
+
+  /* Increase spacing between columns */
+.footer-columns {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 40px; /* Add more spacing between columns */
+  }
+  
+  /* Ensure footer extends to the bottom */
+  .footer {
+    background-color: #222;
+    color: #ddd;
+    padding: 30px 0;
+    font-size: 14px;
+    width: 100%;
+    position: relative;
+    bottom: 0;
+    left: 0;
+  }
+  
+  /* Push footer to the bottom if there's extra space */
+
+  
+  .footer {
+    margin-top: auto; /* Pushes footer to the bottom */
+  }
+  
+  

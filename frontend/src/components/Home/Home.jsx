@@ -7,16 +7,28 @@ import "./Home.css";
 export default function Hero() {
   const navigate = useNavigate();
 
-  // Category Data
- 
-
   // Navigate to category page
   const handleCategoryClick = (categoryId) => {
     navigate(`/category/${categoryId}`);
   };
 
+  // Navigate directly to prompt creator
+  const handleRecentPromptClick = (categoryId, serviceName) => {
+    navigate(`/prompt-creator/${categoryId}/${serviceName.replace(/\s+/g, "-")}`);
+  };
+
+  // Hardcoded recently used services
+  const recentlyUsed = [
+    { name: "Business Marketing Plan", category: "business-services" },
+    { name: "Summarise This", category: "daily-business-tools" },
+    { name: "Keywords Generator", category: "marketing-seo" },
+    { name: "Home Page", category: "content-writing" },
+    { name: "Decision Maker", category: "daily-business-tools" },
+    { name: "Competitor Analysis", category: "business-services" },
+  ];
+
   return (
-    <>
+    <div className="home-page-section">
       {/* Hero Section */}
       <div className="hero-section">
         <div className="hero-container">
@@ -34,6 +46,7 @@ export default function Hero() {
 
       {/* Services Section */}
       <MDBContainer className="services-section py-5">
+        <h2 className="section-title">AI Tool Categories</h2>
         <div className="services-grid">
           {categories.map((category) => (
             <div
@@ -50,6 +63,22 @@ export default function Hero() {
           ))}
         </div>
       </MDBContainer>
-    </>
+
+      {/* Recently Used Section */}
+      <MDBContainer className="recently-used-section py-5">
+        <h2 className="section-title">Recently Used</h2>
+        <div className="recently-used-grid">
+          {recentlyUsed.map((service, index) => (
+            <div
+              key={index}
+              className="recent-service-card"
+              onClick={() => handleRecentPromptClick(service.category, service.name)}
+            >
+              <p className="recent-service-name">{service.name}</p>
+            </div>
+          ))}
+        </div>
+      </MDBContainer>
+    </div>
   );
 }
