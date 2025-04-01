@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { MDBContainer } from "mdb-react-ui-kit";
 import { categories } from "../../assets/categories";
@@ -6,6 +6,7 @@ import "./Home.css";
 
 export default function Hero() {
   const navigate = useNavigate();
+  const [searchTerm, setSearchTerm] = useState("");
 
   // Navigate to category page
   const handleCategoryClick = (categoryId) => {
@@ -27,6 +28,29 @@ export default function Hero() {
     { name: "Competitor Analysis", category: "business-services" },
   ];
 
+  // Extract all services, including nested ones from content writing
+  const allServices = categories.flatMap((category) => {
+    if (Array.isArray(category.services)) {
+      return category.services.map((service) => ({
+        name: service,
+        category: category.id,
+      }));
+    } else if (typeof category.services === "object") {
+      return Object.entries(category.services).flatMap(([section, services]) =>
+        services.map((service) => ({
+          name: service,
+          category: category.id,
+        }))
+      );
+    }
+    return [];
+  });
+
+  // Filter services based on search term
+  const filteredServices = allServices.filter((service) =>
+    service.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="home-page-section">
       {/* Hero Section */}
@@ -38,11 +62,41 @@ export default function Hero() {
           {/* Search Bar */}
           <div className="search-container">
             <form className="search-form">
-              <input type="text" className="search-input" placeholder="Search AI Tools" />
+              <input
+                type="text"
+                className="search-input"
+                placeholder="Search AI Tools..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+              <button type="submit" className="search-button">
+                <i className="fas fa-search"></i>
+              </button>
+              {searchTerm && (
+        <MDBContainer className="search-results">
+          {filteredServices.length > 0 ? (
+            filteredServices.map((service, index) => (
+              <div
+                key={index}
+                className="search-result-item"
+                onClick={() => handleRecentPromptClick(service.category, service.name)}
+              >
+                {service.name}
+              </div>
+            ))
+          ) : (
+            <p className="no-results">No results found</p>
+          )}
+        </MDBContainer>
+      )}
             </form>
           </div>
+
+
         </div>
       </div>
+
+      
 
       {/* Services Section */}
       <MDBContainer className="services-section py-5">

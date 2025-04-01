@@ -1,53 +1,60 @@
 import React from "react";
-import { MDBFooter, MDBContainer, MDBIcon } from "mdb-react-ui-kit";
+import { Link, useNavigate } from "react-router-dom";
+import { categories } from "../../assets/categories";
+import { MDBFooter, MDBContainer } from "mdb-react-ui-kit";
 import "./Footer.css";
 
 export default function Footer() {
+  const navigate = useNavigate();
+
+  // Function to format service name into URL-friendly format
+  const formatServiceSlug = (service) => service.replace(/\s+/g, "-");
+
   return (
     <MDBFooter className="footer">
       <MDBContainer className="footer-content">
         <div className="footer-columns">
-          {/* Company Info */}
-          <div className="footer-section">
-            <h6 className="footer-title">
-              <MDBIcon icon="gem" className="me-2" />
-              Your Company
-            </h6>
-            <p>Delivering top-notch services with quality and efficiency.</p>
-          </div>
-
-          {/* Products */}
-          <div className="footer-section">
-            <h6 className="footer-title">Products</h6>
-            <ul className="footer-list">
-              <li><a href="#" className="footer-link">Angular</a></li>
-              <li><a href="#" className="footer-link">React</a></li>
-              <li><a href="#" className="footer-link">Vue</a></li>
-              <li><a href="#" className="footer-link">Laravel</a></li>
-            </ul>
-          </div>
-
-          {/* Useful Links */}
-          <div className="footer-section">
-            <h6 className="footer-title">Useful Links</h6>
-            <ul className="footer-list">
-              <li><a href="#" className="footer-link">Pricing</a></li>
-              <li><a href="#" className="footer-link">Settings</a></li>
-              <li><a href="#" className="footer-link">Orders</a></li>
-              <li><a href="#" className="footer-link">Help</a></li>
-            </ul>
-          </div>
-
-          {/* Contact */}
-          <div className="footer-section">
-            <h6 className="footer-title">Contact</h6>
-            <ul className="footer-contact">
-              <li><MDBIcon icon="home" className="me-2" /> New York, NY 10012, US</li>
-              <li><MDBIcon icon="envelope" className="me-2" /> info@example.com</li>
-              <li><MDBIcon icon="phone" className="me-2" /> +1 234 567 88</li>
-              <li><MDBIcon icon="print" className="me-2" /> +1 234 567 89</li>
-            </ul>
-          </div>
+          {categories.map((category) => (
+            <div key={category.id} className="footer-section">
+              <h6 className="footer-title">{category.name}</h6>
+              <ul className="footer-list">
+                {Array.isArray(category.services) ? (
+                  category.services.length > 0 ? (
+                    category.services.map((service, index) => (
+                      <li key={index}>
+                        <Link
+                          to={`/prompt-creator/${category.id}/${formatServiceSlug(service)}`}
+                          className="footer-link"
+                        >
+                          {service}
+                        </Link>
+                      </li>
+                    ))
+                  ) : (
+                    <li className="footer-no-services">No services available</li>
+                  )
+                ) : (
+                  Object.entries(category.services).map(([subCategory, subServices], idx) => (
+                    <div key={idx}>
+                      <h6 className="footer-subcategory">{subCategory}</h6>
+                      <ul className="footer-sublist">
+                        {subServices.map((service, i) => (
+                          <li key={i}>
+                            <Link
+                              to={`/category/${category.id}/${formatServiceSlug(service)}`}
+                              className="footer-link"
+                            >
+                              {service}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))
+                )}
+              </ul>
+            </div>
+          ))}
         </div>
       </MDBContainer>
 
