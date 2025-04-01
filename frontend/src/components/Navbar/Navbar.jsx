@@ -1,31 +1,21 @@
-
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   MDBContainer,
   MDBNavbar,
-  MDBNavbarBrand
+  MDBNavbarBrand,
+  MDBBtn
 } from 'mdb-react-ui-kit';
 import './Navbar.css';
 
 export default function Navbar() {
+  const navigate = useNavigate();
+
   return (
-    <MDBNavbar fixed='top' light style={{
-      backgroundColor: "#f5f5f5", /* Greyish Background */
-      padding: "12px 0",
-      borderBottom: "1px solid #ddd"
-    }}>
-      <MDBContainer fluid className='header-navbar' style={{
-        display: "flex",
-        justifyContent: "center",  /* Center content horizontally */
-        alignItems: "center",      /* Center content vertically */
-      }}>
-        <MDBNavbarBrand href='#' style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          width: "100%", /* Make it span full width */
-          textAlign: "center"
-        }}>
+    <MDBNavbar fixed='top' light className="navbar-custom">
+      <MDBContainer fluid className='header-navbar'>
+        {/* Logo */}
+        <MDBNavbarBrand href='/'>
           <img
             src='https://mdbootstrap.com/img/logo/mdb-transaprent-noshadows.webp'
             height='30'
@@ -33,6 +23,16 @@ export default function Navbar() {
             loading='lazy'
           />
         </MDBNavbarBrand>
+
+        {/* Login & Signup Buttons */}
+        <div className="nav-buttons">
+          <button className="nav-btn login-home-btn" onClick={() => navigate('/login')}>
+            Login
+          </button>
+          <button className="nav-btn signup-home-btn" onClick={() => navigate('/signup')}>
+            Signup
+          </button>
+        </div>
       </MDBContainer>
     </MDBNavbar>
   );

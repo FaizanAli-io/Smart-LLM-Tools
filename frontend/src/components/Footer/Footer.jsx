@@ -41,7 +41,7 @@ export default function Footer() {
                         {subServices.map((service, i) => (
                           <li key={i}>
                             <Link
-                              to={`/category/${category.id}/${formatServiceSlug(service)}`}
+                              to={`/prompt-creator/${category.id}/${formatServiceSlug(service)}`}
                               className="footer-link"
                             >
                               {service}
