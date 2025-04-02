@@ -11,6 +11,7 @@ export default function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Login submitted");
+    navigate('/')
   };
 
   return (

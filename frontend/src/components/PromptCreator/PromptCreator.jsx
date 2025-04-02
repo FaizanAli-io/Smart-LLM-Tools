@@ -43,7 +43,6 @@ export default function PromptCreator() {
           {/* Buttons Section */}
           <div className="buttons-container">
             <button type="submit" className="generate-btn">Generate</button>
-            <button type="button" className="language-btn">🇺🇸 English</button>
           </div>
         </form>
       </div>
