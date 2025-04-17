@@ -54,10 +54,10 @@ export const categories = [
     image: "/images/content-writing.png",
     services: {
       "Main Website Content": [
-        "Home Page", "About Us", "Service Page", "Service Page - Location", "Blog", "FAQ"
+        "Full Website","Home Page", "About Us", "Service Page", "Service Page - Location", "Blog", "FAQ"
       ],
       "Mini/Template Website Content": [
-        "Home Page", "About Us", "Service Page", "Service Page - Location", "Blog", "FAQ"
+        "Full Website","Home Page", "About Us", "Service Page", "Service Page - Location", "Blog", "FAQ"
       ],
       "Social Media Post": [
         "Google My Business", "LinkedIn", "Instagram"

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { MDBContainer, MDBBtn } from "mdb-react-ui-kit";
+import { MDBContainer } from "mdb-react-ui-kit";
 import "./Signup.css";
+import { signupUser } from "../../api/auth"; // ✅ Import
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -9,11 +10,25 @@ export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Signup submitted");
-    navigate('/login')
+  
+    try {
+      console.log("Sending signup data:", { name, email, password });
+      const response = await signupUser({ name, email, password });
+      console.log("Signup success:", response);
+      navigate("/login");
+    } catch (error) {
+      console.error("Signup failed:", error?.response?.data || error.message);
+  
+      alert(
+        error?.response?.data?.message?.[0] || // specific message
+        error?.response?.data?.message ||      // or generic message
+        "Signup failed. Try using a different email." // fallback
+      );
+    }
   };
+  
 
   return (
     <div className="signup-page">

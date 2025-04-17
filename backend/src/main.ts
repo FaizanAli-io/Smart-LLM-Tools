@@ -8,10 +8,14 @@ async function bootstrap() {
   dotenv.config(); // Load .env file
   const app = await NestFactory.create(AppModule);
 
+  // ✅ Enable CORS here
+  app.enableCors({
+    origin: 'http://localhost:5173', // or your deployed frontend
+    credentials: true, // if you use cookies (optional)
+  });
+
   app.useGlobalPipes(new ValidationPipe());
-
   app.setGlobalPrefix('api');
-
   await app.listen(3000);
 }
 bootstrap();
