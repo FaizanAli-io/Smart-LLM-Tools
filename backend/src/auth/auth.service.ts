@@ -25,6 +25,10 @@ export class AuthService {
     private readonly emailsService: EmailsService,
   ) {}
 
+  async listUsers(): Promise<User[]> {
+    return this.userRepo.find();
+  }
+
   async signup(dto: SignupDto) {
     const existing = await this.userRepo.findOne({
       where: { email: dto.email },

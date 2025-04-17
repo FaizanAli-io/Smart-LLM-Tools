@@ -1,19 +1,24 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
+import { User } from '../users/entities/user.entity';
 
 @Entity()
 export class Activity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  username: string;
+  @ManyToOne(() => User)
+  @JoinColumn({ name: 'userId' })
+  user: User;
 
   @Column()
-  action: string;
+  prompt: string;
 
-  @Column()
-  category: string;
-
-  @CreateDateColumn()
-  timestamp: Date;
+  @Column({ type: 'timestamp' })
+  loggedAt: Date;
 }

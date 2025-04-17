@@ -20,10 +20,16 @@ export class AuthController {
     return await this.authService.login(loginDto);
   }
 
+  // @UseGuards(JwtAuthGuard)
+  @Get('all')
+  async listUsers(): Promise<User[]> {
+    return this.authService.listUsers();
+  }
+
   @UseGuards(JwtAuthGuard)
   @Get('profile')
   getProfile(@GetUser() user: User) {
-    return user; // this will return the user info if JWT is valid
+    return user;
   }
 
   @Get('verify-email')

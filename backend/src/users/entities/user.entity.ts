@@ -1,10 +1,17 @@
-// src/users/user.entity.ts
 import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
 } from 'typeorm';
+
+export enum UserRole {
+  FREE = 'FREE',
+  STANDARD = 'STANDARD',
+  PREMIUM = 'PREMIUM',
+  ADMIN = 'ADMIN',
+  BLACKLIST = 'BLACKLIST',
+}
 
 @Entity()
 export class User {
@@ -19,6 +26,9 @@ export class User {
 
   @Column()
   password: string;
+
+  @Column({ type: 'enum', enum: UserRole, default: UserRole.FREE })
+  role: UserRole;
 
   @Column({ default: false })
   isVerified: boolean;

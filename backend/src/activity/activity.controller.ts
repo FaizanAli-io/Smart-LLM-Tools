@@ -1,13 +1,13 @@
 import { Controller, Get, Post, Body } from '@nestjs/common';
 import { ActivityService } from './activity.service';
 
-@Controller('api/activity')
+@Controller('activity')
 export class ActivityController {
   constructor(private readonly activityService: ActivityService) {}
 
   @Post()
-  async log(@Body() body: { username: string, action: string, category: string }) {
-    return this.activityService.logActivity(body.username, body.action, body.category);
+  async log(@Body() body: { userId: number; prompt: string }) {
+    return this.activityService.logActivity(body.userId, body.prompt);
   }
 
   @Get()

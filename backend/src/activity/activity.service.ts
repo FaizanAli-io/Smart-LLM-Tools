@@ -2,22 +2,31 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Activity } from './activity.entity';
+import { User } from '../users/entities/user.entity';
 
 @Injectable()
 export class ActivityService {
   constructor(
     @InjectRepository(Activity)
-    private activityRepo: Repository<Activity>,
+    private readonly activityRepository: Repository<Activity>,
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>,
   ) {}
 
-  async logActivity(username: string, action: string, category: string): Promise<Activity> {
-    const activity = this.activityRepo.create({ username, action, category });
-    return await this.activityRepo.save(activity);
+  async logActivity(userId: number, prompt: string) {
+    const user = await this.userRepository.findOne({ where: { id: userId } });
+    if (!user) {
+      throw new Error('User not found');
+    }
+    const activity = this.activityRepository.create({
+      user,
+      prompt,
+      loggedAt: new Date(),
+    });
+    return this.activityRepository.save(activity);
   }
 
-  async getAllActivities(): Promise<Activity[]> {
-    return this.activityRepo.find({
-      order: { timestamp: 'DESC' },
-    });
+  async getAllActivities() {
+    return this.activityRepository.find({ relations: ['user'] });
   }
 }
