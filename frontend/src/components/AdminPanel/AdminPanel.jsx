@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
+import { getAllActivities } from "../../api/activity"; // adjust path as needed
 import "./AdminPanel.css";
 
 export default function AdminPanel() {
-  // Sample user activity data - in a real app, this would come from an API
   const [userData, setUserData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("dashboard");
   const [searchQuery, setSearchQuery] = useState("");
   
-  // Sample stats for the dashboard cards
+  // Stats for the dashboard cards
   const [stats, setStats] = useState({
     totalUsers: 0,
     activeUsers: 0,
@@ -17,37 +17,61 @@ export default function AdminPanel() {
   });
   
   useEffect(() => {
-    // Simulate API call to fetch user data
-    setTimeout(() => {
-      const mockUserData = [
-        { id: 1, username: "user123", action: "Created prompt", category: "Content Writing", timestamp: "2025-04-18T08:30:00" },
-        { id: 2, username: "designer45", action: "Used service", category: "Design", timestamp: "2025-04-18T09:15:00" },
-        { id: 3, username: "marketer22", action: "Saved template", category: "Marketing", timestamp: "2025-04-18T10:22:00" },
-        { id: 4, username: "coder99", action: "Generated code", category: "Development", timestamp: "2025-04-18T11:05:00" },
-        { id: 5, username: "writer77", action: "Edited prompt", category: "Content Writing", timestamp: "2025-04-17T14:40:00" },
-        { id: 6, username: "analyst5", action: "Downloaded result", category: "Analysis", timestamp: "2025-04-17T16:20:00" },
-        { id: 7, username: "manager33", action: "Shared template", category: "Management", timestamp: "2025-04-17T17:15:00" },
-        { id: 8, username: "student12", action: "Created prompt", category: "Education", timestamp: "2025-04-16T09:30:00" },
-        { id: 9, username: "researcher8", action: "Used service", category: "Research", timestamp: "2025-04-16T11:45:00" },
-        { id: 10, username: "assistant66", action: "Generated response", category: "Customer Support", timestamp: "2025-04-16T13:10:00" }
-      ];
-      
-      setUserData(mockUserData);
-      setStats({
-        totalUsers: 238,
-        activeUsers: 45,
-        totalPrompts: 892,
-        avgSessionTime: 12.5
-      });
-      setIsLoading(false);
-    }, 1000);
+    const fetchActivities = async () => {
+      try {
+        const data = await getAllActivities();
+        setUserData(data);
+        
+        // Calculate dashboard stats from the actual data
+        if (data && data.length > 0) {
+          // Get unique users
+          const uniqueUsers = [...new Set(data.map(item => item.user?.id))].filter(Boolean);
+          
+          // Calculate active users (users with activity in the last 24 hours)
+          const oneDayAgo = new Date();
+          oneDayAgo.setDate(oneDayAgo.getDate() - 1);
+          const recentUsers = [...new Set(
+            data.filter(item => new Date(item.loggedAt) > oneDayAgo)
+              .map(item => item.user?.id)
+          )].filter(Boolean);
+          
+          // Count total prompts
+          const totalPrompts = data.length;
+          
+          // For avg session time, we'd need session data, using placeholder for now
+          // In a real implementation, this would come from session analytics
+          const avgSessionTime = 10.5;
+          
+          setStats({
+            totalUsers: uniqueUsers.length,
+            activeUsers: recentUsers.length,
+            totalPrompts: totalPrompts,
+            avgSessionTime: avgSessionTime
+          });
+        }
+      } catch (err) {
+        console.error('Error fetching activity data:', err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    
+    fetchActivities();
   }, []);
   
+  // Format the API data to match our display format
+  // Based on your Activity entity, we only have id, user, prompt, and loggedAt
+  const formattedUserData = userData.map((activity, index) => ({
+    id: activity.id || index,
+    username: activity.user?.username || 'Unknown User',
+    timestamp: activity.loggedAt || new Date().toISOString(),
+    prompt: activity.prompt || ''
+  }));
+  
   // Filter user data based on search query
-  const filteredUserData = userData.filter(user => 
+  const filteredUserData = formattedUserData.filter(user => 
     user.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    user.action.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    user.category.toLowerCase().includes(searchQuery.toLowerCase())
+    user.prompt?.toLowerCase().includes(searchQuery.toLowerCase())
   );
   
   // Format date for display
@@ -149,22 +173,26 @@ export default function AdminPanel() {
             
             <div className="recent-activity-container">
               <h2 className="section-title">Recent Activity</h2>
-              <div className="recent-activity-list">
-                {userData.slice(0, 5).map((user) => (
-                  <div key={user.id} className="activity-item">
-                    <div className="activity-icon">
-                      <span>{user.username.charAt(0).toUpperCase()}</span>
+              {isLoading ? (
+                <div className="loading-spinner">Loading...</div>
+              ) : (
+                <div className="recent-activity-list">
+                  {formattedUserData.slice(0, 5).map((user) => (
+                    <div key={user.id} className="activity-item">
+                      <div className="activity-icon">
+                        <span>{user.username.charAt(0).toUpperCase()}</span>
+                      </div>
+                      <div className="activity-details">
+                        <h4 className="activity-user">{user.username}</h4>
+                        <p className="activity-action">{user.prompt}</p>
+                      </div>
+                      <div className="activity-time">
+                        {formatDate(user.timestamp)}
+                      </div>
                     </div>
-                    <div className="activity-details">
-                      <h4 className="activity-user">{user.username}</h4>
-                      <p className="activity-action">{user.action} in {user.category}</p>
-                    </div>
-                    <div className="activity-time">
-                      {formatDate(user.timestamp)}
-                    </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         )}
@@ -177,7 +205,7 @@ export default function AdminPanel() {
                 <input 
                   type="text"
                   className="admin-search-input"
-                  placeholder="Search users, actions, or categories..."
+                  placeholder="Search users or prompts..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
@@ -195,8 +223,7 @@ export default function AdminPanel() {
                   <thead>
                     <tr>
                       <th>User</th>
-                      <th>Action</th>
-                      <th>Category</th>
+                      <th>Prompt</th>
                       <th>Date & Time</th>
                     </tr>
                   </thead>
@@ -204,8 +231,7 @@ export default function AdminPanel() {
                     {filteredUserData.map(user => (
                       <tr key={user.id}>
                         <td>{user.username}</td>
-                        <td>{user.action}</td>
-                        <td>{user.category}</td>
+                        <td>{user.prompt}</td>
                         <td>{formatDate(user.timestamp)}</td>
                       </tr>
                     ))}

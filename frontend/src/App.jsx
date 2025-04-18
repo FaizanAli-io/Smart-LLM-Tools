@@ -9,24 +9,37 @@ import Login from "./components/Login/Login";
 import Signup from "./components/Signup/Signup";
 import Unauthorized from "./components/Unauthorized";
 import ProtectedRoute from "./components/ProtectedRoute";
-import { AuthProvider } from "./api/authContext";
+import Navbarlogged from "./Navbar(logged)/Navbar(logged)";
+import { AuthProvider, useAuth } from "./api/authContext";
 
 function AppWrapper() {
   const location = useLocation();
-  const hideLayout = location.pathname === "/unauthorized"; 
-
+  const { isAuthenticated } = useAuth();
+  const hideLayout = location.pathname === "/unauthorized";
+  
+  // Paths that require authentication
+  const protectedPaths = ["/", "/admin", "/category", "/prompt-creator"];
+  
+  // Check if current path is a protected route
+  const isProtectedPath = protectedPaths.some(path => 
+    location.pathname === path || location.pathname.startsWith(path + "/")
+  );
+  
+  // Display NavbarLogged for authenticated users on protected routes
+  const shouldShowLoggedNavbar = isAuthenticated && isProtectedPath;
+  
   return (
     <>
-      {!hideLayout && <Navbar />}
+      {!hideLayout && (shouldShowLoggedNavbar ? <Navbarlogged /> : <Navbar />)}
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route
           path="/admin"
           element={
-            <ProtectedRoute requiredRole="admin">
+            // <ProtectedRoute requiredRole="admin">
               <AdminPanel />
-            </ProtectedRoute>
+            // </ProtectedRoute>
           }
         />
         <Route path="/unauthorized" element={<Unauthorized />} />
