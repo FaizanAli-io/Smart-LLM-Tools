@@ -10,6 +10,7 @@ import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 
 import { User } from 'src/users/entities/user.entity';
+import { UserRole } from 'src/users/entities/user.entity';
 import { SignupDto } from './dto/signup.dto';
 import { LoginDto } from './dto/login.dto';
 import { JwtPayload } from './interfaces/jwt-payload.interface';
@@ -41,6 +42,7 @@ export class AuthService {
       name: dto.name,
       email: dto.email,
       password: hashed,
+      role: dto.role ?? UserRole.FREE,
     });
 
     await this.userRepo.save(user);
@@ -74,7 +76,7 @@ export class AuthService {
 
     const payload: JwtPayload = { sub: user.id, email: user.email };
     const accessToken = this.jwtService.sign(payload);
-    return { access_token: accessToken };
+    return { token: accessToken }; // ✅ consistent with frontend
   }
 
   private async validateUser(dto: LoginDto): Promise<User | null> {

@@ -5,7 +5,10 @@ import {
   Matches,
   MaxLength,
   MinLength,
+  IsOptional,
+   IsEnum
 } from 'class-validator';
+import { UserRole } from '../../users/entities/user.entity';
 
 export class SignupDto {
   @IsNotEmpty()
@@ -18,4 +21,8 @@ export class SignupDto {
   @MaxLength(20)
   @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/)
   password: string;
+
+  @IsOptional()
+  @IsEnum(UserRole)
+  role?: UserRole;
 }
