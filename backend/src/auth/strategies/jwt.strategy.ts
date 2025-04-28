@@ -13,7 +13,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       secretOrKey: configService.getOrThrow<string>('ACCESS_TOKEN_SECRET_KEY'),
     });
   }
-
+a
   async validate(payload: JwtPayload) {
     return { userId: payload.sub, email: payload.email };
   }

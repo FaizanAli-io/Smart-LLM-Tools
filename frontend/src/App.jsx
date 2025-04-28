@@ -9,7 +9,7 @@ import Login from "./components/Login/Login";
 import Signup from "./components/Signup/Signup";
 import Unauthorized from "./components/Unauthorized";
 import ProtectedRoute from "./components/ProtectedRoute";
-import Navbarlogged from "./Navbar(logged)/Navbar(logged)";
+import Navbarlogged from "./components/Navbar(logged)/Navbar(logged)";
 import { AuthProvider, useAuth } from "./api/authContext";
 
 function AppWrapper() {

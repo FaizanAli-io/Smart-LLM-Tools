@@ -7,6 +7,7 @@ import {
   MDBBtn
 } from 'mdb-react-ui-kit';
 import './Navbar.css';
+import logo from "../../assets/smart-llm-logo.png";
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -17,8 +18,8 @@ export default function Navbar() {
         {/* Logo */}
         <MDBNavbarBrand href='/'>
           <img
-            src='https://mdbootstrap.com/img/logo/mdb-transaprent-noshadows.webp'
-            height='30'
+            src={logo}
+            height='50'
             alt='Logo'
             loading='lazy'
           />
