@@ -46,25 +46,25 @@ function AppWrapper() {
         <Route
           path="/"
           element={
-            <ProtectedRoute>
+           // <ProtectedRoute>
               <Home />
-            </ProtectedRoute>
+            //</ProtectedRoute>
           }
         />
         <Route
           path="/category/:categoryId"
           element={
-            <ProtectedRoute>
+            // <ProtectedRoute>
               <CategoryPage />
-            </ProtectedRoute>
+            // </ProtectedRoute>
           }
         />
         <Route
           path="/prompt-creator/:categoryId/:serviceId"
           element={
-            <ProtectedRoute>
+            // <ProtectedRoute>
               <PromptCreator />
-            </ProtectedRoute>
+            // </ProtectedRoute>
           }
         />
       </Routes>
