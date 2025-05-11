@@ -120,3 +120,138 @@
   }
   
   
+/* Input Label Styling */
+.input-label {
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #495057;
+}
+
+/* Input Field Styling */
+.custom-input {
+  width: 100%;
+  border: 1.5px solid #ced4da;
+  border-radius: 12px;
+  padding: 14px 16px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  margin-bottom: 16px;
+}
+
+.custom-input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 10px rgba(0, 123, 255, 0.2);
+}
+
+/* Improve the textarea spacing */
+.custom-textarea {
+  margin-bottom: 16px;
+}
+
+/* Output Section Enhancements */
+.output-section {
+  margin-top: 40px;
+  background: #f8f9fa;
+  border: 2px solid #dee2e6;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.output-heading {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #343a40;
+}
+
+.output-box {
+  background: #ffffff;
+  border: 1.5px solid #ced4da;
+  border-radius: 12px;
+  padding: 20px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.output-box pre {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-family: 'Courier New', monospace;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #343a40;
+}
+
+/* Form Field Animation */
+.relative {
+  position: relative;
+  transition: transform 0.2s ease;
+}
+
+.relative:focus-within {
+  transform: translateY(-2px);
+}
+
+/* Error Message Styling */
+.no-template-message {
+  padding: 20px;
+  background: #f8d7da;
+  border: 1px solid #f5c6cb;
+  border-radius: 12px;
+  color: #721c24;
+  text-align: center;
+  font-size: 18px;
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+  .prompt-creator-page {
+    padding: 15px;
+    margin: 20px auto;
+  }
+  
+  .form-container {
+    padding: 20px;
+  }
+  
+  .page-title {
+    font-size: 28px;
+  }
+  
+  .page-subtitle {
+    font-size: 18px;
+  }
+  
+  .generate-btn {
+    width: 100%;
+    padding: 12px;
+  }
+}
+
+/* Enhance Breadcrumb */
+.breadcrumb {
+  margin-bottom: 24px;
+  background: rgba(248, 249, 250, 0.7);
+  padding: 10px 15px;
+  border-radius: 30px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+}
+
+.current-page {
+  font-weight: 600;
+  color: #343a40;
+}
+
+/* Animation for newly generated output */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.output-section {
+  animation: fadeIn 0.5s ease-out;
+}
