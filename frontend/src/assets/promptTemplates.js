@@ -433,5 +433,178 @@ export const promptTemplates = {
   }
 }
     
-}
+},
+"marketing-seo": {
+  "Competitor List": {
+    description: "See who you're up against. Generate a tailored list of local or industry-specific competitors in seconds.",
+    inputs: [
+      { name: "businessName", label: "Your Business Name", type: "text" },
+      { name: "businessType", label: "Business Type / Industry", type: "text", placeholder: "e.g., Roofing, Digital Marketing, Fire Safety Consultancy" },
+      { name: "location", label: "Location / Catchment Area", type: "text", placeholder: "e.g., East London, UK-wide, 15-mile radius around Manchester" },
+      { name: "service1", label: "Main Service / Offering 1", type: "text" },
+      { name: "service2", label: "Main Service / Offering 2", type: "text" },
+      { name: "service3", label: "Main Service / Offering 3", type: "text" },
+      { name: "filters", label: "Optional Filters", type: "text", placeholder: "e.g., Only top-rated, Only within 10 miles, Exclude national chains", optional: true }
+    ],
+    prompt: ({ businessName, businessType, location, service1, service2, service3, filters }) =>
+      `Based on the business details below, generate a list of relevant competitors. Focus on businesses offering similar services in the same target area. Include their names, websites (if available), and a brief note on what they do or how they compare.\n\nBusiness Name: ${businessName}\nBusiness Type: ${businessType}\nLocation / Catchment Area: ${location}\nMain Services / Offerings: ${service1}, ${service2}, ${service3}\n${filters ? `Optional Filters: ${filters}` : ""}`
+  },
+
+  "Keywords Generator": {
+    description: "Find the right words. Get high-impact keywords tailored to your services and location.",
+    inputs: [
+      { name: "businessName", label: "Business Name", type: "text", placeholder: "Insert company name", optional: true },
+      { name: "businessType", label: "Business Type / Industry", type: "text", placeholder: "e.g., Electrician, Probate Solicitor, Digital Marketing Agency" },
+      { name: "service1", label: "Target Service or Product 1", type: "text" },
+      { name: "service2", label: "Target Service or Product 2", type: "text" },
+      { name: "service3", label: "Target Service or Product 3", type: "text" },
+      { name: "location", label: "Target Location / Area", type: "text", placeholder: "e.g., London, Birmingham, UK-wide" },
+      { name: "goal", label: "Primary Goal", type: "text", placeholder: "e.g., Improve SEO, Run Google Ads, Rank locally" },
+      { name: "notes", label: "Optional Notes", type: "text", placeholder: "e.g., Avoid branded terms / Focus on commercial intent", optional: true }
+    ],
+    prompt: ({ businessName, businessType, service1, service2, service3, location, goal, notes }) =>
+      `Generate a list of relevant keywords based on the business details below. Include a mix of high-intent, local, and long-tail keywords where appropriate. Prioritise terms that are likely to attract targeted traffic or leads.\n\n${businessName ? `Business Name: ${businessName}\n` : ""}Business Type: ${businessType}\nTarget Services or Products: ${service1}, ${service2}, ${service3}\nTarget Location / Area: ${location}\nPrimary Goal: ${goal}\n${notes ? `Additional Notes: ${notes}` : ""}`
+  },
+
+  "Related Business Categories": {
+    description: "Explore smart add-ons. Discover industries and services that naturally connect with your business.",
+    inputs: [
+      { name: "businessName", label: "Business Name", type: "text", placeholder: "Insert your company name", optional: true },
+      { name: "businessType", label: "Primary Industry or Business Type", type: "text", placeholder: "e.g., Fire Safety, Web Design, Landscaping" },
+      { name: "service1", label: "Core Service / Offering 1", type: "text" },
+      { name: "service2", label: "Core Service / Offering 2", type: "text" },
+      { name: "service3", label: "Core Service / Offering 3", type: "text" },
+      { name: "targetMarket", label: "Target Market / Clients", type: "text", placeholder: "e.g., Landlords, SMEs, Local homeowners" },
+      { name: "purpose", label: "Purpose of the Category Suggestions", type: "text", placeholder: "e.g., Business expansion, Cross-marketing, Lead partnerships" }
+    ],
+    prompt: ({ businessName, businessType, service1, service2, service3, targetMarket, purpose }) =>
+      `Based on the business information provided, generate a list of related or complementary business categories. Include options that could lead to strategic growth, service expansion, or local partnerships.\n\n${businessName ? `Business Name: ${businessName}\n` : ""}Primary Industry: ${businessType}\nCore Services / Offerings: ${service1}, ${service2}, ${service3}\nTarget Market / Clients: ${targetMarket}\nPurpose of Suggestions: ${purpose}`
+  }
+},
+"social-media-posts":{
+ "Google My Business": {
+    description: "Stay active and local. Create a post for your Google profile that attracts attention — and action.",
+    inputs: [
+      { name: "businessName", label: "Business Name", type: "text" },
+      { name: "businessType", label: "Type of Business / Industry", type: "text", placeholder: "e.g., Fire Risk Assessments, Beauty Salon, Law Firm" },
+      { name: "postType", label: "Post Type", type: "text", placeholder: "e.g., Announcement, Special Offer, Service Highlight, Event, Seasonal Message" },
+      { name: "mainMessage", label: "Main Message or Topic", type: "text", placeholder: "e.g., Now offering weekend appointments / 10% off this month / Meet our team" },
+      { name: "targetLocation", label: "Target Location / Audience", type: "text", placeholder: "e.g., Croydon, East London, Local homeowners" },
+      { name: "callToAction", label: "Preferred Call to Action", type: "text", placeholder: "e.g., Call now, Learn more, Book today" },
+      { name: "tone", label: "Tone (optional)", type: "text", placeholder: "e.g., Friendly, Professional, Energetic" },
+      { name: "numberOfPosts", label: "Number of Posts to Generate", type: "select", options: ["1", "5", "10", "15", "30", "50"] }
+    ],
+    prompt: ({ businessName, businessType, postType, mainMessage, targetLocation, callToAction, tone, numberOfPosts }) =>
+      `Create ${numberOfPosts} compelling Google Business Profile ${numberOfPosts > 1 ? 'posts' : 'post'} for the business below. Make ${numberOfPosts > 1 ? 'them' : 'it'} engaging, relevant to the audience, and optimised to encourage clicks, calls, or bookings. Include a clear call to action.\n\nBusiness Name: ${businessName}\nBusiness Type: ${businessType}\nPost Type: ${postType}\nMain Message: ${mainMessage}\nTarget Location/Audience: ${targetLocation}\nCall to Action: ${callToAction}${tone ? `\nTone: ${tone}` : ''}`
+  },
+  
+  "LinkedIn": {
+    description: "Build your presence. Create professional LinkedIn posts to grow your brand and spark engagement.",
+    inputs: [
+      { name: "businessName", label: "Business Name", type: "text" },
+      { name: "industry", label: "Industry / Sector", type: "text", placeholder: "e.g., Fire Engineering, Marketing, Software, Legal" },
+      { name: "targetAudience", label: "Target Audience", type: "text", placeholder: "e.g., Property professionals, SME owners, HR managers" },
+      { name: "keyMessage1", label: "Key Message/Theme 1 (optional)", type: "text", placeholder: "e.g., Industry tips, Business milestones" },
+      { name: "keyMessage2", label: "Key Message/Theme 2 (optional)", type: "text", placeholder: "e.g., Case studies, Recruitment" },
+      { name: "keyMessage3", label: "Key Message/Theme 3 (optional)", type: "text", placeholder: "e.g., Partnerships, Product launches" },
+      { name: "tonePreference", label: "Tone Preference", type: "text", placeholder: "e.g., Professional, Insightful, Conversational, Thought-leadership" },
+      { name: "ctaStyle", label: "Call to Action Style (optional)", type: "text", placeholder: "e.g., Invite comments, Link to service, Encourage contact" },
+      { name: "numberOfPosts", label: "Number of Posts to Generate", type: "select", options: ["1", "5", "10", "15", "30", "50"] }
+    ],
+    prompt: ({ businessName, industry, targetAudience, keyMessage1, keyMessage2, keyMessage3, tonePreference, ctaStyle, numberOfPosts }) => {
+      const keyMessages = [keyMessage1, keyMessage2, keyMessage3].filter(msg => msg).join(", ");
+      return `Create ${numberOfPosts} LinkedIn ${numberOfPosts > 1 ? 'posts' : 'post'} for the business below. ${numberOfPosts > 1 ? 'Posts' : 'The post'} should be professional, thought-provoking, and relevant to the business's industry or audience. ${numberOfPosts > 1 ? 'Vary content types (e.g., insights, announcements, tips, team highlights)' : ''}, and include light calls to action when appropriate.\n\nBusiness Name: ${businessName}\nIndustry/Sector: ${industry}\nTarget Audience: ${targetAudience}${keyMessages ? `\nKey Messages/Themes: ${keyMessages}` : ''}\nTone Preference: ${tonePreference}${ctaStyle ? `\nCall to Action Style: ${ctaStyle}` : ''}`;
+    }
+  },
+  
+  "Instagram": {
+    description: "Look good, sound great. Get Instagram-ready captions to boost your brand and engagement.",
+    inputs: [
+      { name: "businessName", label: "Business Name", type: "text" },
+      { name: "businessType", label: "Business Type / Industry", type: "text", placeholder: "e.g., Skincare Clinic, Gym, Coffee Shop, Tradesperson" },
+      { name: "targetAudience", label: "Target Audience", type: "text", placeholder: "e.g., Local customers, Millennials, Business owners" },
+      { name: "theme1", label: "Post Theme 1 (optional)", type: "text", placeholder: "e.g., Promotions, Tips" },
+      { name: "theme2", label: "Post Theme 2 (optional)", type: "text", placeholder: "e.g., Team features, Product highlights" },
+      { name: "theme3", label: "Post Theme 3 (optional)", type: "text", placeholder: "e.g., Client feedback, Behind the scenes" },
+      { name: "tonePreference", label: "Tone Preference", type: "text", placeholder: "e.g., Friendly, Fun, Trendy, Minimalist, Community-focused" },
+      { name: "hashtags", label: "Hashtags to Include (optional)", type: "text", placeholder: "e.g., #LondonCafes, #GlowUpTips, #HomeSafety" },
+      { name: "ctaStyle", label: "Call to Action Style (optional)", type: "text", placeholder: "e.g., Book now, Tag a friend, DM us, Visit the link in bio" },
+      { name: "numberOfPosts", label: "Number of Posts to Generate", type: "select", options: ["1", "5", "10", "15", "30", "50"] }
+    ],
+    prompt: ({ businessName, businessType, targetAudience, theme1, theme2, theme3, tonePreference, hashtags, ctaStyle, numberOfPosts }) => {
+      const themes = [theme1, theme2, theme3].filter(theme => theme).join(", ");
+      return `Create ${numberOfPosts} Instagram ${numberOfPosts > 1 ? 'captions' : 'caption'} for the business below. ${numberOfPosts > 1 ? 'Captions' : 'The caption'} should be engaging, visually descriptive, and relevant to the business's industry or audience. ${numberOfPosts > 1 ? 'Vary content types' : ''} and include appropriate calls to action.\n\nBusiness Name: ${businessName}\nBusiness Type/Industry: ${businessType}\nTarget Audience: ${targetAudience}${themes ? `\nPost Themes: ${themes}` : ''}\nTone Preference: ${tonePreference}${hashtags ? `\nHashtags to Include: ${hashtags}` : ''}${ctaStyle ? `\nCall to Action Style: ${ctaStyle}` : ''}`;
+    }
+  }
+},
+"other":{
+    "Video Script": {
+    description: "Script it like a pro. Create a clear, engaging video script tailored to your brand, audience, and message.",
+    inputs: [
+      { name: "businessName", label: "Business Name", type: "text" },
+      { name: "videoPurpose", label: "Video Purpose", type: "text", placeholder: "e.g., Promo, Explainer, Testimonial, Social Ad, Event teaser" },
+      { name: "targetAudience", label: "Target Audience", type: "text", placeholder: "e.g., Homeowners, Business clients, Local community" },
+      { name: "mainMessage", label: "Main Message / Focus", type: "text", placeholder: "e.g., Why choose us?, How our service works, Limited-time offer" },
+      { name: "platform", label: "Platform (optional)", type: "text", placeholder: "e.g., Instagram, YouTube, Website, TikTok" },
+      { name: "tonePreference", label: "Tone Preference", type: "text", placeholder: "e.g., Friendly, Direct, Professional, Inspiring" },
+      { name: "callToAction", label: "Call to Action", type: "text", placeholder: "e.g., Book now, Call us, Visit our website" },
+      { name: "preferredLength", label: "Preferred Length (optional)", type: "text", placeholder: "e.g., 30 seconds, 60–90 seconds, 2 minutes" }
+    ],
+    prompt: ({ businessName, videoPurpose, targetAudience, mainMessage, platform, tonePreference, callToAction, preferredLength }) =>
+      `Write a clear, engaging video script for the business below. The script should match the video's goal and audience, include a strong hook, explain the core message, and end with a clear call to action. Keep the tone and length appropriate for the platform.\n\nBusiness Name: ${businessName}\nVideo Purpose: ${videoPurpose}\nTarget Audience: ${targetAudience}\nMain Message/Focus: ${mainMessage}${platform ? `\nPlatform: ${platform}` : ''}\nTone Preference: ${tonePreference}\nCall to Action: ${callToAction}${preferredLength ? `\nPreferred Length: ${preferredLength}` : ''}`
+  },
+  
+  "Review Response": {
+    description: "Reply with care. Generate polite, thoughtful responses to customer reviews — good or bad.",
+    inputs: [
+      { name: "customerReview", label: "Customer Review", type: "textarea" },
+      { name: "reviewSentiment", label: "Review Sentiment", type: "select", options: ["Positive", "Neutral", "Negative"] },
+      { name: "businessName", label: "Business Name", type: "text" },
+      { name: "optionalDetails", label: "Optional Details to Mention (if any)", type: "text", placeholder: "e.g., Specific service, Team member name, Booking date" },
+      { name: "tonePreference", label: "Tone Preference (optional)", type: "text", placeholder: "e.g., Friendly, Formal, Sincere, Reassuring" }
+    ],
+    prompt: ({ customerReview, reviewSentiment, businessName, optionalDetails, tonePreference }) =>
+      `Write a professional, personalised response to the customer review below. Match the tone of the review (${reviewSentiment.toLowerCase()}) and reflect the brand's values. Be polite, concise, and include a thank-you or resolution where appropriate.\n\nCustomer Review: "${customerReview}"\nBusiness Name: ${businessName}${optionalDetails ? `\nDetails to Mention: ${optionalDetails}` : ''}${tonePreference ? `\nTone Preference: ${tonePreference}` : ''}`
+  },
+  
+  "Review Generator": {
+    description: "Showcase great feedback. Create realistic, positive reviews to promote your business or prepare examples.",
+    inputs: [
+      { name: "businessName", label: "Business Name", type: "text" },
+      { name: "businessType", label: "Type of Business / Industry", type: "text", placeholder: "e.g., Electrician, Solicitor, Restaurant, Fitness Coach" },
+      { name: "serviceUsed", label: "Service or Product Used", type: "text", placeholder: "e.g., Fire risk assessment, Logo design, Facial treatment" },
+      { name: "highlight1", label: "Customer Experience Highlight 1", type: "text", placeholder: "e.g., Friendly staff, Fast service" },
+      { name: "highlight2", label: "Customer Experience Highlight 2 (optional)", type: "text", placeholder: "e.g., Great value, Clean location" },
+      { name: "highlight3", label: "Customer Experience Highlight 3 (optional)", type: "text", placeholder: "e.g., Professional approach, Knowledgeable team" },
+      { name: "starRating", label: "Star Rating", type: "select", options: ["5 stars", "4 stars", "4.5 stars"] },
+      { name: "numberOfReviews", label: "Number of Reviews to Generate", type: "select", options: ["1", "5", "10", "15", "30"] },
+      { name: "tonePreference", label: "Tone Preference (optional)", type: "text", placeholder: "e.g., Friendly, Professional, Excited, Sincere" }
+    ],
+    prompt: ({ businessName, businessType, serviceUsed, highlight1, highlight2, highlight3, starRating, numberOfReviews, tonePreference }) => {
+      const highlights = [highlight1, highlight2, highlight3].filter(h => h).join(", ");
+      return `Write ${numberOfReviews} realistic, positive customer ${numberOfReviews > 1 ? 'reviews' : 'review'} based on the details provided below. Make ${numberOfReviews > 1 ? 'them' : 'it'} sound natural and specific, highlighting the business's strengths, service quality, or customer experience. ${numberOfReviews > 1 ? 'Vary the tone slightly between reviews.' : ''}\n\nBusiness Name: ${businessName}\nBusiness Type: ${businessType}\nService/Product Used: ${serviceUsed}\nCustomer Experience Highlights: ${highlights}\nStar Rating: ${starRating}${tonePreference ? `\nTone Preference: ${tonePreference}` : ''}`;
+    }
+  },
+  
+  "Privacy & Terms Generator": {
+    description: "Stay compliant with ease. Generate tailored privacy policies and terms for your website or online business.",
+    inputs: [
+      { name: "businessName", label: "Business Name", type: "text" },
+      { name: "businessType", label: "Business Type / Industry", type: "text", placeholder: "e.g., E-commerce, Consultancy, SaaS, Tradesperson" },
+      { name: "websiteURL", label: "Website URL", type: "text" },
+      { name: "targetCustomers", label: "Target Customers", type: "text", placeholder: "e.g., UK consumers, EU residents, B2B clients, US users" },
+      { name: "service1", label: "Service/Product 1", type: "text" },
+      { name: "service2", label: "Service/Product 2 (optional)", type: "text" },
+      { name: "service3", label: "Service/Product 3 (optional)", type: "text" },
+      { name: "collectUserData", label: "Does the website collect any user data?", type: "text", placeholder: "e.g., Yes – contact forms, analytics, cookies" },
+      { name: "optionalAdditions", label: "Optional Additions (if applicable)", type: "text", placeholder: "e.g., Returns policy, User accounts, Subscription terms, Age restrictions" },
+      { name: "preferredFormat", label: "Preferred Format", type: "select", options: ["Combined document", "Separate policies"] }
+    ],
+    prompt: ({ businessName, businessType, websiteURL, targetCustomers, service1, service2, service3, collectUserData, optionalAdditions, preferredFormat }) => {
+      const services = [service1, service2, service3].filter(s => s).join(", ");
+      return `Create tailored Privacy Policy and Terms & Conditions documents for the business below. Ensure the content is GDPR-compliant (if applicable), clearly written, and suitable for a public-facing website. Avoid legal jargon where possible and cover standard clauses relevant to the business type.\n\nBusiness Name: ${businessName}\nBusiness Type: ${businessType}\nWebsite URL: ${websiteURL}\nTarget Customers: ${targetCustomers}\nServices/Products Offered: ${services}\nUser Data Collection: ${collectUserData}${optionalAdditions ? `\nOptional Additions: ${optionalAdditions}` : ''}\nPreferred Format: ${preferredFormat}`;
+    }
+  }
+},
+
 };

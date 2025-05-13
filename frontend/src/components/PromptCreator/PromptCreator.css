@@ -246,12 +246,19 @@
   color: #343a40;
 }
 
-/* Animation for newly generated output */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+
 
 .output-section {
-  animation: fadeIn 0.5s ease-out;
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 15px;
+  padding: 20px;
+  margin-top: 20px;
+  font-size: 1rem;
+  color: #333;
+}
+
+.output-box {
+  margin-top: 10px;
+  white-space: pre-wrap;
 }

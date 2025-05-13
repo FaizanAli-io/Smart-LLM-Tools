@@ -47,25 +47,38 @@ export const categories = [
         "Related Business Categories"
       ]
     },
- {
-    id: "content-writing",
-    name: "Content Writing",
-    description: "Generate high-quality content effortlessly with AI assistance.",
-    image: "/images/content-writing.png",
-    services: {
-      "Main Website Content": [
-        "Full Website","Home Page", "About Us", "Service Page", "Service Page - Location", "Blog", "FAQ"
-      ],
-      "Mini/Template Website Content": [
-        "Full Website","Home Page", "About Us", "Service Page", "Service Page - Location", "Blog", "FAQ"
-      ],
-      "Social Media Post": [
-        "Google My Business", "LinkedIn", "Instagram"
-      ],
-      "Other": [
+    {
+      id: "content-writing",
+      name: "Content Writing",
+      description: "Generate high-quality content effortlessly with AI assistance.",
+      image: "/images/content-writing.png",
+      services: {
+        "Main Website Content": [
+          "Full Website", "Home Page", "About Us", "Service Page", "Service Page - Location", "Blog", "FAQ"
+        ],
+        "Mini/Template Website Content": [
+          "Full Website", "Home Page", "About Us", "Service Page", "Service Page - Location", "Blog", "FAQ"
+        ]
+      }
+    },
+    {
+      id: "social-media-posts",
+      name: "Social Media Posts",
+      description: "Create engaging social media content with AI-powered assistance.",
+      image: "/images/social-media.png",
+      services: [
+        "Google My Business",
+        "LinkedIn",
+        "Instagram"
+      ]
+    },
+    {
+      id: "other",
+      name: "Other",
+      description: "Various AI-powered content creation tools to boost your productivity.",
+      image: "/images/other-content.png",
+      services: [
         "Video Script", "Review Response", "Review Generator", "Privacy & Terms Generator"
       ]
     }
-  }
   ];
-  

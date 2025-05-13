@@ -2,25 +2,27 @@ import React, { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { categories } from "../../assets/categories";
 import { promptTemplates } from "../../assets/promptTemplates";
+import { generateFromPrompt } from "../../api/gptt";
 import "./PromptCreator.css";
+
 
 export default function PromptCreator() {
   const { categoryId, serviceId } = useParams();
   const category = categories.find((cat) => cat.id === categoryId);
   const categoryName = category ? category.name : "Unknown Category";
   const formattedServiceName = serviceId ? serviceId.replace(/-/g, " ") : "";
-  
+
   // Normalize the service name to match the format in the URL
   const normalize = (str) => str.toLowerCase().replace(/\s+/g, "-");
-  
+
   // Find the service key in the promptTemplates object
   const serviceKey = Object.keys(promptTemplates[categoryId] || {}).find(
     (key) => normalize(key) === normalize(serviceId)
   );
-  
+
   // Get the template for the selected service
   const template = promptTemplates[categoryId]?.[serviceKey];
-  
+
   // Initialize state for input fields based on the template inputs
   const [inputs, setInputs] = useState(() =>
     template?.inputs?.reduce((acc, field) => {
@@ -28,23 +30,39 @@ export default function PromptCreator() {
       return acc;
     }, {}) || {}
   );
-  
+
   const [output, setOutput] = useState("");
-  
+
   const handleChange = (e, name) => {
     setInputs({ ...inputs, [name]: e.target.value });
   };
-  
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!template || !template.prompt) return;
-    
-    // Use the template's prompt function with the current inputs
-    const generatedPrompt = template.prompt(inputs);
-    setOutput(generatedPrompt);
-    // Later: Send `generatedPrompt` to backend via axios
-  };
-  
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  if (!template || !template.prompt) return;
+
+  const generatedPrompt = template.prompt(inputs);
+  setOutput("Generating..."); // temporary feedback
+
+  try {
+    const res = await generateFromPrompt(generatedPrompt);
+    setOutput(res?.response || "No response received.");
+  } catch (err) {
+    console.error("Error generating content:", err);
+    setOutput("Something went wrong. Try again.");
+  }
+};
+
+  if (!template) {
+  return (
+    <div className="prompt-creator-page">
+      <h2 style={{ textAlign: "center", marginTop: "4rem" }}>
+        This service does not have a prompt template yet.
+      </h2>
+    </div>
+  );
+}
+
   return (
     <div className="prompt-creator-page">
       {/* Breadcrumb Navigation */}
@@ -55,11 +73,11 @@ export default function PromptCreator() {
         <div className="separator">/</div>
         <span className="current-page">{formattedServiceName}</span>
       </div>
-      
+
       {/* Page Titles */}
       <h1 className="page-title">{formattedServiceName}</h1>
       <h2 className="page-subtitle">{template?.description || "Craft AI content for this service."}</h2>
-      
+
       {/* Form Section */}
       <div className="form-container">
         {template ? (
@@ -94,7 +112,7 @@ export default function PromptCreator() {
           <p className="no-template-message">This service does not yet have a prompt template.</p>
         )}
       </div>
-      
+
       {/* Generated Output */}
       {output && (
         <div className="output-section">
