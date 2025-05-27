@@ -1,176 +1,164 @@
-import React, { useState, useEffect } from "react";
-import { getAllActivities } from "../../api/activity"; // adjust path as needed
 import "./AdminPanel.css";
+import { useState, useEffect } from "react";
+import { getAllActivities } from "../../api/activity";
+import { listUsers, updateRole } from "../../api/auth";
 
 export default function AdminPanel() {
   const [userData, setUserData] = useState([]);
+  const [userList, setUserList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("dashboard");
   const [searchQuery, setSearchQuery] = useState("");
-  
-  // Stats for the dashboard cards
+  const [roleUpdates, setRoleUpdates] = useState({});
   const [stats, setStats] = useState({
     totalUsers: 0,
     activeUsers: 0,
     totalPrompts: 0,
     avgSessionTime: 0
   });
-  
+
   useEffect(() => {
     const fetchActivities = async () => {
       try {
         const data = await getAllActivities();
         setUserData(data);
-        
-        // Calculate dashboard stats from the actual data
-        if (data && data.length > 0) {
-          // Get unique users
-          const uniqueUsers = [...new Set(data.map(item => item.user?.id))].filter(Boolean);
-          
-          // Calculate active users (users with activity in the last 24 hours)
+
+        if (data?.length) {
+          const uniqueUserIds = [...new Set(data.map((item) => item.user?.id))].filter(Boolean);
+
           const oneDayAgo = new Date();
           oneDayAgo.setDate(oneDayAgo.getDate() - 1);
-          const recentUsers = [...new Set(
-            data.filter(item => new Date(item.loggedAt) > oneDayAgo)
-              .map(item => item.user?.id)
-          )].filter(Boolean);
-          
-          // Count total prompts
-          const totalPrompts = data.length;
-          
-          // For avg session time, we'd need session data, using placeholder for now
-          // In a real implementation, this would come from session analytics
-          const avgSessionTime = 10.5;
-          
+
+          const recentUserIds = [
+            ...new Set(
+              data
+                .filter((item) => new Date(item.loggedAt) > oneDayAgo)
+                .map((item) => item.user?.id)
+            )
+          ].filter(Boolean);
+
           setStats({
-            totalUsers: uniqueUsers.length,
-            activeUsers: recentUsers.length,
-            totalPrompts: totalPrompts,
-            avgSessionTime: avgSessionTime
+            totalUsers: uniqueUserIds.length,
+            activeUsers: recentUserIds.length,
+            totalPrompts: data.length,
+            avgSessionTime: 10.5
           });
         }
       } catch (err) {
-        console.error('Error fetching activity data:', err);
+        console.error("Error fetching activity data:", err);
       } finally {
         setIsLoading(false);
       }
     };
-    
+
+    const fetchUsers = async () => {
+      try {
+        const users = await listUsers();
+        const nonAdmins = users.filter((user) => user.role !== "admin");
+        setUserList(nonAdmins);
+      } catch (err) {
+        console.error("Error fetching users:", err);
+      }
+    };
+
     fetchActivities();
+    fetchUsers();
   }, []);
-  
-  // Format the API data to match our display format
-  // Based on your Activity entity, we only have id, user, prompt, and loggedAt
-  const formattedUserData = userData.map((activity, index) => ({
-    id: activity.id || index,
-    username: activity.user?.username || 'Unknown User',
-    timestamp: activity.loggedAt || new Date().toISOString(),
-    prompt: activity.prompt || ''
-  }));
-  
-  // Filter user data based on search query
-  const filteredUserData = formattedUserData.filter(user => 
-    user.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    user.prompt?.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-  
-  // Format date for display
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleString();
+
+  const handleRoleChange = (userId, newRole) => {
+    setRoleUpdates((prev) => ({
+      ...prev,
+      [userId]: newRole
+    }));
   };
-  
+
+  const handleUpdateRole = async (userId) => {
+    const newRole = roleUpdates[userId];
+    if (!newRole) return;
+    try {
+      await updateRole({ userId, role: newRole });
+      alert("Role updated successfully.");
+
+      const updatedUsers = await listUsers();
+      setUserList(updatedUsers);
+    } catch (error) {
+      console.error("Error updating role:", error);
+      alert("Failed to update role.");
+    }
+  };
+
+  const formatDate = (dateString) => new Date(dateString).toLocaleString();
+
+  const formattedUserData = [...userData].reverse().map((activity, index) => ({
+    id: activity.id || index,
+    username: activity.user?.name || "Unknown User",
+    timestamp: activity.loggedAt || new Date().toISOString(),
+    prompt: activity.prompt || ""
+  }));
+
+  const filteredUserData = formattedUserData.filter(
+    (entry) =>
+      entry.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      entry.prompt.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div className="admin-panel-section">
-      {/* Header with gradient styling */}
+      {/* Header */}
       <div className="admin-header-section">
         <div className="hero-decoration">
           <div className="shape shape-1"></div>
           <div className="shape shape-2"></div>
           <div className="shape shape-3"></div>
         </div>
-        
         <div className="admin-header admin-container">
           <h1 className="admin-title">Admin Dashboard</h1>
           <p className="admin-description">Monitor user activities and system performance</p>
         </div>
       </div>
-      
+
+      {/* Content */}
       <div className="admin-content">
-        {/* Navigation Tabs */}
+        {/* Tabs */}
         <div className="admin-tabs">
-          <button 
-            className={`admin-tab-button ${activeTab === "dashboard" ? "active" : ""}`}
-            onClick={() => setActiveTab("dashboard")}
-          >
-            <div className="tab-icon">D</div>
-            Dashboard
-          </button>
-          <button 
-            className={`admin-tab-button ${activeTab === "activities" ? "active" : ""}`}
-            onClick={() => setActiveTab("activities")}
-          >
-            <div className="tab-icon">A</div>
-            User Activities
-          </button>
-          <button 
-            className={`admin-tab-button ${activeTab === "analytics" ? "active" : ""}`}
-            onClick={() => setActiveTab("analytics")}
-          >
-            <div className="tab-icon">S</div>
-            Analytics
-          </button>
-          <button 
-            className={`admin-tab-button ${activeTab === "settings" ? "active" : ""}`}
-            onClick={() => setActiveTab("settings")}
-          >
-            <div className="tab-icon">C</div>
-            Settings
-          </button>
+          {["dashboard", "activities", "users"].map((tab) => (
+            <button
+              key={tab}
+              className={`admin-tab-button ${activeTab === tab ? "active" : ""}`}
+              onClick={() => setActiveTab(tab)}
+            >
+              <div className="tab-icon">{tab.charAt(0).toUpperCase()}</div>
+              {tab === "dashboard"
+                ? "Dashboard"
+                : tab === "activities"
+                ? "User Activities"
+                : "Manage Users"}
+            </button>
+          ))}
         </div>
-        
-        {/* Dashboard Tab Content */}
+
+        {/* Dashboard */}
         {activeTab === "dashboard" && (
           <div className="dashboard-content">
             <div className="stats-grid">
-              <div className="stat-card">
-                <div className="stat-icon">
-                  <span>U</span>
+              {[
+                { title: "Total Users", value: stats.totalUsers, icon: "U" },
+                { title: "Active Users", value: stats.activeUsers, icon: "A" },
+                { title: "Total Prompts", value: stats.totalPrompts, icon: "P" },
+                { title: "Avg. Session (min)", value: stats.avgSessionTime, icon: "T" }
+              ].map((stat, idx) => (
+                <div className="stat-card" key={idx}>
+                  <div className="stat-icon">
+                    <span>{stat.icon}</span>
+                  </div>
+                  <div className="stat-info">
+                    <h3>{stat.title}</h3>
+                    <p className="stat-value">{stat.value}</p>
+                  </div>
                 </div>
-                <div className="stat-info">
-                  <h3>Total Users</h3>
-                  <p className="stat-value">{stats.totalUsers}</p>
-                </div>
-              </div>
-              <div className="stat-card">
-                <div className="stat-icon">
-                  <span>A</span>
-                </div>
-                <div className="stat-info">
-                  <h3>Active Users</h3>
-                  <p className="stat-value">{stats.activeUsers}</p>
-                </div>
-              </div>
-              <div className="stat-card">
-                <div className="stat-icon">
-                  <span>P</span>
-                </div>
-                <div className="stat-info">
-                  <h3>Total Prompts</h3>
-                  <p className="stat-value">{stats.totalPrompts}</p>
-                </div>
-              </div>
-              <div className="stat-card">
-                <div className="stat-icon">
-                  <span>T</span>
-                </div>
-                <div className="stat-info">
-                  <h3>Avg. Session (min)</h3>
-                  <p className="stat-value">{stats.avgSessionTime}</p>
-                </div>
-              </div>
+              ))}
             </div>
-            
+
             <div className="recent-activity-container">
               <h2 className="section-title">Recent Activity</h2>
               {isLoading ? (
@@ -186,9 +174,7 @@ export default function AdminPanel() {
                         <h4 className="activity-user">{user.username}</h4>
                         <p className="activity-action">{user.prompt}</p>
                       </div>
-                      <div className="activity-time">
-                        {formatDate(user.timestamp)}
-                      </div>
+                      <div className="activity-time">{formatDate(user.timestamp)}</div>
                     </div>
                   ))}
                 </div>
@@ -196,13 +182,13 @@ export default function AdminPanel() {
             </div>
           </div>
         )}
-        
-        {/* User Activities Tab Content */}
+
+        {/* Activities */}
         {activeTab === "activities" && (
           <div className="activities-content">
             <div className="search-filter-container">
               <div className="admin-search-container">
-                <input 
+                <input
                   type="text"
                   className="admin-search-input"
                   placeholder="Search users or prompts..."
@@ -210,11 +196,13 @@ export default function AdminPanel() {
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
                 <button className="admin-search-button">
-                  <span>🔍</span>
+                  <span role="img" aria-label="Search">
+                    🔍
+                  </span>
                 </button>
               </div>
             </div>
-            
+
             {isLoading ? (
               <div className="loading-spinner">Loading...</div>
             ) : (
@@ -228,11 +216,11 @@ export default function AdminPanel() {
                     </tr>
                   </thead>
                   <tbody>
-                    {filteredUserData.map(user => (
-                      <tr key={user.id}>
-                        <td>{user.username}</td>
-                        <td>{user.prompt}</td>
-                        <td>{formatDate(user.timestamp)}</td>
+                    {filteredUserData.map((entry) => (
+                      <tr key={entry.id}>
+                        <td>{entry.username}</td>
+                        <td>{entry.prompt}</td>
+                        <td>{formatDate(entry.timestamp)}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -241,22 +229,68 @@ export default function AdminPanel() {
             )}
           </div>
         )}
-        
-        {/* Placeholder for Analytics Tab */}
-        {activeTab === "analytics" && (
-          <div className="placeholder-content">
-            <div className="placeholder-icon">📊</div>
-            <h2>Analytics Dashboard</h2>
-            <p>Detailed analytics features would be implemented here.</p>
-          </div>
-        )}
-        
-        {/* Placeholder for Settings Tab */}
-        {activeTab === "settings" && (
-          <div className="placeholder-content">
-            <div className="placeholder-icon">⚙️</div>
-            <h2>Settings</h2>
-            <p>System configuration and user management options would be implemented here.</p>
+
+        {/* Manage Users */}
+        {activeTab === "users" && (
+          <div className="manage-users-content">
+            <h2 className="section-title">Manage Users</h2>
+            {userList.length === 0 ? (
+              <p>No non-admin users found.</p>
+            ) : (
+              <table className="activities-table">
+                <thead>
+                  <tr>
+                    <th>User</th>
+                    <th>Email</th>
+                    <th>Current Role</th>
+                    <th>Update Role</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[...userList]
+                    .sort((a, b) => {
+                      const rolePriority = {
+                        ADMIN: 0,
+                        PREMIUM: 1,
+                        STANDARD: 2,
+                        FREE: 3,
+                        BLACKLIST: 4
+                      };
+                      return rolePriority[a.role] - rolePriority[b.role];
+                    })
+                    .map((user) => (
+                      <tr key={user.id}>
+                        <td>{user.name}</td>
+                        <td>{user.email}</td>
+                        <td>{user.role}</td>
+                        <td>
+                          <select
+                            className="role-select"
+                            value={roleUpdates[user.id] || user.role}
+                            onChange={(e) => handleRoleChange(user.id, e.target.value)}
+                            disabled={user.role === "ADMIN"}
+                          >
+                            <option value="FREE">Free</option>
+                            <option value="STANDARD">Standard</option>
+                            <option value="PREMIUM">Premium</option>
+                            <option value="BLACKLIST">Blacklist</option>
+                          </select>
+                        </td>
+                        <td>
+                          <button
+                            className="update-role-button"
+                            onClick={() => handleUpdateRole(user.id)}
+                            disabled={user.role === "ADMIN"}
+                          >
+                            Update
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+            )}
           </div>
         )}
       </div>

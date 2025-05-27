@@ -47,12 +47,10 @@ export class AuthService {
 
     await this.userRepo.save(user);
 
-    // Generate email verification token
     const verificationToken = this.generateEmailVerificationToken(user.id);
     user.emailVerificationToken = verificationToken;
     await this.userRepo.save(user);
 
-    // Send the verification email
     await this.emailsService.sendVerificationEmail(
       user.email,
       verificationToken,
@@ -76,7 +74,7 @@ export class AuthService {
 
     const payload: JwtPayload = { sub: user.id, email: user.email };
     const accessToken = this.jwtService.sign(payload);
-    return { token: accessToken }; // ✅ consistent with frontend
+    return { user: user, token: accessToken };
   }
 
   private async validateUser(dto: LoginDto): Promise<User | null> {
@@ -135,7 +133,6 @@ export class AuthService {
     user.passwordResetToken = resetToken;
     await this.userRepo.save(user);
 
-    // Send the reset password email
     await this.emailsService.sendResetPasswordEmail(email, resetToken);
   }
 
@@ -153,10 +150,21 @@ export class AuthService {
       }
 
       user.password = await bcrypt.hash(newPassword, 10);
-      user.passwordResetToken = ''; // Clear the token after successful reset
+      user.passwordResetToken = '';
       await this.userRepo.save(user);
     } catch (error) {
       throw new UnauthorizedException('Failed to reset password');
     }
+  }
+
+  async updateUserRole(userId: number, role: UserRole): Promise<User> {
+    const user = await this.userRepo.findOneBy({ id: userId });
+
+    if (!user) {
+      throw new BadRequestException('User not found');
+    }
+
+    user.role = role;
+    return await this.userRepo.save(user);
   }
 }

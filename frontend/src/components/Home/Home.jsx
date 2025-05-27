@@ -21,7 +21,9 @@ export default function Hero() {
 
   // Navigate directly to prompt creator
   const handleRecentPromptClick = (categoryId, serviceName) => {
-    navigate(`/prompt-creator/${categoryId}/${serviceName.replace(/\s+/g, "-")}`);
+    navigate(
+      `/prompt-creator/${categoryId}/${serviceName.replace(/\s+/g, "-")}`,
+    );
   };
 
   // Search input change handler
@@ -57,7 +59,7 @@ export default function Hero() {
         services.map((service) => ({
           name: service,
           category: category.id,
-        }))
+        })),
       );
     }
     return [];
@@ -65,7 +67,7 @@ export default function Hero() {
 
   // Filter services based on search term
   const filteredServices = allServices.filter((service) =>
-    service.name.toLowerCase().includes(searchTerm.toLowerCase())
+    service.name.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   return (
@@ -78,11 +80,15 @@ export default function Hero() {
           <div className="shape shape-2"></div>
           <div className="shape shape-3"></div>
         </div>
-        
-        <div className={`hero-container ${animateHero ? 'hero-animate' : ''}`}>
+
+        <div className={`hero-container ${animateHero ? "hero-animate" : ""}`}>
           <div className="hero-content">
-            <h1 className="hero-title">AI-Powered Business & Marketing Tools at Your Fingertips</h1>
-            <p className="hero-subtext">Enter your info and get instant, tailored results</p>
+            <h1 className="hero-title">
+              AI-Powered Business & Marketing Tools at Your Fingertips
+            </h1>
+            <p className="hero-subtext">
+              Enter your info and get instant, tailored results
+            </p>
 
             {/* Search Bar - Fixed structure */}
             <div className="search-container">
@@ -95,31 +101,31 @@ export default function Hero() {
                   onChange={handleSearchChange}
                 />
               </form>
-              
+
               {/* Search results moved outside form */}
-              
             </div>
           </div>
         </div>
-        
       </div>
       {searchTerm && (
-                <div className="search-results">
-                  {filteredServices.length > 0 ? (
-                    filteredServices.map((service, index) => (
-                      <div
-                        key={index}
-                        className="search-result-item"
-                        onClick={() => handleRecentPromptClick(service.category, service.name)}
-                      >
-                        {service.name}
-                      </div>
-                    ))
-                  ) : (
-                    <p className="no-results">No results found</p>
-                  )}
-                </div>
-              )}
+        <div className="search-results">
+          {filteredServices.length > 0 ? (
+            filteredServices.map((service, index) => (
+              <div
+                key={index}
+                className="search-result-item"
+                onClick={() =>
+                  handleRecentPromptClick(service.category, service.name)
+                }
+              >
+                {service.name}
+              </div>
+            ))
+          ) : (
+            <p className="no-results">No results found</p>
+          )}
+        </div>
+      )}
 
       {/* Services Section */}
       <MDBContainer className="services-section py-5">
@@ -131,7 +137,6 @@ export default function Hero() {
               className="service-card"
               onClick={() => handleCategoryClick(category.id)}
             >
-
               <h5 className="service-name">{category.name}</h5>
               <p className="service-description">{category.description}</p>
             </div>
@@ -148,7 +153,9 @@ export default function Hero() {
               <div
                 key={index}
                 className="recent-service-card"
-                onClick={() => handleRecentPromptClick(service.category, service.name)}
+                onClick={() =>
+                  handleRecentPromptClick(service.category, service.name)
+                }
               >
                 <div className="recent-service-icon">
                   <i className="fas fa-history"></i>

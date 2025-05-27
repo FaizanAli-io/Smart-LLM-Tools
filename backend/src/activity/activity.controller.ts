@@ -12,6 +12,6 @@ export class ActivityController {
 
   @Get()
   async getAll() {
-    return this.activityService.getAllActivities();
+    return await this.activityService.getAllActivities();
   }
 }

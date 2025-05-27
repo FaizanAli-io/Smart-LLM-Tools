@@ -1,14 +1,13 @@
-import React, { useState } from "react";
+import "./Login.css";
+import { useState } from "react";
+import { loginUser } from "../../api/auth";
 import { useNavigate } from "react-router-dom";
 import { MDBContainer } from "mdb-react-ui-kit";
-import "./Login.css";
-import { loginUser } from "../../api/auth";
 import { useAuth } from "../../api/authContext";
-
 
 export default function Login() {
   const navigate = useNavigate();
-  const { login } = useAuth(); // ✅ Hook to update auth state
+  const { login } = useAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -17,18 +16,18 @@ export default function Login() {
     e.preventDefault();
     try {
       console.log("Sending login data:", { email, password });
+      const response = await loginUser({ email, password });
+      login(response.token, response.user);
 
-      const res = await loginUser({ email, password }); // ✅ Use object
-      login(res.token); // ✅ Save token to localStorage & update context
-      console.log("Login successful:", res);
-      navigate("/"); // ✅ Redirect
-
+      console.log("Login successful:", response);
+      navigate("/");
     } catch (err) {
       console.error("Login failed:", err?.response?.data || err.message);
+
       alert(
         err?.response?.data?.message?.[0] ||
-        err?.response?.data?.message ||
-        "Login failed. Try again."
+          err?.response?.data?.message ||
+          "Login failed. Try again.",
       );
     }
   };
@@ -70,7 +69,8 @@ export default function Login() {
             </button>
 
             <p className="signup-link">
-              Don't have an account? <span onClick={() => navigate("/signup")}>Sign Up</span>
+              Don't have an account?{" "}
+              <span onClick={() => navigate("/signup")}>Sign Up</span>
             </p>
           </form>
         </div>

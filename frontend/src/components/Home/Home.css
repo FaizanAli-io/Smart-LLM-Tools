@@ -2,7 +2,7 @@
 .home-page-section {
   min-height: 100vh;
   background-color: #f9f9ff;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /* Hero Section with gradient background */
@@ -154,7 +154,9 @@
   color: #333;
   outline: none;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-  transition: transform 0.3s, box-shadow 0.3s;
+  transition:
+    transform 0.3s,
+    box-shadow 0.3s;
   cursor: text; /* Explicitly set cursor */
 }
 
@@ -214,7 +216,11 @@
 }
 
 .search-result-item:hover {
-  background: linear-gradient(135deg, rgba(110, 142, 251, 0.1), rgba(167, 119, 227, 0.1));
+  background: linear-gradient(
+    135deg,
+    rgba(110, 142, 251, 0.1),
+    rgba(167, 119, 227, 0.1)
+  );
   color: #6e8efb;
 }
 
@@ -236,7 +242,7 @@
 }
 
 .section-title:after {
-  content: '';
+  content: "";
   position: absolute;
   width: 80px;
   height: 4px;
@@ -283,7 +289,7 @@
 }
 
 .service-card:before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -309,7 +315,11 @@
   align-items: center;
   width: 80px;
   height: 80px;
-  background: linear-gradient(135deg, rgba(110, 142, 251, 0.1), rgba(167, 119, 227, 0.1));
+  background: linear-gradient(
+    135deg,
+    rgba(110, 142, 251, 0.1),
+    rgba(167, 119, 227, 0.1)
+  );
   border-radius: 50%;
   margin: 0 auto 25px;
   transition: transform 0.4s ease;
@@ -388,7 +398,11 @@
 }
 
 .recent-service-card:hover {
-  background: linear-gradient(135deg, rgba(110, 142, 251, 0.1), rgba(167, 119, 227, 0.1));
+  background: linear-gradient(
+    135deg,
+    rgba(110, 142, 251, 0.1),
+    rgba(167, 119, 227, 0.1)
+  );
   transform: translateX(5px);
   box-shadow: 0 10px 25px rgba(107, 142, 251, 0.2);
 }
@@ -419,15 +433,16 @@
   .hero-title {
     font-size: 2.2rem;
   }
-  
+
   .hero-subtext {
     font-size: 1.1rem;
   }
-  
-  .services-grid, .recently-used-grid {
+
+  .services-grid,
+  .recently-used-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .service-card {
     height: auto;
     min-height: 250px;

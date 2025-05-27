@@ -27,6 +27,6 @@ export class ActivityService {
   }
 
   async getAllActivities() {
-    return this.activityRepository.find({ relations: ['user'] });
+    return await this.activityRepository.find({ relations: ['user'] });
   }
 }

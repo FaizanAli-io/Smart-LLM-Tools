@@ -11,10 +11,10 @@ export default function CategoryPage() {
 
   useEffect(() => {
     // Animation effect similar to home page
-    const headerElement = document.querySelector('.category-header');
+    const headerElement = document.querySelector(".category-header");
     if (headerElement) {
       setTimeout(() => {
-        headerElement.classList.add('category-animate');
+        headerElement.classList.add("category-animate");
       }, 100);
     }
   }, []);
@@ -29,7 +29,9 @@ export default function CategoryPage() {
 
   // Function to navigate to Prompt Creator Page
   const handleServiceClick = (serviceName) => {
-    navigate(`/prompt-creator/${categoryId}/${serviceName.replace(/\s+/g, "-")}`);
+    navigate(
+      `/prompt-creator/${categoryId}/${serviceName.replace(/\s+/g, "-")}`,
+    );
   };
 
   return (
@@ -41,9 +43,11 @@ export default function CategoryPage() {
           <div className="shape shape-2"></div>
           <div className="shape shape-3"></div>
         </div>
-        
+
         <div className="category-header category-container">
-          <MDBCardTitle className="category-title">{category.name}</MDBCardTitle>
+          <MDBCardTitle className="category-title">
+            {category.name}
+          </MDBCardTitle>
           <p className="category-description">{category.description}</p>
         </div>
       </div>
@@ -52,33 +56,35 @@ export default function CategoryPage() {
         {/* Handle Nested Structure for Content Writing Category */}
         {category.id === "content-writing" ? (
           <div className="subcategories-wrapper">
-            {Object.entries(category.services).map(([subcategory, services], idx) => (
-              <div key={idx} className="subcategory-container">
-                <h3 className="subcategory-title">{subcategory}</h3>
-                <div className="service-bar-list">
-                  {services.map((service, index) => (
-                    <div 
-                      key={index} 
-                      className="service-bar"
-                      onClick={() => handleServiceClick(service)}
-                    >
-                      <div className="service-bar-icon">
-                        <span>{service.charAt(0)}</span>
+            {Object.entries(category.services).map(
+              ([subcategory, services], idx) => (
+                <div key={idx} className="subcategory-container">
+                  <h3 className="subcategory-title">{subcategory}</h3>
+                  <div className="service-bar-list">
+                    {services.map((service, index) => (
+                      <div
+                        key={index}
+                        className="service-bar"
+                        onClick={() => handleServiceClick(service)}
+                      >
+                        <div className="service-bar-icon">
+                          <span>{service.charAt(0)}</span>
+                        </div>
+                        <div className="service-bar-name">{service}</div>
                       </div>
-                      <div className="service-bar-name">{service}</div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
-              </div>
-            ))}
+              ),
+            )}
           </div>
         ) : (
           /* Default Grid for Other Categories */
           <div className="services-section">
             <div className="service-bar-list">
               {category.services.map((service, index) => (
-                <div 
-                  key={index} 
+                <div
+                  key={index}
                   className="service-bar"
                   onClick={() => handleServiceClick(service)}
                 >

@@ -6,10 +6,10 @@ import "./Footer.css";
 
 export default function Footer() {
   const navigate = useNavigate();
-  
+
   // Function to format service name into URL-friendly format
   const formatServiceSlug = (service) => service.replace(/\s+/g, "-");
-  
+
   // Function to handle link clicks and scroll to top
   const handleLinkClick = () => {
     window.scrollTo(0, 0);
@@ -37,27 +37,31 @@ export default function Footer() {
                       </li>
                     ))
                   ) : (
-                    <li className="footer-no-services">No services available</li>
+                    <li className="footer-no-services">
+                      No services available
+                    </li>
                   )
                 ) : (
-                  Object.entries(category.services).map(([subCategory, subServices], idx) => (
-                    <div key={idx}>
-                      <h6 className="footer-subcategory">{subCategory}</h6>
-                      <ul className="footer-sublist">
-                        {subServices.map((service, i) => (
-                          <li key={i}>
-                            <Link
-                              to={`/prompt-creator/${category.id}/${formatServiceSlug(service)}`}
-                              className="footer-link"
-                              onClick={handleLinkClick}
-                            >
-                              {service}
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  ))
+                  Object.entries(category.services).map(
+                    ([subCategory, subServices], idx) => (
+                      <div key={idx}>
+                        <h6 className="footer-subcategory">{subCategory}</h6>
+                        <ul className="footer-sublist">
+                          {subServices.map((service, i) => (
+                            <li key={i}>
+                              <Link
+                                to={`/prompt-creator/${category.id}/${formatServiceSlug(service)}`}
+                                className="footer-link"
+                                onClick={handleLinkClick}
+                              >
+                                {service}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ),
+                  )
                 )}
               </ul>
             </div>

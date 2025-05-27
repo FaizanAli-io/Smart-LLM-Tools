@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import "./Signup.css";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { MDBContainer } from "mdb-react-ui-kit";
-import "./Signup.css";
-import { signupUser } from "../../api/auth"; // ✅ Import
+import { signupUser } from "../../api/auth";
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -12,23 +12,23 @@ export default function Signup() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     try {
       console.log("Sending signup data:", { name, email, password });
       const response = await signupUser({ name, email, password });
+
       console.log("Signup success:", response);
       navigate("/login");
     } catch (error) {
       console.error("Signup failed:", error?.response?.data || error.message);
-  
+
       alert(
-        error?.response?.data?.message?.[0] || // specific message
-        error?.response?.data?.message ||      // or generic message
-        "Signup failed. Try using a different email." // fallback
+        error?.response?.data?.message ||
+          error?.response?.data?.message?.[0] ||
+          "Signup failed. Try using a different email.",
       );
     }
   };
-  
 
   return (
     <div className="signup-page">
@@ -38,7 +38,6 @@ export default function Signup() {
           <p className="signup-subtitle">Join us today</p>
 
           <form onSubmit={handleSubmit}>
-            {/* Name Input */}
             <div className="input-wrapper">
               <input
                 type="text"
@@ -51,7 +50,6 @@ export default function Signup() {
               <label htmlFor="name">Full Name</label>
             </div>
 
-            {/* Email Input */}
             <div className="input-wrapper">
               <input
                 type="email"
@@ -64,7 +62,6 @@ export default function Signup() {
               <label htmlFor="email">Email Address</label>
             </div>
 
-            {/* Password Input */}
             <div className="input-wrapper">
               <input
                 type="password"
@@ -77,14 +74,13 @@ export default function Signup() {
               <label htmlFor="password">Password</label>
             </div>
 
-            {/* Signup Button */}
             <button type="submit" className="signup-btn">
               Sign Up
             </button>
 
-            {/* Login Link */}
             <p className="login-link">
-              Already have an account? <span onClick={() => navigate("/login")}>Login</span>
+              Already have an account?{" "}
+              <span onClick={() => navigate("/login")}>Login</span>
             </p>
           </form>
         </div>

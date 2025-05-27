@@ -12,8 +12,8 @@ export class GptService {
     this.logger.log(`Calling OpenAI with prompt: ${prompt}`);
     try {
       const completion = await this.openai.chat.completions.create({
-        model: "gpt-3.5-turbo", // or your preferred model
-        messages: [{ role: "user", content: prompt }],
+        model: 'gpt-4o-mini', // or your preferred model
+        messages: [{ role: 'user', content: prompt }],
       });
 
       const response = completion.choices[0]?.message?.content;

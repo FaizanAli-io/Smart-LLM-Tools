@@ -1,10 +1,22 @@
-import { Controller, Post, Body, Get, UseGuards, Query } from '@nestjs/common';
-import { AuthService } from './auth.service';
+import {
+  Get,
+  Post,
+  Patch,
+  Body,
+  Query,
+  UseGuards,
+  Controller,
+} from '@nestjs/common';
+
 import { LoginDto } from './dto/login.dto';
-import { JwtAuthGuard } from './guards/jwt-auth.guard';
-import { GetUser } from './decorators/get-user.decorator';
-import { User } from 'src/users/entities/user.entity';
 import { SignupDto } from './dto/signup.dto';
+import { UpdateRoleDto } from './dto/update-role.dto';
+
+import { AuthService } from './auth.service';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
+
+import { User } from 'src/users/entities/user.entity';
+import { GetUser } from './decorators/get-user.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -20,7 +32,6 @@ export class AuthController {
     return await this.authService.login(loginDto);
   }
 
-  // @UseGuards(JwtAuthGuard)
   @Get('all')
   async listUsers(): Promise<User[]> {
     return this.authService.listUsers();
@@ -49,5 +60,10 @@ export class AuthController {
   ): Promise<string> {
     await this.authService.resetPassword(token, newPassword);
     return 'Password reset successfully!';
+  }
+
+  @Patch('update-role')
+  async updateUserRole(@Body() dto: UpdateRoleDto) {
+    return this.authService.updateUserRole(dto.userId, dto.role);
   }
 }
