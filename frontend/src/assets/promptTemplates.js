@@ -331,7 +331,7 @@ export const promptTemplates = {
       prompt: ({ companyName, ownerName, businessAddress, website, industry, yearsOperation, teamSize, service1, service2, service3, targetAudience, businessGoal1, businessGoal2, challenge1, challenge2, revenueRange, longTermVision }) =>
         `Act as a business coach and strategic advisor. Create a tailored business growth and development plan for the following company:\n\nCompany: ${companyName}\nOwner: ${ownerName}\nAddress: ${businessAddress}\nWebsite: ${website}\nIndustry: ${industry}\nYears in Operation: ${yearsOperation}\nTeam Size: ${teamSize}\nCore Services/Products: ${service1}, ${service2}, ${service3}\nTarget Audience: ${targetAudience}\nMain Business Goals: ${businessGoal1}, ${businessGoal2}\nBiggest Challenges: ${challenge1}, ${challenge2}${revenueRange ? `\nMonthly Revenue Range: ${revenueRange}` : ""}\nLong-Term Vision: ${longTermVision}\n\nGenerate a Business Coaching & Strategy Plan that includes:\n1. Business Health Check Summary (SWOT: strengths, weaknesses, opportunities, threats)\n2. Clarity of Vision & Mission Evaluation\n3. Key Strategic Priorities for the Next 12 Months\n4. Leadership & Team Development Plan\n5. Sales & Marketing Recommendations\n6. Systemisation & Workflow Optimisation\n7. Client Retention and Growth Opportunities\n8. KPIs to Track Progress\n9. Monthly Coaching Focus Areas (Month-by-month suggested roadmap)\n10. Top 5 Immediate Action Points\n\nProvide the output in a coaching-friendly tone, structured by section with practical tips and insights — as if the user were receiving it from a top-tier business strategist or mentor.`
     },
-    
+
     "Optimise Business Profile": {
       description: "Be the business everyone finds (and chooses). Polish your Google profile to shine in search, attract clicks, and turn views into calls.",
       inputs: [
@@ -384,227 +384,1131 @@ export const promptTemplates = {
         if (competitor4Name && competitor4Website) {
           competitorsText += `\nCompetitor 4: ${competitor4Name} (${competitor4Website})`;
         }
-        
+
         return `Conduct a comprehensive competitor analysis for the following business, including comparison across online visibility, services, reputation, and marketing strategy:\n\nYour Company: ${companyName}\nYour Website: ${website}\nBusiness Type: ${businessType}\nTarget Market: ${targetMarket}\nCore Services/Products: ${service1}, ${service2}, ${service3}\nTarget Audience: ${targetAudience}\nMain Competitors:\n${competitorsText}\nLearning Goals: ${learningGoals}\n\nGenerate a Competitor Analysis Report that includes:\n1. Company Overview Comparison (Years active, size, areas covered)\n2. Service Offering Comparison (Breadth, depth, positioning)\n3. Website Performance & SEO (Speed, mobile friendliness, keyword ranking estimates)\n4. Google Business Profile Comparison (Reviews, activity, completeness)\n5. Social Media Presence & Activity (Platforms used, post frequency, engagement levels)\n6. Online Reputation Summary (Star ratings, review counts, sentiment trends)\n7. Pricing Transparency & Positioning (If pricing info is available)\n8. Strengths & Weaknesses of Each Competitor\n9. Opportunities for Differentiation\n10. Strategic Recommendations for Your Business\n\nStructure the report using clear headings and bullet points. Keep the tone analytical but actionable, aimed at helping a business refine its marketing and service strategy based on the local competition.`;
       }
     },
     "Local Lead Gen": {
-  description: "Get the phone ringing. Turn nearby searches into real leads — with local strategies that actually work.",
-  inputs: [
-    { name: "companyName", label: "Company Name", type: "text" },
-    { name: "businessAddress", label: "Business Address", type: "text" },
-    { name: "website", label: "Website URL", type: "text" },
-    { name: "phoneNumber", label: "Phone Number", type: "text" },
-    { name: "businessType", label: "Business Type / Industry", type: "text", placeholder: "e.g., Fire Safety Consultancy, Cleaning Services, Electrician" },
-    { name: "service1", label: "Core Service/Product 1", type: "text" },
-    { name: "service2", label: "Core Service/Product 2", type: "text" },
-    { name: "service3", label: "Core Service/Product 3", type: "text" },
-    { name: "targetArea", label: "Target Area / Catchment", type: "text", placeholder: "e.g., Within 15 miles of Croydon, Central London, Essex" },
-    { name: "targetAudience", label: "Target Audience", type: "text", placeholder: "e.g., Homeowners, Commercial Landlords, SMEs" },
-    { name: "marketingChannels", label: "Current Marketing Channels in Use", type: "text", placeholder: "e.g., Google Ads, Facebook Ads, Google Business Profile, Website SEO" },
-    { name: "monthlyBudget", label: "Monthly Marketing Budget", type: "text", placeholder: "e.g., £500/month, Not set, Up to £2K" },
-    { name: "leadHandlingProcess", label: "Lead Handling Process", type: "text", placeholder: "e.g., Direct calls, Contact form, WhatsApp, CRM use" },
-    { name: "businessGoals", label: "Business Goals", type: "text", placeholder: "e.g., 10 new client leads per week, 25% increase in local calls, grow mailing list" }
-  ],
-  prompt: ({ companyName, businessAddress, website, phoneNumber, businessType, service1, service2, service3, targetArea, targetAudience, marketingChannels, monthlyBudget, leadHandlingProcess, businessGoals }) => {
-    return `Create a comprehensive local lead generation strategy for the following business to increase inbound enquiries, bookings, or calls from the local area:\n\nCompany Name: ${companyName}\nBusiness Address: ${businessAddress}\nWebsite URL: ${website}\nPhone Number: ${phoneNumber}\nBusiness Type: ${businessType}\nCore Services/Products: ${service1}, ${service2}, ${service3}\nTarget Area / Catchment: ${targetArea}\nTarget Audience: ${targetAudience}\nCurrent Marketing Channels in Use: ${marketingChannels}\nMonthly Marketing Budget: ${monthlyBudget}\nLead Handling Process: ${leadHandlingProcess}\nBusiness Goals: ${businessGoals}\n\nGenerate a Local Lead Generation Strategy that includes:\n1. Lead Source Audit (Where leads are likely to come from or being lost)\n2. Local SEO Optimisation Tips (including GBP, citations, keyword strategy)\n3. Google Ads Setup Recommendations (Targeting, ad types, local extensions)\n4. Facebook/Instagram Ad Suggestions (Creative angles, audience targeting)\n5. Lead Magnet Ideas (Free guides, checklists, audits, discounts)\n6. Conversion Optimisation for Website & Contact Points\n7. Referral and Review-Based Lead Boosting Techniques\n8. Local PR and Partnership Ideas for Exposure\n9. CRM / Lead Tracking Suggestions (If applicable)\n10. 30-Day Action Plan to Increase Local Leads\n\nStructure the response with clear headings, bullet points, and a prioritised plan of action. Make the output suitable for a local service business aiming to increase visibility and convert interest into enquiries.`;
-  }
-},
-"Estimating & Job Quoter": {
-  description: "Quote it like a pro. Make pricing simple, sharp, and stress-free with clean, client-ready job quotes in seconds.",
-  inputs: [
-    { name: "companyName", label: "Company Name", type: "text" },
-    { name: "businessAddress", label: "Business Address", type: "text" },
-    { name: "website", label: "Website URL", type: "text" },
-    { name: "contactInfo", label: "Phone / Email Contact", type: "text" },
-    { name: "businessType", label: "Business Type / Industry", type: "text", placeholder: "e.g., Fire Risk Assessments, Landscaping, Home Renovations" },
-    { name: "service1", label: "Main Service Offered 1", type: "text" },
-    { name: "service2", label: "Main Service Offered 2", type: "text" },
-    { name: "service3", label: "Main Service Offered 3", type: "text" },
-    { name: "serviceArea", label: "Service Area / Region Covered", type: "text", placeholder: "e.g., Greater London, East Midlands, UK-wide" },
-    { name: "clientTypes", label: "Client Types", type: "text", placeholder: "e.g., Residential, Commercial, Landlords, Public Sector" },
-    { name: "projectSizes", label: "Typical Project Sizes or Ranges", type: "text", placeholder: "e.g., £200–£2,000, or £3K+ full jobs" },
-    { name: "quotingMethod", label: "Current Method for Quoting", type: "text", placeholder: "e.g., Manual Excel sheet, Email replies, Verbal estimates" },
-    { name: "quotingChallenges", label: "Quoting Challenges Faced", type: "text", placeholder: "e.g., Inconsistent pricing, Delayed replies, Low conversion rate" },
-    { name: "desiredOutcome", label: "Desired Outcome", type: "text", placeholder: "e.g., Faster quoting, More accepted quotes, Better margin control" }
-  ],
-  prompt: ({ companyName, businessAddress, website, contactInfo, businessType, service1, service2, service3, serviceArea, clientTypes, projectSizes, quotingMethod, quotingChallenges, desiredOutcome }) => {
-    return `Create a tailored estimating and job quoting system for the following service-based business to improve consistency, professionalism, and conversion rates for incoming enquiries:\n\nCompany Name: ${companyName}\nBusiness Address: ${businessAddress}\nWebsite URL: ${website}\nPhone / Email Contact: ${contactInfo}\nBusiness Type: ${businessType}\nMain Services Offered: ${service1}, ${service2}, ${service3}\nService Area / Region Covered: ${serviceArea}\nClient Types: ${clientTypes}\nTypical Project Sizes or Ranges: ${projectSizes}\nCurrent Method for Quoting: ${quotingMethod}\nQuoting Challenges Faced: ${quotingChallenges}\nDesired Outcome: ${desiredOutcome}\n\nGenerate a professional Estimating & Job Quoting System that includes:\n1. Quote Structure Template (What sections every quote should include)\n2. Suggested Tools or Platforms for Quote Generation (e.g., Google Sheets, Jobber, Quotient)\n3. Pre-set Price Guide Examples (if relevant to industry)\n4. Variables to Consider When Estimating (e.g., labour, travel, materials, urgency)\n5. Upsell Opportunities and Optional Add-ons\n6. Follow-up Process After Sending a Quote (Templates and timing)\n7. Mobile or On-Site Quoting Tips (if applicable)\n8. Terms & Conditions / Payment Terms Recommendations\n9. Branding Tips for Quotes (Professional design, logo, company details)\n10. Quote-to-Job Conversion Boosters (e.g., instant booking links, testimonials, guarantee badges)\n\nPresent the output with clear sections, practical tools, and step-by-step tips — suitable for improving both speed and professionalism in quoting jobs for a local service business.`;
-  }
-}
-    
-},
-"marketing-seo": {
-  "Competitor List": {
-    description: "See who you're up against. Generate a tailored list of local or industry-specific competitors in seconds.",
-    inputs: [
-      { name: "businessName", label: "Your Business Name", type: "text" },
-      { name: "businessType", label: "Business Type / Industry", type: "text", placeholder: "e.g., Roofing, Digital Marketing, Fire Safety Consultancy" },
-      { name: "location", label: "Location / Catchment Area", type: "text", placeholder: "e.g., East London, UK-wide, 15-mile radius around Manchester" },
-      { name: "service1", label: "Main Service / Offering 1", type: "text" },
-      { name: "service2", label: "Main Service / Offering 2", type: "text" },
-      { name: "service3", label: "Main Service / Offering 3", type: "text" },
-      { name: "filters", label: "Optional Filters", type: "text", placeholder: "e.g., Only top-rated, Only within 10 miles, Exclude national chains", optional: true }
-    ],
-    prompt: ({ businessName, businessType, location, service1, service2, service3, filters }) =>
-      `Based on the business details below, generate a list of relevant competitors. Focus on businesses offering similar services in the same target area. Include their names, websites (if available), and a brief note on what they do or how they compare.\n\nBusiness Name: ${businessName}\nBusiness Type: ${businessType}\nLocation / Catchment Area: ${location}\nMain Services / Offerings: ${service1}, ${service2}, ${service3}\n${filters ? `Optional Filters: ${filters}` : ""}`
-  },
+      description: "Get the phone ringing. Turn nearby searches into real leads — with local strategies that actually work.",
+      inputs: [
+        { name: "companyName", label: "Company Name", type: "text" },
+        { name: "businessAddress", label: "Business Address", type: "text" },
+        { name: "website", label: "Website URL", type: "text" },
+        { name: "phoneNumber", label: "Phone Number", type: "text" },
+        { name: "businessType", label: "Business Type / Industry", type: "text", placeholder: "e.g., Fire Safety Consultancy, Cleaning Services, Electrician" },
+        { name: "service1", label: "Core Service/Product 1", type: "text" },
+        { name: "service2", label: "Core Service/Product 2", type: "text" },
+        { name: "service3", label: "Core Service/Product 3", type: "text" },
+        { name: "targetArea", label: "Target Area / Catchment", type: "text", placeholder: "e.g., Within 15 miles of Croydon, Central London, Essex" },
+        { name: "targetAudience", label: "Target Audience", type: "text", placeholder: "e.g., Homeowners, Commercial Landlords, SMEs" },
+        { name: "marketingChannels", label: "Current Marketing Channels in Use", type: "text", placeholder: "e.g., Google Ads, Facebook Ads, Google Business Profile, Website SEO" },
+        { name: "monthlyBudget", label: "Monthly Marketing Budget", type: "text", placeholder: "e.g., £500/month, Not set, Up to £2K" },
+        { name: "leadHandlingProcess", label: "Lead Handling Process", type: "text", placeholder: "e.g., Direct calls, Contact form, WhatsApp, CRM use" },
+        { name: "businessGoals", label: "Business Goals", type: "text", placeholder: "e.g., 10 new client leads per week, 25% increase in local calls, grow mailing list" }
+      ],
+      prompt: ({ companyName, businessAddress, website, phoneNumber, businessType, service1, service2, service3, targetArea, targetAudience, marketingChannels, monthlyBudget, leadHandlingProcess, businessGoals }) => {
+        return `Create a comprehensive local lead generation strategy for the following business to increase inbound enquiries, bookings, or calls from the local area:\n\nCompany Name: ${companyName}\nBusiness Address: ${businessAddress}\nWebsite URL: ${website}\nPhone Number: ${phoneNumber}\nBusiness Type: ${businessType}\nCore Services/Products: ${service1}, ${service2}, ${service3}\nTarget Area / Catchment: ${targetArea}\nTarget Audience: ${targetAudience}\nCurrent Marketing Channels in Use: ${marketingChannels}\nMonthly Marketing Budget: ${monthlyBudget}\nLead Handling Process: ${leadHandlingProcess}\nBusiness Goals: ${businessGoals}\n\nGenerate a Local Lead Generation Strategy that includes:\n1. Lead Source Audit (Where leads are likely to come from or being lost)\n2. Local SEO Optimisation Tips (including GBP, citations, keyword strategy)\n3. Google Ads Setup Recommendations (Targeting, ad types, local extensions)\n4. Facebook/Instagram Ad Suggestions (Creative angles, audience targeting)\n5. Lead Magnet Ideas (Free guides, checklists, audits, discounts)\n6. Conversion Optimisation for Website & Contact Points\n7. Referral and Review-Based Lead Boosting Techniques\n8. Local PR and Partnership Ideas for Exposure\n9. CRM / Lead Tracking Suggestions (If applicable)\n10. 30-Day Action Plan to Increase Local Leads\n\nStructure the response with clear headings, bullet points, and a prioritised plan of action. Make the output suitable for a local service business aiming to increase visibility and convert interest into enquiries.`;
+      }
+    },
+    "Estimating & Job Quoter": {
+      description: "Quote it like a pro. Make pricing simple, sharp, and stress-free with clean, client-ready job quotes in seconds.",
+      inputs: [
+        { name: "companyName", label: "Company Name", type: "text" },
+        { name: "businessAddress", label: "Business Address", type: "text" },
+        { name: "website", label: "Website URL", type: "text" },
+        { name: "contactInfo", label: "Phone / Email Contact", type: "text" },
+        { name: "businessType", label: "Business Type / Industry", type: "text", placeholder: "e.g., Fire Risk Assessments, Landscaping, Home Renovations" },
+        { name: "service1", label: "Main Service Offered 1", type: "text" },
+        { name: "service2", label: "Main Service Offered 2", type: "text" },
+        { name: "service3", label: "Main Service Offered 3", type: "text" },
+        { name: "serviceArea", label: "Service Area / Region Covered", type: "text", placeholder: "e.g., Greater London, East Midlands, UK-wide" },
+        { name: "clientTypes", label: "Client Types", type: "text", placeholder: "e.g., Residential, Commercial, Landlords, Public Sector" },
+        { name: "projectSizes", label: "Typical Project Sizes or Ranges", type: "text", placeholder: "e.g., £200–£2,000, or £3K+ full jobs" },
+        { name: "quotingMethod", label: "Current Method for Quoting", type: "text", placeholder: "e.g., Manual Excel sheet, Email replies, Verbal estimates" },
+        { name: "quotingChallenges", label: "Quoting Challenges Faced", type: "text", placeholder: "e.g., Inconsistent pricing, Delayed replies, Low conversion rate" },
+        { name: "desiredOutcome", label: "Desired Outcome", type: "text", placeholder: "e.g., Faster quoting, More accepted quotes, Better margin control" }
+      ],
+      prompt: ({ companyName, businessAddress, website, contactInfo, businessType, service1, service2, service3, serviceArea, clientTypes, projectSizes, quotingMethod, quotingChallenges, desiredOutcome }) => {
+        return `Create a tailored estimating and job quoting system for the following service-based business to improve consistency, professionalism, and conversion rates for incoming enquiries:\n\nCompany Name: ${companyName}\nBusiness Address: ${businessAddress}\nWebsite URL: ${website}\nPhone / Email Contact: ${contactInfo}\nBusiness Type: ${businessType}\nMain Services Offered: ${service1}, ${service2}, ${service3}\nService Area / Region Covered: ${serviceArea}\nClient Types: ${clientTypes}\nTypical Project Sizes or Ranges: ${projectSizes}\nCurrent Method for Quoting: ${quotingMethod}\nQuoting Challenges Faced: ${quotingChallenges}\nDesired Outcome: ${desiredOutcome}\n\nGenerate a professional Estimating & Job Quoting System that includes:\n1. Quote Structure Template (What sections every quote should include)\n2. Suggested Tools or Platforms for Quote Generation (e.g., Google Sheets, Jobber, Quotient)\n3. Pre-set Price Guide Examples (if relevant to industry)\n4. Variables to Consider When Estimating (e.g., labour, travel, materials, urgency)\n5. Upsell Opportunities and Optional Add-ons\n6. Follow-up Process After Sending a Quote (Templates and timing)\n7. Mobile or On-Site Quoting Tips (if applicable)\n8. Terms & Conditions / Payment Terms Recommendations\n9. Branding Tips for Quotes (Professional design, logo, company details)\n10. Quote-to-Job Conversion Boosters (e.g., instant booking links, testimonials, guarantee badges)\n\nPresent the output with clear sections, practical tools, and step-by-step tips — suitable for improving both speed and professionalism in quoting jobs for a local service business.`;
+      }
+    }
 
-  "Keywords Generator": {
-    description: "Find the right words. Get high-impact keywords tailored to your services and location.",
-    inputs: [
-      { name: "businessName", label: "Business Name", type: "text", placeholder: "Insert company name", optional: true },
-      { name: "businessType", label: "Business Type / Industry", type: "text", placeholder: "e.g., Electrician, Probate Solicitor, Digital Marketing Agency" },
-      { name: "service1", label: "Target Service or Product 1", type: "text" },
-      { name: "service2", label: "Target Service or Product 2", type: "text" },
-      { name: "service3", label: "Target Service or Product 3", type: "text" },
-      { name: "location", label: "Target Location / Area", type: "text", placeholder: "e.g., London, Birmingham, UK-wide" },
-      { name: "goal", label: "Primary Goal", type: "text", placeholder: "e.g., Improve SEO, Run Google Ads, Rank locally" },
-      { name: "notes", label: "Optional Notes", type: "text", placeholder: "e.g., Avoid branded terms / Focus on commercial intent", optional: true }
-    ],
-    prompt: ({ businessName, businessType, service1, service2, service3, location, goal, notes }) =>
-      `Generate a list of relevant keywords based on the business details below. Include a mix of high-intent, local, and long-tail keywords where appropriate. Prioritise terms that are likely to attract targeted traffic or leads.\n\n${businessName ? `Business Name: ${businessName}\n` : ""}Business Type: ${businessType}\nTarget Services or Products: ${service1}, ${service2}, ${service3}\nTarget Location / Area: ${location}\nPrimary Goal: ${goal}\n${notes ? `Additional Notes: ${notes}` : ""}`
   },
+  "marketing-seo": {
+    "Competitor List": {
+      description: "See who you're up against. Generate a tailored list of local or industry-specific competitors in seconds.",
+      inputs: [
+        { name: "businessName", label: "Your Business Name", type: "text" },
+        { name: "businessType", label: "Business Type / Industry", type: "text", placeholder: "e.g., Roofing, Digital Marketing, Fire Safety Consultancy" },
+        { name: "location", label: "Location / Catchment Area", type: "text", placeholder: "e.g., East London, UK-wide, 15-mile radius around Manchester" },
+        { name: "service1", label: "Main Service / Offering 1", type: "text" },
+        { name: "service2", label: "Main Service / Offering 2", type: "text" },
+        { name: "service3", label: "Main Service / Offering 3", type: "text" },
+        { name: "filters", label: "Optional Filters", type: "text", placeholder: "e.g., Only top-rated, Only within 10 miles, Exclude national chains", optional: true }
+      ],
+      prompt: ({ businessName, businessType, location, service1, service2, service3, filters }) =>
+        `Based on the business details below, generate a list of relevant competitors. Focus on businesses offering similar services in the same target area. Include their names, websites (if available), and a brief note on what they do or how they compare.\n\nBusiness Name: ${businessName}\nBusiness Type: ${businessType}\nLocation / Catchment Area: ${location}\nMain Services / Offerings: ${service1}, ${service2}, ${service3}\n${filters ? `Optional Filters: ${filters}` : ""}`
+    },
 
-  "Related Business Categories": {
-    description: "Explore smart add-ons. Discover industries and services that naturally connect with your business.",
-    inputs: [
-      { name: "businessName", label: "Business Name", type: "text", placeholder: "Insert your company name", optional: true },
-      { name: "businessType", label: "Primary Industry or Business Type", type: "text", placeholder: "e.g., Fire Safety, Web Design, Landscaping" },
-      { name: "service1", label: "Core Service / Offering 1", type: "text" },
-      { name: "service2", label: "Core Service / Offering 2", type: "text" },
-      { name: "service3", label: "Core Service / Offering 3", type: "text" },
-      { name: "targetMarket", label: "Target Market / Clients", type: "text", placeholder: "e.g., Landlords, SMEs, Local homeowners" },
-      { name: "purpose", label: "Purpose of the Category Suggestions", type: "text", placeholder: "e.g., Business expansion, Cross-marketing, Lead partnerships" }
-    ],
-    prompt: ({ businessName, businessType, service1, service2, service3, targetMarket, purpose }) =>
-      `Based on the business information provided, generate a list of related or complementary business categories. Include options that could lead to strategic growth, service expansion, or local partnerships.\n\n${businessName ? `Business Name: ${businessName}\n` : ""}Primary Industry: ${businessType}\nCore Services / Offerings: ${service1}, ${service2}, ${service3}\nTarget Market / Clients: ${targetMarket}\nPurpose of Suggestions: ${purpose}`
-  }
-},
-"social-media-posts":{
- "Google My Business": {
-    description: "Stay active and local. Create a post for your Google profile that attracts attention — and action.",
-    inputs: [
-      { name: "businessName", label: "Business Name", type: "text" },
-      { name: "businessType", label: "Type of Business / Industry", type: "text", placeholder: "e.g., Fire Risk Assessments, Beauty Salon, Law Firm" },
-      { name: "postType", label: "Post Type", type: "text", placeholder: "e.g., Announcement, Special Offer, Service Highlight, Event, Seasonal Message" },
-      { name: "mainMessage", label: "Main Message or Topic", type: "text", placeholder: "e.g., Now offering weekend appointments / 10% off this month / Meet our team" },
-      { name: "targetLocation", label: "Target Location / Audience", type: "text", placeholder: "e.g., Croydon, East London, Local homeowners" },
-      { name: "callToAction", label: "Preferred Call to Action", type: "text", placeholder: "e.g., Call now, Learn more, Book today" },
-      { name: "tone", label: "Tone (optional)", type: "text", placeholder: "e.g., Friendly, Professional, Energetic" },
-      { name: "numberOfPosts", label: "Number of Posts to Generate", type: "select", options: ["1", "5", "10", "15", "30", "50"] }
-    ],
-    prompt: ({ businessName, businessType, postType, mainMessage, targetLocation, callToAction, tone, numberOfPosts }) =>
-      `Create ${numberOfPosts} compelling Google Business Profile ${numberOfPosts > 1 ? 'posts' : 'post'} for the business below. Make ${numberOfPosts > 1 ? 'them' : 'it'} engaging, relevant to the audience, and optimised to encourage clicks, calls, or bookings. Include a clear call to action.\n\nBusiness Name: ${businessName}\nBusiness Type: ${businessType}\nPost Type: ${postType}\nMain Message: ${mainMessage}\nTarget Location/Audience: ${targetLocation}\nCall to Action: ${callToAction}${tone ? `\nTone: ${tone}` : ''}`
-  },
-  
-  "LinkedIn": {
-    description: "Build your presence. Create professional LinkedIn posts to grow your brand and spark engagement.",
-    inputs: [
-      { name: "businessName", label: "Business Name", type: "text" },
-      { name: "industry", label: "Industry / Sector", type: "text", placeholder: "e.g., Fire Engineering, Marketing, Software, Legal" },
-      { name: "targetAudience", label: "Target Audience", type: "text", placeholder: "e.g., Property professionals, SME owners, HR managers" },
-      { name: "keyMessage1", label: "Key Message/Theme 1 (optional)", type: "text", placeholder: "e.g., Industry tips, Business milestones" },
-      { name: "keyMessage2", label: "Key Message/Theme 2 (optional)", type: "text", placeholder: "e.g., Case studies, Recruitment" },
-      { name: "keyMessage3", label: "Key Message/Theme 3 (optional)", type: "text", placeholder: "e.g., Partnerships, Product launches" },
-      { name: "tonePreference", label: "Tone Preference", type: "text", placeholder: "e.g., Professional, Insightful, Conversational, Thought-leadership" },
-      { name: "ctaStyle", label: "Call to Action Style (optional)", type: "text", placeholder: "e.g., Invite comments, Link to service, Encourage contact" },
-      { name: "numberOfPosts", label: "Number of Posts to Generate", type: "select", options: ["1", "5", "10", "15", "30", "50"] }
-    ],
-    prompt: ({ businessName, industry, targetAudience, keyMessage1, keyMessage2, keyMessage3, tonePreference, ctaStyle, numberOfPosts }) => {
-      const keyMessages = [keyMessage1, keyMessage2, keyMessage3].filter(msg => msg).join(", ");
-      return `Create ${numberOfPosts} LinkedIn ${numberOfPosts > 1 ? 'posts' : 'post'} for the business below. ${numberOfPosts > 1 ? 'Posts' : 'The post'} should be professional, thought-provoking, and relevant to the business's industry or audience. ${numberOfPosts > 1 ? 'Vary content types (e.g., insights, announcements, tips, team highlights)' : ''}, and include light calls to action when appropriate.\n\nBusiness Name: ${businessName}\nIndustry/Sector: ${industry}\nTarget Audience: ${targetAudience}${keyMessages ? `\nKey Messages/Themes: ${keyMessages}` : ''}\nTone Preference: ${tonePreference}${ctaStyle ? `\nCall to Action Style: ${ctaStyle}` : ''}`;
+    "Keywords Generator": {
+      description: "Find the right words. Get high-impact keywords tailored to your services and location.",
+      inputs: [
+        { name: "businessName", label: "Business Name", type: "text", placeholder: "Insert company name", optional: true },
+        { name: "businessType", label: "Business Type / Industry", type: "text", placeholder: "e.g., Electrician, Probate Solicitor, Digital Marketing Agency" },
+        { name: "service1", label: "Target Service or Product 1", type: "text" },
+        { name: "service2", label: "Target Service or Product 2", type: "text" },
+        { name: "service3", label: "Target Service or Product 3", type: "text" },
+        { name: "location", label: "Target Location / Area", type: "text", placeholder: "e.g., London, Birmingham, UK-wide" },
+        { name: "goal", label: "Primary Goal", type: "text", placeholder: "e.g., Improve SEO, Run Google Ads, Rank locally" },
+        { name: "notes", label: "Optional Notes", type: "text", placeholder: "e.g., Avoid branded terms / Focus on commercial intent", optional: true }
+      ],
+      prompt: ({ businessName, businessType, service1, service2, service3, location, goal, notes }) =>
+        `Generate a list of relevant keywords based on the business details below. Include a mix of high-intent, local, and long-tail keywords where appropriate. Prioritise terms that are likely to attract targeted traffic or leads.\n\n${businessName ? `Business Name: ${businessName}\n` : ""}Business Type: ${businessType}\nTarget Services or Products: ${service1}, ${service2}, ${service3}\nTarget Location / Area: ${location}\nPrimary Goal: ${goal}\n${notes ? `Additional Notes: ${notes}` : ""}`
+    },
+
+    "Related Business Categories": {
+      description: "Explore smart add-ons. Discover industries and services that naturally connect with your business.",
+      inputs: [
+        { name: "businessName", label: "Business Name", type: "text", placeholder: "Insert your company name", optional: true },
+        { name: "businessType", label: "Primary Industry or Business Type", type: "text", placeholder: "e.g., Fire Safety, Web Design, Landscaping" },
+        { name: "service1", label: "Core Service / Offering 1", type: "text" },
+        { name: "service2", label: "Core Service / Offering 2", type: "text" },
+        { name: "service3", label: "Core Service / Offering 3", type: "text" },
+        { name: "targetMarket", label: "Target Market / Clients", type: "text", placeholder: "e.g., Landlords, SMEs, Local homeowners" },
+        { name: "purpose", label: "Purpose of the Category Suggestions", type: "text", placeholder: "e.g., Business expansion, Cross-marketing, Lead partnerships" }
+      ],
+      prompt: ({ businessName, businessType, service1, service2, service3, targetMarket, purpose }) =>
+        `Based on the business information provided, generate a list of related or complementary business categories. Include options that could lead to strategic growth, service expansion, or local partnerships.\n\n${businessName ? `Business Name: ${businessName}\n` : ""}Primary Industry: ${businessType}\nCore Services / Offerings: ${service1}, ${service2}, ${service3}\nTarget Market / Clients: ${targetMarket}\nPurpose of Suggestions: ${purpose}`
     }
   },
-  
-  "Instagram": {
-    description: "Look good, sound great. Get Instagram-ready captions to boost your brand and engagement.",
-    inputs: [
-      { name: "businessName", label: "Business Name", type: "text" },
-      { name: "businessType", label: "Business Type / Industry", type: "text", placeholder: "e.g., Skincare Clinic, Gym, Coffee Shop, Tradesperson" },
-      { name: "targetAudience", label: "Target Audience", type: "text", placeholder: "e.g., Local customers, Millennials, Business owners" },
-      { name: "theme1", label: "Post Theme 1 (optional)", type: "text", placeholder: "e.g., Promotions, Tips" },
-      { name: "theme2", label: "Post Theme 2 (optional)", type: "text", placeholder: "e.g., Team features, Product highlights" },
-      { name: "theme3", label: "Post Theme 3 (optional)", type: "text", placeholder: "e.g., Client feedback, Behind the scenes" },
-      { name: "tonePreference", label: "Tone Preference", type: "text", placeholder: "e.g., Friendly, Fun, Trendy, Minimalist, Community-focused" },
-      { name: "hashtags", label: "Hashtags to Include (optional)", type: "text", placeholder: "e.g., #LondonCafes, #GlowUpTips, #HomeSafety" },
-      { name: "ctaStyle", label: "Call to Action Style (optional)", type: "text", placeholder: "e.g., Book now, Tag a friend, DM us, Visit the link in bio" },
-      { name: "numberOfPosts", label: "Number of Posts to Generate", type: "select", options: ["1", "5", "10", "15", "30", "50"] }
-    ],
-    prompt: ({ businessName, businessType, targetAudience, theme1, theme2, theme3, tonePreference, hashtags, ctaStyle, numberOfPosts }) => {
-      const themes = [theme1, theme2, theme3].filter(theme => theme).join(", ");
-      return `Create ${numberOfPosts} Instagram ${numberOfPosts > 1 ? 'captions' : 'caption'} for the business below. ${numberOfPosts > 1 ? 'Captions' : 'The caption'} should be engaging, visually descriptive, and relevant to the business's industry or audience. ${numberOfPosts > 1 ? 'Vary content types' : ''} and include appropriate calls to action.\n\nBusiness Name: ${businessName}\nBusiness Type/Industry: ${businessType}\nTarget Audience: ${targetAudience}${themes ? `\nPost Themes: ${themes}` : ''}\nTone Preference: ${tonePreference}${hashtags ? `\nHashtags to Include: ${hashtags}` : ''}${ctaStyle ? `\nCall to Action Style: ${ctaStyle}` : ''}`;
+  "social-media-posts": {
+    "Google My Business": {
+      description: "Stay active and local. Create a post for your Google profile that attracts attention — and action.",
+      inputs: [
+        { name: "businessName", label: "Business Name", type: "text" },
+        { name: "businessType", label: "Type of Business / Industry", type: "text", placeholder: "e.g., Fire Risk Assessments, Beauty Salon, Law Firm" },
+        { name: "postType", label: "Post Type", type: "text", placeholder: "e.g., Announcement, Special Offer, Service Highlight, Event, Seasonal Message" },
+        { name: "mainMessage", label: "Main Message or Topic", type: "text", placeholder: "e.g., Now offering weekend appointments / 10% off this month / Meet our team" },
+        { name: "targetLocation", label: "Target Location / Audience", type: "text", placeholder: "e.g., Croydon, East London, Local homeowners" },
+        { name: "callToAction", label: "Preferred Call to Action", type: "text", placeholder: "e.g., Call now, Learn more, Book today" },
+        { name: "tone", label: "Tone (optional)", type: "text", placeholder: "e.g., Friendly, Professional, Energetic" },
+        { name: "numberOfPosts", label: "Number of Posts to Generate", type: "select", options: ["1", "5", "10", "15", "30", "50"] }
+      ],
+      prompt: ({ businessName, businessType, postType, mainMessage, targetLocation, callToAction, tone, numberOfPosts }) =>
+        `Create ${numberOfPosts} compelling Google Business Profile ${numberOfPosts > 1 ? 'posts' : 'post'} for the business below. Make ${numberOfPosts > 1 ? 'them' : 'it'} engaging, relevant to the audience, and optimised to encourage clicks, calls, or bookings. Include a clear call to action.\n\nBusiness Name: ${businessName}\nBusiness Type: ${businessType}\nPost Type: ${postType}\nMain Message: ${mainMessage}\nTarget Location/Audience: ${targetLocation}\nCall to Action: ${callToAction}${tone ? `\nTone: ${tone}` : ''}`
+    },
+
+    "LinkedIn": {
+      description: "Build your presence. Create professional LinkedIn posts to grow your brand and spark engagement.",
+      inputs: [
+        { name: "businessName", label: "Business Name", type: "text" },
+        { name: "industry", label: "Industry / Sector", type: "text", placeholder: "e.g., Fire Engineering, Marketing, Software, Legal" },
+        { name: "targetAudience", label: "Target Audience", type: "text", placeholder: "e.g., Property professionals, SME owners, HR managers" },
+        { name: "keyMessage1", label: "Key Message/Theme 1 (optional)", type: "text", placeholder: "e.g., Industry tips, Business milestones" },
+        { name: "keyMessage2", label: "Key Message/Theme 2 (optional)", type: "text", placeholder: "e.g., Case studies, Recruitment" },
+        { name: "keyMessage3", label: "Key Message/Theme 3 (optional)", type: "text", placeholder: "e.g., Partnerships, Product launches" },
+        { name: "tonePreference", label: "Tone Preference", type: "text", placeholder: "e.g., Professional, Insightful, Conversational, Thought-leadership" },
+        { name: "ctaStyle", label: "Call to Action Style (optional)", type: "text", placeholder: "e.g., Invite comments, Link to service, Encourage contact" },
+        { name: "numberOfPosts", label: "Number of Posts to Generate", type: "select", options: ["1", "5", "10", "15", "30", "50"] }
+      ],
+      prompt: ({ businessName, industry, targetAudience, keyMessage1, keyMessage2, keyMessage3, tonePreference, ctaStyle, numberOfPosts }) => {
+        const keyMessages = [keyMessage1, keyMessage2, keyMessage3].filter(msg => msg).join(", ");
+        return `Create ${numberOfPosts} LinkedIn ${numberOfPosts > 1 ? 'posts' : 'post'} for the business below. ${numberOfPosts > 1 ? 'Posts' : 'The post'} should be professional, thought-provoking, and relevant to the business's industry or audience. ${numberOfPosts > 1 ? 'Vary content types (e.g., insights, announcements, tips, team highlights)' : ''}, and include light calls to action when appropriate.\n\nBusiness Name: ${businessName}\nIndustry/Sector: ${industry}\nTarget Audience: ${targetAudience}${keyMessages ? `\nKey Messages/Themes: ${keyMessages}` : ''}\nTone Preference: ${tonePreference}${ctaStyle ? `\nCall to Action Style: ${ctaStyle}` : ''}`;
+      }
+    },
+
+    "Instagram": {
+      description: "Look good, sound great. Get Instagram-ready captions to boost your brand and engagement.",
+      inputs: [
+        { name: "businessName", label: "Business Name", type: "text" },
+        { name: "businessType", label: "Business Type / Industry", type: "text", placeholder: "e.g., Skincare Clinic, Gym, Coffee Shop, Tradesperson" },
+        { name: "targetAudience", label: "Target Audience", type: "text", placeholder: "e.g., Local customers, Millennials, Business owners" },
+        { name: "theme1", label: "Post Theme 1 (optional)", type: "text", placeholder: "e.g., Promotions, Tips" },
+        { name: "theme2", label: "Post Theme 2 (optional)", type: "text", placeholder: "e.g., Team features, Product highlights" },
+        { name: "theme3", label: "Post Theme 3 (optional)", type: "text", placeholder: "e.g., Client feedback, Behind the scenes" },
+        { name: "tonePreference", label: "Tone Preference", type: "text", placeholder: "e.g., Friendly, Fun, Trendy, Minimalist, Community-focused" },
+        { name: "hashtags", label: "Hashtags to Include (optional)", type: "text", placeholder: "e.g., #LondonCafes, #GlowUpTips, #HomeSafety" },
+        { name: "ctaStyle", label: "Call to Action Style (optional)", type: "text", placeholder: "e.g., Book now, Tag a friend, DM us, Visit the link in bio" },
+        { name: "numberOfPosts", label: "Number of Posts to Generate", type: "select", options: ["1", "5", "10", "15", "30", "50"] }
+      ],
+      prompt: ({ businessName, businessType, targetAudience, theme1, theme2, theme3, tonePreference, hashtags, ctaStyle, numberOfPosts }) => {
+        const themes = [theme1, theme2, theme3].filter(theme => theme).join(", ");
+        return `Create ${numberOfPosts} Instagram ${numberOfPosts > 1 ? 'captions' : 'caption'} for the business below. ${numberOfPosts > 1 ? 'Captions' : 'The caption'} should be engaging, visually descriptive, and relevant to the business's industry or audience. ${numberOfPosts > 1 ? 'Vary content types' : ''} and include appropriate calls to action.\n\nBusiness Name: ${businessName}\nBusiness Type/Industry: ${businessType}\nTarget Audience: ${targetAudience}${themes ? `\nPost Themes: ${themes}` : ''}\nTone Preference: ${tonePreference}${hashtags ? `\nHashtags to Include: ${hashtags}` : ''}${ctaStyle ? `\nCall to Action Style: ${ctaStyle}` : ''}`;
+      }
     }
-  }
-},
-"other":{
+  },
+  "other": {
     "Video Script": {
-    description: "Script it like a pro. Create a clear, engaging video script tailored to your brand, audience, and message.",
-    inputs: [
-      { name: "businessName", label: "Business Name", type: "text" },
-      { name: "videoPurpose", label: "Video Purpose", type: "text", placeholder: "e.g., Promo, Explainer, Testimonial, Social Ad, Event teaser" },
-      { name: "targetAudience", label: "Target Audience", type: "text", placeholder: "e.g., Homeowners, Business clients, Local community" },
-      { name: "mainMessage", label: "Main Message / Focus", type: "text", placeholder: "e.g., Why choose us?, How our service works, Limited-time offer" },
-      { name: "platform", label: "Platform (optional)", type: "text", placeholder: "e.g., Instagram, YouTube, Website, TikTok" },
-      { name: "tonePreference", label: "Tone Preference", type: "text", placeholder: "e.g., Friendly, Direct, Professional, Inspiring" },
-      { name: "callToAction", label: "Call to Action", type: "text", placeholder: "e.g., Book now, Call us, Visit our website" },
-      { name: "preferredLength", label: "Preferred Length (optional)", type: "text", placeholder: "e.g., 30 seconds, 60–90 seconds, 2 minutes" }
-    ],
-    prompt: ({ businessName, videoPurpose, targetAudience, mainMessage, platform, tonePreference, callToAction, preferredLength }) =>
-      `Write a clear, engaging video script for the business below. The script should match the video's goal and audience, include a strong hook, explain the core message, and end with a clear call to action. Keep the tone and length appropriate for the platform.\n\nBusiness Name: ${businessName}\nVideo Purpose: ${videoPurpose}\nTarget Audience: ${targetAudience}\nMain Message/Focus: ${mainMessage}${platform ? `\nPlatform: ${platform}` : ''}\nTone Preference: ${tonePreference}\nCall to Action: ${callToAction}${preferredLength ? `\nPreferred Length: ${preferredLength}` : ''}`
-  },
-  
-  "Review Response": {
-    description: "Reply with care. Generate polite, thoughtful responses to customer reviews — good or bad.",
-    inputs: [
-      { name: "customerReview", label: "Customer Review", type: "textarea" },
-      { name: "reviewSentiment", label: "Review Sentiment", type: "select", options: ["Positive", "Neutral", "Negative"] },
-      { name: "businessName", label: "Business Name", type: "text" },
-      { name: "optionalDetails", label: "Optional Details to Mention (if any)", type: "text", placeholder: "e.g., Specific service, Team member name, Booking date" },
-      { name: "tonePreference", label: "Tone Preference (optional)", type: "text", placeholder: "e.g., Friendly, Formal, Sincere, Reassuring" }
-    ],
-    prompt: ({ customerReview, reviewSentiment, businessName, optionalDetails, tonePreference }) =>
-      `Write a professional, personalised response to the customer review below. Match the tone of the review (${reviewSentiment.toLowerCase()}) and reflect the brand's values. Be polite, concise, and include a thank-you or resolution where appropriate.\n\nCustomer Review: "${customerReview}"\nBusiness Name: ${businessName}${optionalDetails ? `\nDetails to Mention: ${optionalDetails}` : ''}${tonePreference ? `\nTone Preference: ${tonePreference}` : ''}`
-  },
-  
-  "Review Generator": {
-    description: "Showcase great feedback. Create realistic, positive reviews to promote your business or prepare examples.",
-    inputs: [
-      { name: "businessName", label: "Business Name", type: "text" },
-      { name: "businessType", label: "Type of Business / Industry", type: "text", placeholder: "e.g., Electrician, Solicitor, Restaurant, Fitness Coach" },
-      { name: "serviceUsed", label: "Service or Product Used", type: "text", placeholder: "e.g., Fire risk assessment, Logo design, Facial treatment" },
-      { name: "highlight1", label: "Customer Experience Highlight 1", type: "text", placeholder: "e.g., Friendly staff, Fast service" },
-      { name: "highlight2", label: "Customer Experience Highlight 2 (optional)", type: "text", placeholder: "e.g., Great value, Clean location" },
-      { name: "highlight3", label: "Customer Experience Highlight 3 (optional)", type: "text", placeholder: "e.g., Professional approach, Knowledgeable team" },
-      { name: "starRating", label: "Star Rating", type: "select", options: ["5 stars", "4 stars", "4.5 stars"] },
-      { name: "numberOfReviews", label: "Number of Reviews to Generate", type: "select", options: ["1", "5", "10", "15", "30"] },
-      { name: "tonePreference", label: "Tone Preference (optional)", type: "text", placeholder: "e.g., Friendly, Professional, Excited, Sincere" }
-    ],
-    prompt: ({ businessName, businessType, serviceUsed, highlight1, highlight2, highlight3, starRating, numberOfReviews, tonePreference }) => {
-      const highlights = [highlight1, highlight2, highlight3].filter(h => h).join(", ");
-      return `Write ${numberOfReviews} realistic, positive customer ${numberOfReviews > 1 ? 'reviews' : 'review'} based on the details provided below. Make ${numberOfReviews > 1 ? 'them' : 'it'} sound natural and specific, highlighting the business's strengths, service quality, or customer experience. ${numberOfReviews > 1 ? 'Vary the tone slightly between reviews.' : ''}\n\nBusiness Name: ${businessName}\nBusiness Type: ${businessType}\nService/Product Used: ${serviceUsed}\nCustomer Experience Highlights: ${highlights}\nStar Rating: ${starRating}${tonePreference ? `\nTone Preference: ${tonePreference}` : ''}`;
+      description: "Script it like a pro. Create a clear, engaging video script tailored to your brand, audience, and message.",
+      inputs: [
+        { name: "businessName", label: "Business Name", type: "text" },
+        { name: "videoPurpose", label: "Video Purpose", type: "text", placeholder: "e.g., Promo, Explainer, Testimonial, Social Ad, Event teaser" },
+        { name: "targetAudience", label: "Target Audience", type: "text", placeholder: "e.g., Homeowners, Business clients, Local community" },
+        { name: "mainMessage", label: "Main Message / Focus", type: "text", placeholder: "e.g., Why choose us?, How our service works, Limited-time offer" },
+        { name: "platform", label: "Platform (optional)", type: "text", placeholder: "e.g., Instagram, YouTube, Website, TikTok" },
+        { name: "tonePreference", label: "Tone Preference", type: "text", placeholder: "e.g., Friendly, Direct, Professional, Inspiring" },
+        { name: "callToAction", label: "Call to Action", type: "text", placeholder: "e.g., Book now, Call us, Visit our website" },
+        { name: "preferredLength", label: "Preferred Length (optional)", type: "text", placeholder: "e.g., 30 seconds, 60–90 seconds, 2 minutes" }
+      ],
+      prompt: ({ businessName, videoPurpose, targetAudience, mainMessage, platform, tonePreference, callToAction, preferredLength }) =>
+        `Write a clear, engaging video script for the business below. The script should match the video's goal and audience, include a strong hook, explain the core message, and end with a clear call to action. Keep the tone and length appropriate for the platform.\n\nBusiness Name: ${businessName}\nVideo Purpose: ${videoPurpose}\nTarget Audience: ${targetAudience}\nMain Message/Focus: ${mainMessage}${platform ? `\nPlatform: ${platform}` : ''}\nTone Preference: ${tonePreference}\nCall to Action: ${callToAction}${preferredLength ? `\nPreferred Length: ${preferredLength}` : ''}`
+    },
+
+    "Review Response": {
+      description: "Reply with care. Generate polite, thoughtful responses to customer reviews — good or bad.",
+      inputs: [
+        { name: "customerReview", label: "Customer Review", type: "textarea" },
+        { name: "reviewSentiment", label: "Review Sentiment", type: "select", options: ["Positive", "Neutral", "Negative"] },
+        { name: "businessName", label: "Business Name", type: "text" },
+        { name: "optionalDetails", label: "Optional Details to Mention (if any)", type: "text", placeholder: "e.g., Specific service, Team member name, Booking date" },
+        { name: "tonePreference", label: "Tone Preference (optional)", type: "text", placeholder: "e.g., Friendly, Formal, Sincere, Reassuring" }
+      ],
+      prompt: ({ customerReview, reviewSentiment, businessName, optionalDetails, tonePreference }) =>
+        `Write a professional, personalised response to the customer review below. Match the tone of the review (${reviewSentiment.toLowerCase()}) and reflect the brand's values. Be polite, concise, and include a thank-you or resolution where appropriate.\n\nCustomer Review: "${customerReview}"\nBusiness Name: ${businessName}${optionalDetails ? `\nDetails to Mention: ${optionalDetails}` : ''}${tonePreference ? `\nTone Preference: ${tonePreference}` : ''}`
+    },
+
+    "Review Generator": {
+      description: "Showcase great feedback. Create realistic, positive reviews to promote your business or prepare examples.",
+      inputs: [
+        { name: "businessName", label: "Business Name", type: "text" },
+        { name: "businessType", label: "Type of Business / Industry", type: "text", placeholder: "e.g., Electrician, Solicitor, Restaurant, Fitness Coach" },
+        { name: "serviceUsed", label: "Service or Product Used", type: "text", placeholder: "e.g., Fire risk assessment, Logo design, Facial treatment" },
+        { name: "highlight1", label: "Customer Experience Highlight 1", type: "text", placeholder: "e.g., Friendly staff, Fast service" },
+        { name: "highlight2", label: "Customer Experience Highlight 2 (optional)", type: "text", placeholder: "e.g., Great value, Clean location" },
+        { name: "highlight3", label: "Customer Experience Highlight 3 (optional)", type: "text", placeholder: "e.g., Professional approach, Knowledgeable team" },
+        { name: "starRating", label: "Star Rating", type: "select", options: ["5 stars", "4 stars", "4.5 stars"] },
+        { name: "numberOfReviews", label: "Number of Reviews to Generate", type: "select", options: ["1", "5", "10", "15", "30"] },
+        { name: "tonePreference", label: "Tone Preference (optional)", type: "text", placeholder: "e.g., Friendly, Professional, Excited, Sincere" }
+      ],
+      prompt: ({ businessName, businessType, serviceUsed, highlight1, highlight2, highlight3, starRating, numberOfReviews, tonePreference }) => {
+        const highlights = [highlight1, highlight2, highlight3].filter(h => h).join(", ");
+        return `Write ${numberOfReviews} realistic, positive customer ${numberOfReviews > 1 ? 'reviews' : 'review'} based on the details provided below. Make ${numberOfReviews > 1 ? 'them' : 'it'} sound natural and specific, highlighting the business's strengths, service quality, or customer experience. ${numberOfReviews > 1 ? 'Vary the tone slightly between reviews.' : ''}\n\nBusiness Name: ${businessName}\nBusiness Type: ${businessType}\nService/Product Used: ${serviceUsed}\nCustomer Experience Highlights: ${highlights}\nStar Rating: ${starRating}${tonePreference ? `\nTone Preference: ${tonePreference}` : ''}`;
+      }
+    },
+
+    "Privacy & Terms Generator": {
+      description: "Stay compliant with ease. Generate tailored privacy policies and terms for your website or online business.",
+      inputs: [
+        { name: "businessName", label: "Business Name", type: "text" },
+        { name: "businessType", label: "Business Type / Industry", type: "text", placeholder: "e.g., E-commerce, Consultancy, SaaS, Tradesperson" },
+        { name: "websiteURL", label: "Website URL", type: "text" },
+        { name: "targetCustomers", label: "Target Customers", type: "text", placeholder: "e.g., UK consumers, EU residents, B2B clients, US users" },
+        { name: "service1", label: "Service/Product 1", type: "text" },
+        { name: "service2", label: "Service/Product 2 (optional)", type: "text" },
+        { name: "service3", label: "Service/Product 3 (optional)", type: "text" },
+        { name: "collectUserData", label: "Does the website collect any user data?", type: "text", placeholder: "e.g., Yes – contact forms, analytics, cookies" },
+        { name: "optionalAdditions", label: "Optional Additions (if applicable)", type: "text", placeholder: "e.g., Returns policy, User accounts, Subscription terms, Age restrictions" },
+        { name: "preferredFormat", label: "Preferred Format", type: "select", options: ["Combined document", "Separate policies"] }
+      ],
+      prompt: ({ businessName, businessType, websiteURL, targetCustomers, service1, service2, service3, collectUserData, optionalAdditions, preferredFormat }) => {
+        const services = [service1, service2, service3].filter(s => s).join(", ");
+        return `Create tailored Privacy Policy and Terms & Conditions documents for the business below. Ensure the content is GDPR-compliant (if applicable), clearly written, and suitable for a public-facing website. Avoid legal jargon where possible and cover standard clauses relevant to the business type.\n\nBusiness Name: ${businessName}\nBusiness Type: ${businessType}\nWebsite URL: ${websiteURL}\nTarget Customers: ${targetCustomers}\nServices/Products Offered: ${services}\nUser Data Collection: ${collectUserData}${optionalAdditions ? `\nOptional Additions: ${optionalAdditions}` : ''}\nPreferred Format: ${preferredFormat}`;
+      }
     }
   },
-  
-  "Privacy & Terms Generator": {
-    description: "Stay compliant with ease. Generate tailored privacy policies and terms for your website or online business.",
-    inputs: [
-      { name: "businessName", label: "Business Name", type: "text" },
-      { name: "businessType", label: "Business Type / Industry", type: "text", placeholder: "e.g., E-commerce, Consultancy, SaaS, Tradesperson" },
-      { name: "websiteURL", label: "Website URL", type: "text" },
-      { name: "targetCustomers", label: "Target Customers", type: "text", placeholder: "e.g., UK consumers, EU residents, B2B clients, US users" },
-      { name: "service1", label: "Service/Product 1", type: "text" },
-      { name: "service2", label: "Service/Product 2 (optional)", type: "text" },
-      { name: "service3", label: "Service/Product 3 (optional)", type: "text" },
-      { name: "collectUserData", label: "Does the website collect any user data?", type: "text", placeholder: "e.g., Yes – contact forms, analytics, cookies" },
-      { name: "optionalAdditions", label: "Optional Additions (if applicable)", type: "text", placeholder: "e.g., Returns policy, User accounts, Subscription terms, Age restrictions" },
-      { name: "preferredFormat", label: "Preferred Format", type: "select", options: ["Combined document", "Separate policies"] }
-    ],
-    prompt: ({ businessName, businessType, websiteURL, targetCustomers, service1, service2, service3, collectUserData, optionalAdditions, preferredFormat }) => {
-      const services = [service1, service2, service3].filter(s => s).join(", ");
-      return `Create tailored Privacy Policy and Terms & Conditions documents for the business below. Ensure the content is GDPR-compliant (if applicable), clearly written, and suitable for a public-facing website. Avoid legal jargon where possible and cover standard clauses relevant to the business type.\n\nBusiness Name: ${businessName}\nBusiness Type: ${businessType}\nWebsite URL: ${websiteURL}\nTarget Customers: ${targetCustomers}\nServices/Products Offered: ${services}\nUser Data Collection: ${collectUserData}${optionalAdditions ? `\nOptional Additions: ${optionalAdditions}` : ''}\nPreferred Format: ${preferredFormat}`;
+  "content-writing": {
+    "Full Website": {
+      description: "Create well researched and fully optimised SEO content for your entire website including Home page, About us, Main services pages x 3, and contact us",
+      inputs: [
+        {
+          name: "businessDescription",
+          label: "Business/Company Description",
+          type: "textarea",
+          placeholder: "Provide a brief description of the business/company, including how long established, mission, values, and any unique aspects that differentiate it from competitors. Example: Plumbing services company has been established since 1998, serving London and surrounding areas..."
+        },
+        {
+          name: "companyName",
+          label: "Your Business/Company Name",
+          type: "text",
+          placeholder: "Enter your business name"
+        },
+        {
+          name: "service1",
+          label: "Service 1 (Primary Service)",
+          type: "text",
+          placeholder: "Enter primary service"
+        },
+        {
+          name: "service2",
+          label: "Service 2",
+          type: "text",
+          placeholder: "Enter service 2"
+        },
+        {
+          name: "service3",
+          label: "Service 3",
+          type: "text",
+          placeholder: "Enter service 3"
+        },
+        {
+          name: "businessAddress",
+          label: "Business/Company Address",
+          type: "text",
+          placeholder: "Enter address (skip if not relevant)"
+        },
+        {
+          name: "openingHours",
+          label: "Opening Hours",
+          type: "text",
+          placeholder: "Enter opening hours (skip if not relevant)"
+        },
+        {
+          name: "telephoneNumber",
+          label: "Telephone Number",
+          type: "text",
+          placeholder: "Enter telephone number (skip if not relevant)"
+        },
+        {
+          name: "emailAddress",
+          label: "Email Address",
+          type: "email",
+          placeholder: "Enter email address (skip if not relevant)"
+        },
+        {
+          name: "additionalKeywords",
+          label: "Additional Keywords (Optional)",
+          type: "textarea",
+          placeholder: "Enter up to 5 additional keywords, separated by commas (skip if not relevant)"
+        },
+        {
+          name: "whyChooseUs",
+          label: "Why Choose Our Services?",
+          type: "textarea",
+          placeholder: "Enter 4 reasons why customers should choose you. Examples: Free quotations, over 30 years experience, same day service, fully qualified"
+        }
+      ],
+      prompt: ({ businessDescription, companyName, service1, service2, service3, businessAddress, openingHours, telephoneNumber, emailAddress, additionalKeywords, whyChooseUs }) =>
+        `Create a full SEO-optimised website content written in British English for a business website. The content should be engaging, professional, informative, and well-structured. Please generate the following six website pages:
+
+Home Page (approx. 500–750 words)
+About Us Page (approx. 500–750 words)
+Three Services Pages (each approx. 750–1,000 words)
+Contact Us Page (approx. 200–300 words)
+
+Business Information:
+- Company Name: ${companyName}
+- Business Description: ${businessDescription}
+- Service 1: ${service1}
+- Service 2: ${service2}
+- Service 3: ${service3}
+- Address: ${businessAddress || 'Not provided'}
+- Opening Hours: ${openingHours || 'Not provided'}
+- Phone: ${telephoneNumber || 'Not provided'}
+- Email: ${emailAddress || 'Not provided'}
+- Additional Keywords: ${additionalKeywords || 'Not provided'}
+- Why Choose Us: ${whyChooseUs}
+
+Please ensure:
+- Clear structure with subheadings
+- Bullet points where helpful
+- Tone is professional but approachable
+- SEO optimisation using the keywords provided
+- Content must reflect credibility and trustworthiness
+- All content follows British English conventions
+- Include SEO elements (permalink, meta title, meta description) for each page
+
+Structure each page clearly with titles and formatting so it can be easily readable and shows they are all separate pages.`
+    },
+
+    "Home Page": {
+      description: "Write well researched and SEO friendly content for your website's homepage",
+      inputs: [
+        {
+          name: "businessDescription",
+          label: "Business/Company Description",
+          type: "textarea",
+          placeholder: "Provide a brief description including how long established, mission, values, and unique aspects. Example: Plumbing services company established since 1998..."
+        },
+        {
+          name: "companyName",
+          label: "Your Business/Company Name",
+          type: "text",
+          placeholder: "Enter your business name"
+        },
+        {
+          name: "service1",
+          label: "Service 1 (Primary Service)",
+          type: "text",
+          placeholder: "Enter primary service"
+        },
+        {
+          name: "service2",
+          label: "Service 2",
+          type: "text",
+          placeholder: "Enter service 2"
+        },
+        {
+          name: "service3",
+          label: "Service 3",
+          type: "text",
+          placeholder: "Enter service 3"
+        },
+        {
+          name: "businessAddress",
+          label: "Business Address (Optional)",
+          type: "text",
+          placeholder: "Enter address"
+        },
+        {
+          name: "openingHours",
+          label: "Opening Hours (Optional)",
+          type: "text",
+          placeholder: "Enter opening hours"
+        },
+        {
+          name: "telephoneNumber",
+          label: "Telephone Number (Optional)",
+          type: "text",
+          placeholder: "Enter telephone number"
+        },
+        {
+          name: "emailAddress",
+          label: "Email Address (Optional)",
+          type: "email",
+          placeholder: "Enter email address"
+        }
+      ],
+      prompt: ({ businessDescription, companyName, service1, service2, service3, businessAddress, openingHours, telephoneNumber, emailAddress }) =>
+        `Write content for a website homepage in relation to the industry described below. Be creative in your research, focusing on a local business. Ensure the content is engaging, informative, and reflects a professional yet approachable tone. Use British English throughout.
+
+Business Information:
+- Company Name: ${companyName}
+- Business Description: ${businessDescription}
+- Service 1: ${service1}
+- Service 2: ${service2}
+- Service 3: ${service3}
+- Address: ${businessAddress || 'Not provided'}
+- Opening Hours: ${openingHours || 'Not provided'}
+- Phone: ${telephoneNumber || 'Not provided'}
+- Email: ${emailAddress || 'Not provided'}
+
+Please generate:
+
+**Company Overview:**
+- Engaging introduction highlighting expertise, values, and commitment to quality service
+
+**Headline Banner:**
+- Headline (7 words) and content underneath (15 words)
+
+**Mini Call to Action:**
+- Create a mini call to action button text
+
+**About Us:**
+- Compelling narrative about company history, values, and mission (120-150 words)
+
+**Services Offered:**
+- Detailed descriptions for each service emphasising benefits (50 words each)
+
+**Why Choose Us?**
+- Four strong unique selling points highlighting credibility and trustworthiness
+
+**Contact Details:**
+- Welcoming invitation with contact information
+
+**Customer Testimonials:**
+- Three realistic customer testimonials
+
+**Footer Banner:**
+- Headline (7 words) and content (approx 20 words)
+
+**Call to Action Options:**
+- 5 mini call to action button options
+
+**SEO Elements:**
+- URL-friendly permalink
+- Optimised meta title
+- Compelling meta description
+
+This structure ensures a comprehensive, well-researched homepage for local businesses.`
+    },
+
+    "About Us": {
+      description: "Write well researched and SEO friendly content for your website's about us page",
+      inputs: [
+        {
+          name: "businessDescription",
+          label: "Business/Company Description",
+          type: "textarea",
+          placeholder: "Provide a brief description including how long established, mission, values, and unique aspects..."
+        },
+        {
+          name: "companyName",
+          label: "Your Business/Company Name",
+          type: "text",
+          placeholder: "Enter your business name"
+        },
+        {
+          name: "wordCount",
+          label: "Word Count",
+          type: "number",
+          placeholder: "Enter desired word count (500-750 recommended)"
+        }
+      ],
+      prompt: ({ businessDescription, companyName, wordCount }) =>
+        `Write content for an About Us page that is professional, engaging, and well-structured. The content should reflect the company's identity while maintaining readability and clarity. Use British English throughout.
+
+Company Information:
+- Company Name: ${companyName}
+- Business Description: ${businessDescription}
+- Target Word Count: ${wordCount || '500-750'} words
+
+Please include:
+
+**Introduction:**
+- Engaging opening paragraph introducing the company and core values
+
+**Company History & Background:**
+- Overview of founding, growth journey, and key milestones
+- Industry experience, innovations, or special achievements
+
+**Mission & Values:**
+- Company mission and upheld values
+- Commitment to quality, customer service, and key principles
+
+**What We Do:**
+- Core services or products offered
+- What makes them unique and beneficial to customers
+
+**Why Choose Us?**
+- Compelling reasons for customer trust and choice
+- Certifications, awards, partnerships, or distinguishing factors
+
+**Call to Action:**
+- Encourage visitors to take the next step
+
+**SEO Elements:**
+- URL-friendly permalink
+- Optimised meta title
+- Compelling meta description
+
+Additional Notes:
+- Well-structured with subheadings and bullet points for clarity
+- SEO optimised with natural keyword incorporation
+- Formal yet approachable tone aligned with company branding`
+    },
+
+    "Service Page": {
+      description: "Write well researched and SEO friendly content for your business services page",
+      inputs: [
+        {
+          name: "businessDescription",
+          label: "Business/Company Description",
+          type: "textarea",
+          placeholder: "Provide a brief description including how long established, mission, values..."
+        },
+        {
+          name: "companyName",
+          label: "Your Business/Company Name",
+          type: "text",
+          placeholder: "Enter your business name"
+        },
+        {
+          name: "keyword1",
+          label: "Keyword 1 (Primary)",
+          type: "text",
+          placeholder: "Enter primary keyword/service"
+        },
+        {
+          name: "keyword2",
+          label: "Keyword 2",
+          type: "text",
+          placeholder: "Enter keyword 2"
+        },
+        {
+          name: "keyword3",
+          label: "Keyword 3",
+          type: "text",
+          placeholder: "Enter keyword 3"
+        },
+        {
+          name: "additionalKeywords",
+          label: "Additional Keywords (Optional)",
+          type: "textarea",
+          placeholder: "Enter up to 5 additional keywords, separated by commas"
+        },
+        {
+          name: "whyChooseUs",
+          label: "Why Choose Our Services?",
+          type: "textarea",
+          placeholder: "Enter 4 reasons. Examples: Free quotations, over 30 years experience, same day service, fully qualified"
+        },
+        {
+          name: "wordCount",
+          label: "Word Count",
+          type: "number",
+          placeholder: "Enter desired word count (500-750 recommended)"
+        }
+      ],
+      prompt: ({ businessDescription, companyName, keyword1, keyword2, keyword3, additionalKeywords, whyChooseUs, wordCount }) =>
+        `Write content for a Services Page that provides in-depth details about the services offered by the company. The content should maintain a professional, formal, and businesslike tone. The content should be well-researched, informative, and engaging. Use British English throughout.
+
+Company Information:
+- Company Name: ${companyName}
+- Business Description: ${businessDescription}
+- Primary Keywords: ${keyword1}, ${keyword2}, ${keyword3}
+- Additional Keywords: ${additionalKeywords || 'Not provided'}
+- Why Choose Us: ${whyChooseUs || 'Generate automatically'}
+- Target Word Count: ${wordCount || '500-750'} words
+
+Please include:
+
+**Services Overview:**
+- Introduction summarising core services and industry relevance
+
+**Detailed Service Descriptions:**
+For each keyword/service:
+- Detailed explanation including how it works, key features, and benefits
+- Why the service is important and how it stands out from competitors
+- Additional options, customisations, or related complementary services
+
+**Why Choose Our Services?**
+- Use provided reasons or generate compelling reasons highlighting reliability, efficiency, and value
+- Include industry expertise, certifications, or guarantees that reinforce trust
+
+**Call to Action:**
+- Strong call to action encouraging readers to get in touch
+- Suggestions like 'Give us a call today' or 'Get a free quote'
+
+**Frequently Asked Questions (FAQs):**
+- Common questions and answers related to the services
+
+**SEO Elements:**
+- URL-friendly permalink
+- Optimised meta title
+- Compelling meta description
+
+Additional Notes:
+- Well-structured with subheadings and bullet points for readability
+- SEO optimised with natural keyword and location term incorporation`
+    },
+
+    "Service Page - Location": {
+      description: "Write well researched and SEO friendly content for your business services location page",
+      inputs: [
+        {
+          name: "businessDescription",
+          label: "Business/Company Description",
+          type: "textarea",
+          placeholder: "Provide a brief description including how long established, mission, values..."
+        },
+        {
+          name: "companyName",
+          label: "Your Business/Company Name",
+          type: "text",
+          placeholder: "Enter your business name"
+        },
+        {
+          name: "targetLocation",
+          label: "Target Location",
+          type: "text",
+          placeholder: "Enter target location"
+        },
+        {
+          name: "keyword1",
+          label: "Keyword 1 (Primary)",
+          type: "text",
+          placeholder: "Enter primary keyword/service"
+        },
+        {
+          name: "keyword2",
+          label: "Keyword 2",
+          type: "text",
+          placeholder: "Enter keyword 2"
+        },
+        {
+          name: "keyword3",
+          label: "Keyword 3",
+          type: "text",
+          placeholder: "Enter keyword 3"
+        },
+        {
+          name: "additionalKeywords",
+          label: "Additional Keywords (Optional)",
+          type: "textarea",
+          placeholder: "Enter up to 5 additional keywords, separated by commas"
+        },
+        {
+          name: "whyChooseUs",
+          label: "Why Choose Our Services?",
+          type: "textarea",
+          placeholder: "Enter 4 reasons. Examples: Free quotations, over 30 years experience, same day service, fully qualified"
+        },
+        {
+          name: "wordCount",
+          label: "Word Count",
+          type: "number",
+          placeholder: "Enter desired word count (500 recommended)"
+        }
+      ],
+      prompt: ({ businessDescription, companyName, targetLocation, keyword1, keyword2, keyword3, additionalKeywords, whyChooseUs, wordCount }) =>
+        `Write content for a Services Page that incorporates local SEO optimisation for ${targetLocation}. The location will be naturally integrated throughout the content for improved search engine visibility. The content should provide in-depth details about the services offered and maintain a professional, formal, and businesslike tone. Use British English throughout.
+
+Company Information:
+- Company Name: ${companyName}
+- Business Description: ${businessDescription}
+- Target Location: ${targetLocation}
+- Primary Keywords: ${keyword1}, ${keyword2}, ${keyword3}
+- Additional Keywords: ${additionalKeywords || 'Not provided'}
+- Why Choose Us: ${whyChooseUs || 'Generate automatically'}
+- Target Word Count: ${wordCount || '500'} words
+
+Please include:
+
+**Services Overview:**
+- Introduction summarising core services with local relevance and SEO optimisation for ${targetLocation}
+
+**Detailed Service Descriptions:**
+Each service description should be optimised for local SEO by naturally integrating ${targetLocation}:
+- Detailed explanation including how it works, key features, and benefits
+- Why the service is important and how it stands out from competitors
+- Additional options, customisations, or related complementary services
+
+**Why Choose Our Services?**
+- Use provided reasons or generate compelling reasons why customers in ${targetLocation} should choose these services
+- Include industry expertise, certifications, or guarantees that reinforce trust and local expertise
+
+**Call to Action:**
+- Strong call to action encouraging readers in ${targetLocation} to get in touch
+- Include location-specific phrases where appropriate
+
+**Frequently Asked Questions (FAQs):**
+- Common questions and answers related to the services and ${targetLocation}
+
+**SEO Elements:**
+- URL-friendly permalink
+- Optimised meta title
+- Compelling meta description
+
+Additional Notes:
+- Well-structured with subheadings and bullet points for readability
+- Optimised for SEO by naturally incorporating keywords and ${targetLocation} for local relevance
+- Ensure local SEO integration without over-repetition`
+    },
+
+    "Blog": {
+      description: "Well researched and written Blog/Article for your website based on the topic(s) you choose",
+      inputs: [
+        {
+          name: "mainTopic",
+          label: "Main Topic",
+          type: "text",
+          placeholder: "Enter main topic"
+        },
+        {
+          name: "supportingTopics",
+          label: "Supporting Topics",
+          type: "textarea",
+          placeholder: "Enter related topics or keywords to focus on - separate with a comma if more than 1"
+        },
+        {
+          name: "wordCount",
+          label: "Word Count",
+          type: "number",
+          placeholder: "Enter desired word count (750-1000 recommended)"
+        }
+      ],
+      prompt: ({ mainTopic, supportingTopics, wordCount }) =>
+        `Write content for a Blog Article or News Post that is engaging, informative, and well-structured. The content should be professional, readable, and suitable for business or industry audiences. Use British English throughout.
+
+Topic Information:
+- Main Topic: ${mainTopic}
+- Supporting Topics: ${supportingTopics || 'Continue with main topic only'}
+- Target Word Count: ${wordCount || '750-1000'} words
+
+Please include:
+
+**Title:**
+- Compelling and SEO-friendly title based on the topic and key focus
+
+**Introduction:**
+- Engaging opening paragraph introducing the topic and capturing reader interest
+- Clear definition of the article's purpose and reader benefits
+
+**Main Content Sections:**
+- Logical subheadings breaking content into digestible sections
+- Well-researched information with relevant examples or data
+- Smooth flow and easy readability
+
+**Industry Insights or Expert Opinions (Optional):**
+- Expert insights, trends, or data for credibility and authority
+- Relevant and properly attributed statistics or data points
+
+**Conclusion:**
+- Summary of key takeaways
+- Final thoughts encouraging further engagement or reflection
+
+**Frequently Asked Questions (FAQs) (Optional):**
+- Common questions and answers related to the article's topic if relevant
+
+**SEO Elements:**
+- URL-friendly permalink
+- Optimised meta title
+- Compelling meta description
+
+Additional Notes:
+- Well-structured with subheadings and bullet points for readability
+- SEO optimised with natural keyword incorporation
+- Professional yet engaging and approachable tone`
+    },
+
+    "FAQ": {
+      description: "Write FAQ page for a specific keyword or topic",
+      inputs: [
+        {
+          name: "mainTopic",
+          label: "Main Topic or Keyword",
+          type: "text",
+          placeholder: "Enter main topic or keyword"
+        }
+      ],
+      prompt: ({ mainTopic }) =>
+        `Write content for a Frequently Asked Questions (FAQ) Page that is informative, well-structured, and optimised for SEO. The content should be professional, clear, and engaging while ensuring readability. Use British English throughout.
+
+Topic: ${mainTopic}
+
+Please include:
+
+**Introduction:**
+- Engaging opening paragraph introducing the FAQ page
+- Explanation of its purpose and how it helps users find answers related to ${mainTopic}
+
+**Frequently Asked Questions (FAQs):**
+- Generate 20 well-researched frequently asked questions and corresponding answers
+- Ensure relevance to ${mainTopic}
+- Use real-world search queries and industry-relevant questions for SEO performance
+- Structure FAQs clearly with concise, informative, and easy-to-understand answers
+- Include bullet points or step-by-step explanations where applicable
+
+**SEO Optimisation:**
+- Naturally integrate ${mainTopic} throughout the FAQ page
+- Use question-based search queries aligning with online search patterns
+- Structure with clear subheadings for improved search visibility
+
+**SEO Elements:**
+- URL-friendly permalink based on ${mainTopic}
+- Optimised meta title summarising FAQ content
+- Compelling meta description highlighting the FAQ page's purpose
+
+Additional Notes:
+- Logical structure with most common/important questions first
+- Clear, professional, and easy-to-understand language
+- Friendly yet informative tone aligned with subject matter
+- Include links to relevant pages or services where applicable
+- Generate optimal length based on topic complexity`
+    },
+    "Mini/Template Website Content": {
+      "Full Website": {
+        description: "Create well researched and fully optimised SEO content for your entire website. Content will consist of Home page, About us, Main services pages x 3, and contact us.",
+        inputs: [
+          {
+            name: "businessDescription",
+            label: "Business/Company Description",
+            type: "textarea",
+            placeholder: "e.g., Plumbing services company has been established since 1998, serving London and surrounding areas. We are fully qualified with over 30 years of experience, reliable, same day service and offer fixed free quotations. We work with both residential & commercial customers."
+          },
+          {
+            name: "companyName",
+            label: "Your Business/Company Name",
+            type: "text",
+            placeholder: "Enter your company name"
+          },
+          {
+            name: "service1",
+            label: "Service 1",
+            type: "text",
+            placeholder: "Enter primary service"
+          },
+          {
+            name: "service2",
+            label: "Service 2",
+            type: "text",
+            placeholder: "Enter service 2"
+          },
+          {
+            name: "service3",
+            label: "Service 3",
+            type: "text",
+            placeholder: "Enter service 3"
+          },
+          {
+            name: "businessAddress",
+            label: "Business/Company Address",
+            type: "text",
+            placeholder: "Enter address (optional)",
+            required: false
+          },
+          {
+            name: "openingHours",
+            label: "Opening Hours",
+            type: "text",
+            placeholder: "Enter opening hours (optional)",
+            required: false
+          },
+          {
+            name: "telephoneNumber",
+            label: "Telephone Number",
+            type: "text",
+            placeholder: "Enter telephone number (optional)",
+            required: false
+          },
+          {
+            name: "emailAddress",
+            label: "Email Address",
+            type: "email",
+            placeholder: "Enter email address (optional)",
+            required: false
+          },
+          {
+            name: "additionalKeyword1",
+            label: "Additional Keyword 1",
+            type: "text",
+            placeholder: "Enter additional keyword (optional)",
+            required: false
+          },
+          {
+            name: "additionalKeyword2",
+            label: "Additional Keyword 2",
+            type: "text",
+            placeholder: "Enter additional keyword (optional)",
+            required: false
+          },
+          {
+            name: "additionalKeyword3",
+            label: "Additional Keyword 3",
+            type: "text",
+            placeholder: "Enter additional keyword (optional)",
+            required: false
+          },
+          {
+            name: "additionalKeyword4",
+            label: "Additional Keyword 4",
+            type: "text",
+            placeholder: "Enter additional keyword (optional)",
+            required: false
+          },
+          {
+            name: "additionalKeyword5",
+            label: "Additional Keyword 5",
+            type: "text",
+            placeholder: "Enter additional keyword (optional)",
+            required: false
+          },
+          {
+            name: "whyChoose1",
+            label: "Why Choose Us - Point 1",
+            type: "text",
+            placeholder: "e.g., Free quotations"
+          },
+          {
+            name: "whyChoose2",
+            label: "Why Choose Us - Point 2",
+            type: "text",
+            placeholder: "e.g., Over 30 years experience"
+          },
+          {
+            name: "whyChoose3",
+            label: "Why Choose Us - Point 3",
+            type: "text",
+            placeholder: "e.g., Same day service"
+          },
+          {
+            name: "whyChoose4",
+            label: "Why Choose Us - Point 4",
+            type: "text",
+            placeholder: "e.g., Fully qualified"
+          }
+        ],
+        prompt: ({ businessDescription, companyName, service1, service2, service3, businessAddress, openingHours, telephoneNumber, emailAddress, additionalKeyword1, additionalKeyword2, additionalKeyword3, additionalKeyword4, additionalKeyword5, whyChoose1, whyChoose2, whyChoose3, whyChoose4 }) => {
+          const additionalKeywords = [additionalKeyword1, additionalKeyword2, additionalKeyword3, additionalKeyword4, additionalKeyword5].filter(Boolean);
+          const whyChoosePoints = [whyChoose1, whyChoose2, whyChoose3, whyChoose4].filter(Boolean);
+
+          return `Create a full SEO-optimised website content written in British English for a business website. The content should be engaging, professional, informative, and well-structured. Please generate the following six website pages:
+
+**BUSINESS INFORMATION:**
+Company Name: ${companyName}
+Business Description: ${businessDescription}
+Service 1: ${service1}
+Service 2: ${service2}
+Service 3: ${service3}
+${businessAddress ? `Address: ${businessAddress}` : ''}
+${openingHours ? `Opening Hours: ${openingHours}` : ''}
+${telephoneNumber ? `Phone: ${telephoneNumber}` : ''}
+${emailAddress ? `Email: ${emailAddress}` : ''}
+
+${additionalKeywords.length > 0 ? `Additional Keywords: ${additionalKeywords.join(', ')}` : ''}
+
+Why Choose Us Points:
+${whyChoosePoints.map((point, index) => `${index + 1}. ${point}`).join('\n')}
+
+**GENERATE THE FOLLOWING PAGES:**
+
+## **HOME PAGE CONTENT** (approx. 500 words)
+
+**Headline Banner:**
+- Create headline banner content. Headline Blurb (7 words) and some content underneath (15 words)
+
+**Mini Call to Action:**
+- Create a mini call to action for a button on the website
+
+**About Us:**
+- Generate a compelling narrative about the company's history, values, and mission, making it relatable to the local community. (120-150 words)
+
+**Why Choose Us?**
+- Generate four strong unique selling points that highlight why customers should choose us ensuring credibility and trustworthiness.
+
+**Services Offered:**
+1. **${service1}**
+   - Write a detailed description emphasising its benefits and how it solves customer problems. (50 words)
+2. **${service2}**
+   - Write a detailed description emphasising its benefits and how it solves customer problems. (50 words)
+3. **${service3}**
+   - Write a detailed description emphasising its benefits and how it solves customer problems. (50 words)
+
+**Mini Blurb:**
+- Generate a mini blurb with a headline. (40 words)
+
+**Contact Details:**
+${businessAddress || openingHours || telephoneNumber || emailAddress ? `
+- Provide a welcoming invitation for potential customers to get in touch.
+${businessAddress ? `- Address: ${businessAddress}` : ''}
+${openingHours ? `- Opening Hours: ${openingHours}` : ''}
+${telephoneNumber ? `- Phone: ${telephoneNumber}` : ''}
+${emailAddress ? `- Email: ${emailAddress}` : ''}
+` : '- Generate appropriate contact invitation'}
+
+**Customer Testimonials:**
+- Generate three realistic customer testimonials related to the industry, ensuring authenticity and relevance. (Each approx 40 words)
+
+**Frequently Asked Questions (FAQ):**
+- Generate five frequently asked questions related to the industry, ensuring authenticity and relevance. (Each approx 40 words)
+
+**Footer Banner:**
+- Generate a footer banner with headline of 7 words and content approx 20 words
+
+**Call to Action Options:**
+- Create 5 x mini call to action for buttons on the website
+
+**Company Overview:**
+- Generate an engaging introduction for ${companyName}, highlighting its expertise, values, and commitment to quality service.
+
+**SEO Elements:**
+- Permalink: Generate a URL-friendly permalink
+- Meta Title: Create an optimised meta title
+- Meta Description: Write a compelling meta description
+
+---
+
+## **ABOUT US PAGE** (approx. 500-750 words)
+
+**Introduction:**
+- Generate an engaging opening paragraph that introduces ${companyName}, summarising its purpose and core values.
+
+**Company History & Background:**
+- Provide an overview of how the company was founded, its growth journey, and key milestones achieved.
+- Highlight any industry experience, innovations, or special achievements.
+
+**Mission & Values:**
+- Clearly define the company's mission and the values it upholds.
+- Emphasise commitment to quality, customer service, and key principles.
+
+**What We Do:**
+- Explain the core services offered by ${companyName}.
+- Highlight what makes them unique, effective, or beneficial to customers.
+
+**Why Choose Us?**
+- Provide compelling reasons why customers should trust and choose ${companyName} over competitors.
+- Mention any certifications, awards, partnerships, or distinguishing factors.
+
+**Call to Action:**
+- Encourage visitors to take the next step, such as getting in touch or learning more.
+
+**SEO Elements:**
+- Permalink: Generate a URL-friendly permalink
+- Meta Title: Create an optimised meta title
+- Meta Description: Write a compelling meta description
+
+---
+
+## **SERVICE PAGE 1: ${service1}** (approx. 750-1,000 words)
+
+**Services Overview:**
+- Generate an introduction that summarises ${companyName}'s core services, highlighting their relevance to customers and the industry.
+
+**Detailed Service Description:**
+- Provide a detailed explanation of ${service1}, including how it works, its key features, and its benefits to customers.
+- Explain why this service is important and how it stands out compared to competitors.
+- Mention any additional options, customisations, or related services that complement it.
+- Break it down into 3 paragraphs with its own headline and content if relevant.
+
+**Why Choose Our Services?**
+- Use the provided points: ${whyChoosePoints.join(', ')}
+- Include any industry expertise, certifications, or guarantees that reinforce trust.
+
+**Call to Action:**
+- Conclude with a strong call to action, encouraging readers to get in touch.
+
+**Frequently Asked Questions (FAQs):**
+- Generate common questions and answers related to ${service1}, ensuring potential customers have all necessary information.
+
+**SEO Elements:**
+- Permalink: Generate a URL-friendly permalink
+- Meta Title: Create an optimised meta title
+- Meta Description: Write a compelling meta description
+
+---
+
+## **SERVICE PAGE 2: ${service2}** (approx. 750-1,000 words)
+
+[Same structure as Service Page 1, but focused on ${service2}]
+
+---
+
+## **SERVICE PAGE 3: ${service3}** (approx. 750-1,000 words)
+
+[Same structure as Service Page 1, but focused on ${service3}]
+
+---
+
+## **CONTACT US PAGE** (approx. 200-300 words)
+
+**Welcoming Intro:**
+- Include a welcoming introduction encouraging users to reach out
+
+**Contact Information:**
+${businessAddress ? `- Address: ${businessAddress}` : '- Generate appropriate address section'}
+${telephoneNumber ? `- Phone: ${telephoneNumber}` : '- Generate appropriate phone section'}
+${emailAddress ? `- Email: ${emailAddress}` : '- Generate appropriate email section'}
+${openingHours ? `- Opening Hours: ${openingHours}` : '- Generate appropriate opening hours section'}
+
+**Coverage Area:**
+- Include directions or coverage area if relevant
+
+**Call to Action:**
+- Simple call to action like "Get in touch today"
+- Conclude with a strong call to action, encouraging readers to get in touch with phrases like: 'Give us a call today to discuss your needs,' 'Contact our dedicated specialist for expert advice,' or 'Get a free quote by reaching out to us now.'
+
+**SEO Elements:**
+- Permalink: Generate a URL-friendly permalink
+- Meta Title: Create an optimised meta title
+- Meta Description: Write a compelling meta description
+
+---
+
+**FORMATTING REQUIREMENTS:**
+- Present all content with clear page titles and formatting
+- Ensure content is well-structured, easy to read, and informative
+- Use subheadings and bullet points where appropriate for clarity
+- Optimise for SEO by naturally incorporating relevant keywords and location terms
+- Maintain a professional yet approachable tone throughout
+- Use British English conventions throughout all content
+- Make sure each page is clearly separated and labelled
+
+Please generate the complete web content package ready for publishing.`;
+        }
+      }
     }
+
   }
-},
+
 
 };

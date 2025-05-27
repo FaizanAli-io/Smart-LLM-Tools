@@ -6,9 +6,14 @@ import "./Footer.css";
 
 export default function Footer() {
   const navigate = useNavigate();
-
+  
   // Function to format service name into URL-friendly format
   const formatServiceSlug = (service) => service.replace(/\s+/g, "-");
+  
+  // Function to handle link clicks and scroll to top
+  const handleLinkClick = () => {
+    window.scrollTo(0, 0);
+  };
 
   return (
     <MDBFooter className="footer">
@@ -25,6 +30,7 @@ export default function Footer() {
                         <Link
                           to={`/prompt-creator/${category.id}/${formatServiceSlug(service)}`}
                           className="footer-link"
+                          onClick={handleLinkClick}
                         >
                           {service}
                         </Link>
@@ -43,6 +49,7 @@ export default function Footer() {
                             <Link
                               to={`/prompt-creator/${category.id}/${formatServiceSlug(service)}`}
                               className="footer-link"
+                              onClick={handleLinkClick}
                             >
                               {service}
                             </Link>
@@ -57,7 +64,6 @@ export default function Footer() {
           ))}
         </div>
       </MDBContainer>
-
       {/* Copyright Section */}
       <div className="footer-bottom">
         © 2025 Your Company. All rights reserved.

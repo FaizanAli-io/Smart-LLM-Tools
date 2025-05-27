@@ -57,7 +57,7 @@ export const categories = [
           "Full Website", "Home Page", "About Us", "Service Page", "Service Page - Location", "Blog", "FAQ"
         ],
         "Mini/Template Website Content": [
-          "Full Website", "Home Page", "About Us", "Service Page", "Service Page - Location", "Blog", "FAQ"
+          "Full Website", "Home Page", "About Us", "Service Page", "Service Page - Location"
         ]
       }
     },
