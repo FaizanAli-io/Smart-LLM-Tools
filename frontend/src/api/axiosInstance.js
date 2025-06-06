@@ -2,7 +2,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "http://13.51.199.66/api", // or your deployed backend
+  baseURL: "https://fit-probably-shrimp.ngrok-free.app/api", // or your deployed backend
 });
 
 axiosInstance.interceptors.request.use((config) => {
