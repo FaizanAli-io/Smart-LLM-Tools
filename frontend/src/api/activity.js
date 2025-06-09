@@ -1,7 +1,6 @@
 // frontend/src/api/activity.js
 
-// Base URL for your backend API
-const API_BASE_URL = "http://localhost:3000/api"; // Change this to match your backend URL
+import axiosInstance from "./axiosInstance";
 
 /**
  * Fetches all activity data from the backend
@@ -9,14 +8,8 @@ const API_BASE_URL = "http://localhost:3000/api"; // Change this to match your b
  */
 export const getAllActivities = async () => {
   try {
-    const response = await fetch(`${API_BASE_URL}/activity`);
-
-    if (!response.ok) {
-      throw new Error(`API error: ${response.status}`);
-    }
-
-    const data = await response.json();
-    return data;
+    const response = await axiosInstance.get("/activity");
+    return response.data;
   } catch (error) {
     console.error("Error fetching activities:", error);
     throw error;
@@ -31,20 +24,8 @@ export const getAllActivities = async () => {
  */
 export const logActivity = async (userId, prompt) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/activity`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ userId, prompt }),
-    });
-
-    if (!response.ok) {
-      throw new Error(`API error: ${response.status}`);
-    }
-
-    const data = await response.json();
-    return data;
+    const response = await axiosInstance.post("/activity", { userId, prompt });
+    return response.data;
   } catch (error) {
     console.error("Error logging activity:", error);
     throw error;

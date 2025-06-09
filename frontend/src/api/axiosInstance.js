@@ -2,7 +2,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "https://786b-13-51-199-66.ngrok-free.app/api", // or your deployed backend
+  baseURL: "https://api-ai-biz-services.bizg.co.uk/api", // or your deployed backend
 });
 
 axiosInstance.interceptors.request.use((config) => {
