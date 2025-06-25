@@ -12,7 +12,7 @@ export class GptService {
     this.logger.log(`Calling OpenAI with prompt: ${prompt}`);
     try {
       const completion = await this.openai.chat.completions.create({
-        model: 'gpt-4o-mini', // or your preferred model
+        model: 'gpt-4o', // or your preferred model
         messages: [{ role: 'user', content: prompt }],
       });
 
