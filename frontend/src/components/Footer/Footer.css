@@ -4,25 +4,24 @@
   color: #ddd;
   padding: 30px 0;
   font-size: 14px;
+  width: 100%;
+  margin-top: auto;
 }
 
-/* Center Content */
-.footer-content {
-  max-width: 1100px;
-  margin: 0 auto;
-}
-
-/* Footer Columns - FLEXBOX */
+/* Footer Columns - Single Row Layout */
 .footer-columns {
   display: flex;
   justify-content: space-between;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 10px;
 }
 
 /* Footer Sections */
 .footer-section {
   flex: 1;
-  min-width: 200px; /* Ensures proper spacing */
+  min-width: 180px;
   padding: 10px;
 }
 
@@ -33,20 +32,28 @@
   color: #fff;
 }
 
-/* Footer Links */
-.footer-list {
-  list-style: none;
-  padding: 0;
+.footer-subcategory {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 8px 0 6px 0;
+  color: #ccc;
 }
 
-.footer-list li {
+/* Footer Links */
+.footer-list, .footer-sublist {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-list li, .footer-sublist li {
   margin-bottom: 6px;
 }
 
 .footer-link {
   color: #bbb;
-
-  transition: 0.3s ease-in-out;
+  text-decoration: none;
+  transition: color 0.3s ease;
 }
 
 .footer-link:hover {
@@ -54,14 +61,9 @@
   text-decoration: underline;
 }
 
-/* Footer Contact */
-.footer-contact {
-  list-style: none;
-  padding: 0;
-}
-
-.footer-contact li {
-  margin-bottom: 6px;
+.footer-no-services {
+  color: #888;
+  font-style: italic;
 }
 
 /* Footer Bottom */
@@ -71,28 +73,39 @@
   background-color: #181818;
   color: #888;
   font-size: 13px;
+  margin-top: 20px;
 }
 
-/* Increase spacing between columns */
-.footer-columns {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 40px; /* Add more spacing between columns */
+/* Responsive Design */
+@media (max-width: 768px) {
+  .footer-columns {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .footer-section {
+    flex: 1 1 calc(50% - 20px);
+    min-width: 150px;
+  }
 }
 
-/* Ensure footer extends to the bottom */
-.footer {
-  background-color: #222;
-  color: #ddd;
-  padding: 30px 0;
-  font-size: 14px;
-  width: 100%;
-  position: relative;
-  bottom: 0;
-  left: 0;
-}
-
-.footer {
-  margin-top: auto; /* Pushes footer to the bottom */
+@media (max-width: 480px) {
+  .footer {
+    padding: 20px 0;
+  }
+  
+  .footer-columns {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .footer-section {
+    flex: 1;
+    min-width: 100%;
+    text-align: center;
+  }
+  
+  .footer-title {
+    font-size: 15px;
+  }
 }

@@ -1,8 +1,10 @@
 /* Navbar */
 .navbar-custom {
-  background-color: #f5f5f5;
-  padding: 12px 20px;
-  border-bottom: 1px solid #ddd;
+  background-color: #f8f9fa;
+  padding: 15px 20px;
+  border-bottom: 2px solid #e9ecef;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(10px);
 }
 
 /* Navbar Container */
@@ -10,6 +12,51 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Logo Styling */
+.navbar-logo {
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.navbar-logo:hover {
+  transform: scale(1.05);
+}
+
+.navbar-logo img {
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+/* Categories Navigation */
+.nav-categories {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  flex: 1;
+  justify-content: center;
+}
+
+/* Category Navigation Buttons */
+.category-nav-btn {
+  background: none;
+  border: none;
+  color: #333;
+  font-weight: 500;
+  font-size: 14px;
+  padding: 8px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.category-nav-btn:hover {
+
+  color: rgb(90, 118, 210);
+  transform: translateY(-1px);
 }
 
 /* Navbar Buttons */
@@ -20,34 +67,92 @@
 
 /* Common Button Styles */
 .nav-btn {
-  font-weight: bold;
-  padding: 8px 20px;
+  font-weight: 600;
+  padding: 10px 22px;
   border-radius: 25px;
   font-size: 14px;
-  transition: 0.3s ease-in-out;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border: none;
+  cursor: pointer;
 }
 
 /* Login Button */
 .login-home-btn {
-  background-color: rgba(0, 0, 0, 0.9); /* Teal */
+  background-color: rgba(0, 0, 0, 0.9);
   color: white;
-  border: none;
 }
 
 .login-home-btn:hover {
   background-color: rgb(9, 102, 102);
-  box-shadow: 0 5px 12px rgba(0, 128, 128, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 128, 128, 0.4);
 }
 
 /* Signup Button */
 .signup-home-btn {
-  background-color: rgba(0, 0, 0, 0.9); /* Coral */
+  background-color: rgba(0, 0, 0, 0.9);
   color: white;
-  border: none;
 }
 
 .signup-home-btn:hover {
   background-color: rgb(9, 102, 102);
-  box-shadow: 0 5px 12px rgba(255, 111, 97, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 111, 97, 0.4);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .navbar-custom {
+    padding: 12px 15px;
+  }
+  
+  .header-navbar {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .nav-categories {
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+  }
+  
+  .category-nav-btn {
+    font-size: 13px;
+    padding: 6px 10px;
+  }
+  
+  .nav-btn {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+  
+  .navbar-logo img {
+    height: 50px;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-categories {
+    gap: 10px;
+  }
+  
+  .category-nav-btn {
+    font-size: 12px;
+    padding: 5px 8px;
+  }
+  
+  .nav-buttons {
+    gap: 8px;
+  }
+  
+  .nav-btn {
+    padding: 7px 14px;
+    font-size: 12px;
+  }
+  
+  .navbar-logo img {
+    height: 45px;
+  }
 }

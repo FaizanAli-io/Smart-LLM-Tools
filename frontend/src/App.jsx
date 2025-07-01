@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -21,10 +22,20 @@ import CategoryPage from "./components/Home/CategoryPage";
 import AdminPanel from "./components/AdminPanel/AdminPanel";
 import PromptCreator from "./components/PromptCreator/PromptCreator";
 
+// Scroll to top function
+const scrollToTop = () => {
+  window.scrollTo(0, 0);
+};
+
 function AppWrapper() {
   const location = useLocation();
   const { isAuthenticated, isLoading } = useAuth();
   const hideLayout = location.pathname === "/unauthorized";
+
+  // Scroll to top on every route change
+  useEffect(() => {
+    scrollToTop();
+  }, [location.pathname]);
 
   if (isLoading) {
     return <Loader />;
