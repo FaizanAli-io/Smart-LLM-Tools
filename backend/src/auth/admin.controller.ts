@@ -1,11 +1,12 @@
 // src/auth/admin.controller.ts
-import { Controller, Get, UseGuards } from '@nestjs/common';
+import { Controller, Get,Patch, UseGuards,Param,Body } from '@nestjs/common';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { Roles } from './decorators/roles.decorator';
 import { RolesGuard } from './guards/roles.guard';
 import { GetUser } from './decorators/get-user.decorator';
-import { User } from 'src/users/entities/user.entity';
-import { UserRole } from 'src/users/entities/user.entity';
+import { User } from '../users/user.entity';
+import { UserRole } from '../users/user.entity';
+
 
 @Controller('admin')
 @UseGuards(JwtAuthGuard, RolesGuard)
@@ -18,4 +19,5 @@ export class AdminController {
       user,
     };
   }
+
 }

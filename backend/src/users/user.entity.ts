@@ -41,4 +41,7 @@ export class User {
 
   @CreateDateColumn()
   createdAt: Date;
+
+  @Column("text", { array: true, default: () => "ARRAY[]::text[]" })
+  allowedCategories: string[];
 }

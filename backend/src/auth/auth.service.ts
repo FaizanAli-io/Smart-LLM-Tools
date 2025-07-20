@@ -9,8 +9,8 @@ import { Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 
-import { User } from 'src/users/entities/user.entity';
-import { UserRole } from 'src/users/entities/user.entity';
+import { User } from '../users/user.entity';
+import { UserRole } from '../users/user.entity';
 import { SignupDto } from './dto/signup.dto';
 import { LoginDto } from './dto/login.dto';
 import { JwtPayload } from './interfaces/jwt-payload.interface';
@@ -72,7 +72,7 @@ export class AuthService {
       );
     }
 
-    const payload: JwtPayload = { sub: user.id, email: user.email };
+    const payload: JwtPayload = { sub: user.id, email: user.email,  role: user.role, };
     const accessToken = this.jwtService.sign(payload);
     return { user: user, token: accessToken };
   }

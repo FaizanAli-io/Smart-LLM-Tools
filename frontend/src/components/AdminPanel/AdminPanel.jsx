@@ -2,6 +2,7 @@ import "./AdminPanel.css";
 import { useState, useEffect } from "react";
 import { getAllActivities } from "../../api/activity";
 import { listUsers, updateRole } from "../../api/auth";
+import { categories } from "../../assets/categories";
 
 export default function AdminPanel() {
   const [userData, setUserData] = useState([]);
@@ -10,6 +11,8 @@ export default function AdminPanel() {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [searchQuery, setSearchQuery] = useState("");
   const [roleUpdates, setRoleUpdates] = useState({});
+  const [categoryUpdates, setCategoryUpdates] = useState({});
+
   const [stats, setStats] = useState({
     totalUsers: 0,
     activeUsers: 0,
@@ -56,6 +59,13 @@ export default function AdminPanel() {
         const users = await listUsers();
         const nonAdmins = users.filter((user) => user.role !== "admin");
         setUserList(nonAdmins);
+
+        // Initialize category updates with current user categories
+        const initialCategoryUpdates = {};
+        nonAdmins.forEach(user => {
+          initialCategoryUpdates[user.id] = user.allowedCategories || [];
+        });
+        setCategoryUpdates(initialCategoryUpdates);
       } catch (err) {
         console.error("Error fetching users:", err);
       }
@@ -72,19 +82,89 @@ export default function AdminPanel() {
     }));
   };
 
+  const handleCategoryChange = (userId, categoryName, isChecked) => {
+    setCategoryUpdates((prev) => {
+      const currentCategories = prev[userId] || [];
+      let updatedCategories;
+
+      if (isChecked) {
+        updatedCategories = [...currentCategories, categoryName];
+      } else {
+        updatedCategories = currentCategories.filter(cat => cat !== categoryName);
+      }
+
+      return {
+        ...prev,
+        [userId]: updatedCategories
+      };
+    });
+  };
+
   const handleUpdateRole = async (userId) => {
     const newRole = roleUpdates[userId];
     if (!newRole) return;
+
     try {
       await updateRole({ userId, role: newRole });
       alert("Role updated successfully.");
 
       const updatedUsers = await listUsers();
-      setUserList(updatedUsers);
+      const nonAdmins = updatedUsers.filter((user) => user.role !== "admin");
+      setUserList(nonAdmins);
+
+      // Remove from roleUpdates after successful update
+      setRoleUpdates(prev => {
+        const updated = { ...prev };
+        delete updated[userId];
+        return updated;
+      });
     } catch (error) {
       console.error("Error updating role:", error);
       alert("Failed to update role.");
     }
+  };
+
+  const handleUpdateCategories = async (userId) => {
+    const selectedCategories = categoryUpdates[userId];
+    if (!selectedCategories) return;
+
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        console.error("No token found in localStorage");
+        return;
+      }
+
+      console.log("Sending PATCH to:", `http://localhost:3000/api/admin/${userId}/categories`);
+      console.log("Payload:", { allowedCategories: selectedCategories });
+      console.log("Token:", token);
+
+      const res = await fetch(`http://localhost:3000/api/admin/${userId}/categories`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ allowedCategories: selectedCategories })
+      });
+
+      if (!res.ok) {
+        const errorText = await res.text();
+        console.error("Server responded with error:", errorText);
+        throw new Error("Failed to update");
+      }
+
+      alert("Categories updated successfully");
+
+      const updatedUsers = await listUsers();
+      const nonAdmins = updatedUsers.filter((user) => user.role !== "admin");
+      setUserList(nonAdmins);
+    } catch (err) {
+      console.error("Error updating categories:", err);
+      alert("Failed to update categories");
+    }
+
+    console.log("Sent update for user:", userId, "with categories:", selectedCategories);
   };
 
   const formatDate = (dateString) => new Date(dateString).toLocaleString();
@@ -131,8 +211,8 @@ export default function AdminPanel() {
               {tab === "dashboard"
                 ? "Dashboard"
                 : tab === "activities"
-                ? "User Activities"
-                : "Manage Users"}
+                  ? "User Activities"
+                  : "Manage Users"}
             </button>
           ))}
         </div>
@@ -219,7 +299,7 @@ export default function AdminPanel() {
                     {filteredUserData.map((entry) => (
                       <tr key={entry.id}>
                         <td>{entry.username}</td>
-                        <td>{entry.prompt}</td>
+                        <td className="prompt-cell">{entry.prompt}</td>
                         <td>{formatDate(entry.timestamp)}</td>
                       </tr>
                     ))}
@@ -235,61 +315,101 @@ export default function AdminPanel() {
           <div className="manage-users-content">
             <h2 className="section-title">Manage Users</h2>
             {userList.length === 0 ? (
-              <p>No non-admin users found.</p>
+              <div className="empty-state">
+                <div className="empty-state-icon">👥</div>
+                <p>No non-admin users found.</p>
+              </div>
             ) : (
-              <table className="activities-table">
-                <thead>
-                  <tr>
-                    <th>User</th>
-                    <th>Email</th>
-                    <th>Current Role</th>
-                    <th>Update Role</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {[...userList]
-                    .sort((a, b) => {
-                      const rolePriority = {
-                        ADMIN: 0,
-                        PREMIUM: 1,
-                        STANDARD: 2,
-                        FREE: 3,
-                        BLACKLIST: 4
-                      };
-                      return rolePriority[a.role] - rolePriority[b.role];
-                    })
-                    .map((user) => (
-                      <tr key={user.id}>
-                        <td>{user.name}</td>
-                        <td>{user.email}</td>
-                        <td>{user.role}</td>
-                        <td>
-                          <select
-                            className="role-select"
-                            value={roleUpdates[user.id] || user.role}
-                            onChange={(e) => handleRoleChange(user.id, e.target.value)}
-                            disabled={user.role === "ADMIN"}
-                          >
-                            <option value="FREE">Free</option>
-                            <option value="STANDARD">Standard</option>
-                            <option value="PREMIUM">Premium</option>
-                            <option value="BLACKLIST">Blacklist</option>
-                          </select>
-                        </td>
-                        <td>
-                          <button
-                            className="update-role-button"
-                            onClick={() => handleUpdateRole(user.id)}
-                            disabled={user.role === "ADMIN"}
-                          >
-                            Update
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                </tbody>
-              </table>
+              <div className="users-table-container">
+                <table className="users-table">
+                  <thead>
+                    <tr>
+                      <th>User</th>
+                      <th>Email</th>
+                      <th>Current Role</th>
+                      <th>Update Role</th>
+                      <th>Role Action</th>
+                      <th>Categories</th>
+                      <th>Category Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {[...userList]
+                      .sort((a, b) => {
+                        const rolePriority = {
+                          ADMIN: 0,
+                          PREMIUM: 1,
+                          STANDARD: 2,
+                          FREE: 3,
+                          BLACKLIST: 4
+                        };
+                        return rolePriority[a.role] - rolePriority[b.role];
+                      })
+                      .map((user) => (
+                        <tr key={user.id}>
+                          <td className="user-name-cell">
+                            <div className="user-avatar">
+                              {user.name.charAt(0).toUpperCase()}
+                            </div>
+                            {user.name}
+                          </td>
+                          <td className="email-cell">{user.email}</td>
+                          <td>
+                            <span className={`role-badge ${user.role.toLowerCase()}`}>
+                              {user.role}
+                            </span>
+                          </td>
+                          <td>
+                            <select
+                              className="role-select"
+                              value={roleUpdates[user.id] || user.role}
+                              onChange={(e) => handleRoleChange(user.id, e.target.value)}
+                              disabled={user.role === "ADMIN"}
+                            >
+                              <option value="FREE">Free</option>
+                              <option value="STANDARD">Standard</option>
+                              <option value="PREMIUM">Premium</option>
+                              <option value="BLACKLIST">Blacklist</option>
+                            </select>
+                          </td>
+                          <td>
+                            <button
+                              className="action-button update-button"
+                              onClick={() => handleUpdateRole(user.id)}
+                              disabled={user.role === "ADMIN" || !roleUpdates[user.id]}
+                            >
+                              Update Role
+                            </button>
+                          </td>
+                          <td className="categories-cell">
+                            <div className="categories-grid">
+                              {categories.map((cat) => (
+                                <label key={cat.id} className="category-checkbox">
+                                  <input
+                                    type="checkbox"
+                                    checked={(categoryUpdates[user.id] || []).includes(cat.name)}
+                                    onChange={(e) =>
+                                      handleCategoryChange(user.id, cat.name, e.target.checked)
+                                    }
+                                  />
+                                  <span className="checkbox-label">{cat.name}</span>
+                                </label>
+                              ))}
+                            </div>
+                          </td>
+                          <td>
+                            <button
+                              className="action-button category-button"
+                              onClick={() => handleUpdateCategories(user.id)}
+                            >
+                              Update Categories
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                  </tbody>
+                </table>
+              </div>
             )}
           </div>
         )}

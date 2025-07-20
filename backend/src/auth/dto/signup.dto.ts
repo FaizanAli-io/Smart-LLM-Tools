@@ -8,7 +8,7 @@ import {
   IsOptional,
   IsEnum,
 } from 'class-validator';
-import { UserRole } from '../../users/entities/user.entity';
+import { UserRole } from '../../users/user.entity';
 
 export class SignupDto {
   @IsNotEmpty()

@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module';
 import { EmailsModule } from './emails/emails.module';
 import { ActivityModule } from './activity/activity.module';
 import { GptModule } from './gpt/gpt.module';
+import { UserModule } from './users/user.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { GptModule } from './gpt/gpt.module';
     EmailsModule,
     ActivityModule,
     GptModule,
+    UserModule,
   ],
 })
 export class AppModule {}

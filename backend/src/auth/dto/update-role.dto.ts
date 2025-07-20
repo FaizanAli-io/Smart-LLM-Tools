@@ -1,5 +1,5 @@
 import { IsEnum, IsNumber } from 'class-validator';
-import { UserRole } from 'src/users/entities/user.entity';
+import { UserRole } from 'src/users/user.entity';
 
 export class UpdateRoleDto {
   @IsNumber()

@@ -15,7 +15,7 @@ import { UpdateRoleDto } from './dto/update-role.dto';
 import { AuthService } from './auth.service';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 
-import { User } from 'src/users/entities/user.entity';
+import { User } from '../users/user.entity';
 import { GetUser } from './decorators/get-user.decorator';
 
 @Controller('auth')
