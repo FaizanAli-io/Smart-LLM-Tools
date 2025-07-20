@@ -2,8 +2,8 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  // baseURL: "https://api-ai-biz-services.bizg.co.uk/api", // or your deployed backend
-  baseURL:"http://localhost:3000/api/"
+  baseURL: "https://api-ai-biz-services.bizg.co.uk/api", // or your deployed backend
+  // baseURL:"http://localhost:3000/api/"
 });
 
 axiosInstance.interceptors.request.use((config) => {

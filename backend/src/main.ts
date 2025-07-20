@@ -11,8 +11,8 @@ async function bootstrap() {
   // ✅ Enable CORS here
   app.enableCors({
   origin: [
-    "http://localhost:5173", // for local dev
-    // "https://ai-biz-services.bizg.co.uk", // for deployed frontend
+    // "http://localhost:5173", // for local dev
+    "https://ai-biz-services.bizg.co.uk", // for deployed frontend
   ],
     credentials: true, // if you use cookies (optional)
   });
