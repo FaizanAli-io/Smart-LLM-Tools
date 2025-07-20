@@ -135,11 +135,11 @@ export default function AdminPanel() {
         return;
       }
 
-      console.log("Sending PATCH to:", `http://localhost:3000/api/admin/${userId}/categories`);
+      console.log("Sending PATCH to:", `https://api-ai-biz-services.bizg.co.uk/api/admin/${userId}/categories`);
       console.log("Payload:", { allowedCategories: selectedCategories });
       console.log("Token:", token);
 
-      const res = await fetch(`http://localhost:3000/api/admin/${userId}/categories`, {
+      const res = await fetch(`https://api-ai-biz-services.bizg.co.uk/api/admin/${userId}/categories`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

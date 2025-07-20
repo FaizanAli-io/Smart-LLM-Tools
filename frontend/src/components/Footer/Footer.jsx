@@ -19,7 +19,7 @@ export default function Footer() {
         }
 
         console.log("Fetching allowed categories...");
-        const res = await fetch(`http://localhost:3000/api/admin/my-categories`, {
+        const res = await fetch(`https://api-ai-biz-services.bizg.co.uk/api/admin/my-categories`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
