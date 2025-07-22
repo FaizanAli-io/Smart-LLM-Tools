@@ -8,7 +8,6 @@ import { useAuth } from "../../api/authContext";
 export default function Login() {
   const navigate = useNavigate();
   const { login } = useAuth();
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -18,17 +17,35 @@ export default function Login() {
       console.log("Sending login data:", { email, password });
       const response = await loginUser({ email, password });
       login(response.token, response.user);
-
       console.log("Login successful:", response);
+      
+      // Show success message
+      alert(response.message || "Login successful! Welcome back.");
       navigate("/");
     } catch (err) {
       console.error("Login failed:", err?.response?.data || err.message);
-
-      alert(
-        err?.response?.data?.message?.[0] ||
-          err?.response?.data?.message ||
-          "Login failed. Try again.",
-      );
+      
+      // Extract and display user-friendly error message
+      let errorMessage = "Login failed. Please try again.";
+      
+      if (err?.response?.data?.message) {
+        // If the backend returns our nice error messages
+        errorMessage = err.response.data.message;
+      } else if (err?.response?.status === 401) {
+        // Handle 401 Unauthorized
+        errorMessage = "Invalid email or password. Please check your credentials and try again.";
+      } else if (err?.response?.status === 403) {
+        // Handle 403 Forbidden (email not verified)
+        errorMessage = "Your email address needs to be verified before you can log in. Please check your email for the verification link.";
+      } else if (err?.response?.status >= 500) {
+        // Server error
+        errorMessage = "Server error occurred. Please try again later.";
+      } else if (!navigator.onLine) {
+        // Network error
+        errorMessage = "No internet connection. Please check your network and try again.";
+      }
+      
+      alert(errorMessage);
     }
   };
 
@@ -38,7 +55,6 @@ export default function Login() {
         <div className="login-box">
           <h2 className="login-title">Welcome Back</h2>
           <p className="login-subtitle">Login to continue</p>
-
           <form onSubmit={handleSubmit}>
             <div className="input-wrapper">
               <input
@@ -51,7 +67,6 @@ export default function Login() {
               />
               <label htmlFor="email">Email Address</label>
             </div>
-
             <div className="input-wrapper">
               <input
                 type="password"
@@ -63,11 +78,9 @@ export default function Login() {
               />
               <label htmlFor="password">Password</label>
             </div>
-
             <button type="submit" className="login-btn">
               Login
             </button>
-
             <p className="signup-link">
               Don't have an account?{" "}
               <span onClick={() => navigate("/signup")}>Sign Up</span>
